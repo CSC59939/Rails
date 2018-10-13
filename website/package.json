@@ -16,8 +16,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "node_modules/.bin/eslint src/",
-    "eject": "react-scripts eject",
-    "precommit": "npm run lint"
+    "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm test"
+    }
   },
   "browserslist": [
     ">0.2%",
