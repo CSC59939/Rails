@@ -17,7 +17,7 @@
     "test": "react-scripts test",
     "lint": "node_modules/.bin/eslint src/",
     "eject": "react-scripts eject",
-    "precommit": "npm run lint",
+    "precommit": "npm run lint"
   },
   "browserslist": [
     ">0.2%",
