@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, Icon } from 'antd';
+import './Home.css';
 
 const Home = () => (
   <div className="home">
