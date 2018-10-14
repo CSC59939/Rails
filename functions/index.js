@@ -28,20 +28,14 @@ exports.signup = functions.https.onRequest((req, res) => {
         password: reqData.password
       }).then((user) => {
           console.log(user.uid);
-          admin.firestore().collection('users').doc(user.uid).set({
+          admin.database().ref('users/'+user.uid).set({
             type: reqData.type,
             universities: reqData.universities
-          }).then(()=>{
-            res.status(200).send('User created');
+          }).then(() => {
+            res.status(200).send('Signed up.');
             return;
           }).catch((err) => {
-            console.log(err);
-            admin.auth().deleteUser(user.uid).then(()=>{
-              res.status(300).send('Try creating again.');
-              return;
-            }).catch((er) => {
-              res.status(300).send('Created with error. Needs fix.');
-            })
+            res.status(300).send(err);
           });
           return;
       }).catch((err) => {

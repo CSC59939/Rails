@@ -47,7 +47,7 @@ export default class Signup extends PureComponent {
     signup() {
         this.setState({loading: true});
         const reqData = {
-            universities: JSON.stringify(this.state.universities),
+            universities: this.state.universities,
             name: this.state.name,
             password: this.state.password,
             type: this.state.type,
