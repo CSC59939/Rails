@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
-  Layout, Icon, Button,
+  Layout,
 } from 'antd';
+import PropTypes from 'prop-types';
 import { DashboardHeader } from '..';
 
 import './Dashboard.css';
 
 const { Content } = Layout;
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,10 +28,10 @@ class Dashboard extends Component {
       loggedIn,
     } = this.state;
     return (
-      <Layout className="Container" style={{ height: '100%', }}>
+      <Layout className="Container" style={{ height: '100%' }}>
         {loggedIn && <DashboardHeader />}
-        <Layout style={{ height: '100%', }}>
-          <Content style={{ height: '100%', }}>
+        <Layout style={{ height: '100%' }}>
+          <Content style={{ height: '100%' }}>
             {children}
           </Content>
         </Layout>
