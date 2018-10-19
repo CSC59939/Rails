@@ -18,7 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "",
-    "lint": "node_modules/.bin/eslint src/ | node_modules/.bin/stylelint src/",
+    "lint": "node_modules/.bin/eslint src/ | node_modules/.bin/stylelint src/ *.css",
     "eject": "react-scripts eject"
   },
   "husky": {
