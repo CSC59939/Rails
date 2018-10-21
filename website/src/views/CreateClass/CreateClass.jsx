@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { Form, Input, Tooltip, Icon, Button, Card, Tabs, DatePicker, TimePicker, Checkbox} from 'antd';
+import { Form, Input, Tooltip, Icon, Button, Card, DatePicker, TimePicker, Checkbox, Select} from 'antd';
 import './CreateClass.css';
 
 const FormItem = Form.Item;
-const TabPane = Tabs.TabPane;
 const { RangePicker } = DatePicker;
 
 const CheckboxGroup = Checkbox.Group;
@@ -12,12 +11,42 @@ const format = 'HH:mm';
 
 export default class CreateClass extends Component
 {
+    constructor(props) {
+        super(props);
+        this.state = {
+            universities: null,
+            classname: null,
+            sectioncode: null,
+            meetingDates: null,
+            days: null,
+            times: null,
+            collegeOptions: null,
+        };
+        this.getColleges = this.getColleges.bind(this);
+    }
+
+    getColleges(collegeName) {
+        const prefix = "https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=";
+        const name = encodeURI(collegeName);
+        const suffix = "&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK";
+        fetch(prefix+name+suffix)
+        .then(res => res.json())
+        .then((result) => {
+            const schools = result.results;
+            let schoolOptions = [];
+            schools.forEach(element => {
+                schoolOptions.push(
+                <Select.Option key={element['school.name']}>
+                    {element['school.name']}
+                </Select.Option>);
+            });
+            this.setState({
+                collegeOptions: schoolOptions
+            });
+        });
+    }
 
     render() {
-    
-        // function callback(key) {
-        //     console.log(key);
-        //   }
         
         function DatesOnChange(date, dateString) {
            console.log(date, dateString);
@@ -46,13 +75,22 @@ export default class CreateClass extends Component
                 <Card
                     className="createcard"
                     title="Create Class"
-                    extra={<a href="#">Already have a class code? Join Class</a>}
-                    style={{}}>
+                    extra={<a href="/join/class">Already have a class code? Join Class</a>}
+                    >
                     <Form className="regiform">
                         <FormItem
                             {...formItemLayout}
                             label="University/College">
-                            <Input/>
+                            <Select 
+                                size="large"
+                                mode="multiple"
+                                onSearch={this.getColleges}
+                                prefix={<Icon type="bank" />} 
+                                placeholder="University"
+                                style={{width:'100%'}}
+                                onChange={(e)=> this.setState({universities: e})}>
+                                {this.state.collegeOptions}
+                            </Select>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -87,22 +125,6 @@ export default class CreateClass extends Component
                             )}>
                             <Input />
                         </FormItem>
-                        {/* <Tabs className="tab" defaultActiveKey="1" onChange={callback}>
-                            <TabPane tab="Student" key="1">
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="Student ID">
-                                    <Input/>
-                                </FormItem>
-                            </TabPane>
-                            <TabPane tab="Teacher" key="2">
-                                <FormItem
-                                    {...formItemLayout}
-                                    label="Teacher ID">
-                                    <Input/>
-                                </FormItem>
-                            </TabPane>
-                        </Tabs> */}
                         <div className="registerButton" align="center">
                             <Button margin="auto" type="primary" htmlType="submit">Create</Button>
                         </div>

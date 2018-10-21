@@ -1,5 +1,4 @@
 /* eslint-disable */
-import AOS from 'aos';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as firebase from 'firebase';
@@ -24,4 +23,3 @@ messaging.usePublicVapidKey('BLTf1ScMkukM6eMWQ3c713ZwaJ2Relaal_FWIUjiNf-ztSlDVQW
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-AOS.init();

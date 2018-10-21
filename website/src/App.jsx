@@ -10,11 +10,8 @@ class App extends PureComponent {
       <Router>
         <div style={{ width: '100%', height: '100%' }}>
           <Route exact path="/" component={Home} />
-          <Route exact path="/createclass" component={CreateClass} />
-          <Route exact path="/joinclass" component={JoinClass} />
-          {/* Example for route
-            <Route path="/...." component={ComponentName} />
-          */}
+          <Route exact path="/create/class" component={CreateClass} />
+          <Route exact path="/join/class" component={JoinClass} />
         </div>
       </Router>
     );

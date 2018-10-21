@@ -23,9 +23,13 @@
     text-align: center;
     font-weight: 100;
 }
-.joinclasscard
-{
+.joinclasscard, .request_permission{
     width: 800px;
     margin-top: 10px;
     border-radius: 15px;
+}
+.registerButton
+{
+    display: flex;
+    justify-content: center;
 }
