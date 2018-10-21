@@ -8,17 +8,18 @@ import './App.css';
 class App extends PureComponent {
   render() {
     return (
-      <Dashboard style={{ width: '100%', height: '100%', }}>
-        <Router>
-          <div style={{ height: '100%', }}>
-            <Route exact path="/" component={Home} />
-            <Route path="/sample" component={SamplePage} />
-          </div>
-          {/* Example for route
+      <Router>
+        <div style={{ height: '100%' }}>
+          <Route exact path="/" component={Home} />
+          <Route path="/sample" component={SamplePage} />
+          <Dashboard>
+            <Route path="/dashboard" component={SamplePage} />
+          </Dashboard>
+        </div>
+        {/* Example for route
             <Route path="/...." component={ComponentName} />
           */}
-        </Router>
-      </Dashboard>
+      </Router>
     );
   }
 }
