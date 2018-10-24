@@ -5,10 +5,10 @@
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Home, Signin, Signup } from './views';
 import { Dashboard } from './components';
 import './App.css';
-import 'firebase/auth';
 
 class App extends PureComponent {
   constructor(props) {
@@ -21,12 +21,12 @@ class App extends PureComponent {
   }
 
   componentDidMount() {
-    this.authStateListener();
+    if (firebase.app()) this.authStateListener();
   }
 
   componentWillUnmount() {
-    this.fireBaseListener && this.fireBaseListener();
-    this.authListener = undefined;
+    this.firebaseListener && this.firebaseListener();
+    this.authStateListener = undefined;
   }
 
   authStateListener() {
