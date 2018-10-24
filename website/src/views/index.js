@@ -1,3 +1,4 @@
 import Home from './Home/Home';
+import SamplePage from './SamplePage/SamplePage';
 
-export {Home};
+export { Home, SamplePage };
