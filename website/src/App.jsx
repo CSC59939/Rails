@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Home, SamplePage } from './views';
-import { Dashboard } from './components';
+import { Dashboard, Notification } from './components';
 import './App.css';
 
 class App extends PureComponent {
@@ -12,6 +12,7 @@ class App extends PureComponent {
         <div style={{ height: '100%' }}>
           <Route exact path="/" component={Home} />
           <Route path="/sample" component={SamplePage} />
+          <Route path="/test" component={Notification} />
           <Dashboard>
             <Route path="/dashboard" component={SamplePage} />
           </Dashboard>
