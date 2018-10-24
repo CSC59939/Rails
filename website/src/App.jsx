@@ -36,7 +36,7 @@ class App extends PureComponent {
           <Route path="/signin" component={Signin} />
           <Route path="/create/class" component={CreateClass} />
           <Route path="/join/class" component={JoinClass} />
-          <Route path="/dashboard/:trigger?" render={() => (<Dashboard />)} />
+          <Route path="/dashboard" component={null} />
           <Route path="/signout" render={this.signout} />
         </div>
       </Router>
