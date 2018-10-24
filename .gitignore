@@ -26,3 +26,4 @@ functions/rails-private-key.json
 .DS_Store
 .AppleDouble
 .LSOverride
+functions/firebase-debug.log

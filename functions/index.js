@@ -10,6 +10,8 @@ admin.initializeApp({
 });
 // ==========================================================
 
+/* eslint promise/no-nesting: 0 */
+
 exports.signup = functions.https.onRequest((req, res) => {
   /*
     input = {
@@ -26,7 +28,6 @@ exports.signup = functions.https.onRequest((req, res) => {
         reqData.email && 
         reqData.name && 
         reqData.password && 
-        reqData.universities &&
         reqData.type) {
       if (reqData.type !== 'student' && reqData.type !== 'teacher') {
         res.status(400).send({message: 'Invalid user type.'});
@@ -89,11 +90,13 @@ exports.getclass = functions.https.onRequest((req, res) => {
               instructorName: universityData.instructorName,
               approvedEmails: universityData['approved-emails'],
             };
-          };
+          }
           res.status(200).send(c);
+          return;
         } else {
           res.status(300).send({message: 'No classes exist.'})
         }
+        return;
       }).catch((getErr) => {
         res.status(400).send(getErr);
       })
@@ -142,10 +145,12 @@ exports.joinclass = functions.https.onRequest((req, res) => {
               res.status(300).send(writeErr);
               return;
             });
+            return;
           }).catch((getErr) => {
             res.status(350).send(getErr);
             return;
           });
+          return;
         }).catch((authErr) => {
           res.status(400).send(authErr);
           return;
@@ -166,7 +171,11 @@ exports.createclass = functions.https.onRequest((req, res) => {
         name: 'CSC 59939 (L)',
         instructor: firebase.auth().currentUser.uid,
         instructorName: firebase.auth().currentUser.displayName,
-        approvedEmails: ['1@email.com', '2@email.com']
+        approvedEmails: ['1@email.com', '2@email.com'],
+        meetingTimes: {
+          from: '10:00',
+          to: '13:00'
+        }
       }
     }
   */
@@ -181,14 +190,18 @@ exports.createclass = functions.https.onRequest((req, res) => {
               name: reqData.classData.name,
               instructor: reqData.classData.uid,
               instructorName: reqData.classData.displayName,
+              meetingTimes: reqData.classData.meetingTimes,
             };
             cData['approved-emails'] = reqData.classData.approvedEmails;
             admin.database().ref(`universities/${reqData.university}`).push(cData)
             .then(() => {
               res.status(200).send({message: 'Class created.'});
+              return;
             }).catch((pushErr) => {
               res.status(300).send(pushErr);
-            })
+              return;
+            });
+            return;
           }).catch((authErr) => {
             res.status(400).send({message: 'Try signing out and in again.'})
           });
@@ -204,3 +217,8 @@ exports.createclass = functions.https.onRequest((req, res) => {
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
+// curl -i -X POST -H 'Content-Type: application/json' -d "{"email":"student1@email.com","name":"Student 1 Name","password":"studentpassword","universities":["CUNY City College","CUNY York College"],"type":"student"}" http://localhost:5000/rails-students/us-central1/signup
+// curl -i -X POST -H 'Content-Type: application/json' -d "{"email":"student1@email.com","name":"Student 1 Name","password":"studentpassword","universities":["CUNY City College","CUNY York College"],"type":"student"}" http://localhost:5000/rails-students/us-central1/createclass
+// curl -i -X POST -H 'Content-Type: application/json' -d "{"email":"student1@email.com","name":"Student 1 Name","password":"studentpassword","universities":["CUNY City College","CUNY York College"],"type":"student"}" http://localhost:5000/rails-students/us-central1/getclass
+// curl -i -X POST -H 'Content-Type: application/json' -d "{"email":"student1@email.com","name":"Student 1 Name","password":"studentpassword","universities":["CUNY City College","CUNY York College"],"type":"student"}" http://localhost:5000/rails-students/us-central1/joinclass
