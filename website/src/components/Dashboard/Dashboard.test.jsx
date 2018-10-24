@@ -10,15 +10,15 @@ const { Content } = Layout;
 describe("SampleComponent", () => {
   it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
     const component = renderer.create(
-      <Dashboard children="</h1>Hello World</h1>"/>,
+      <Dashboard> <h1> Hello Word </h1></Dashboard>,
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
   });
-//   it('should contains a fake user information under the ProfileInfo tag', () => {
-//   expect(shallow(<Dashboard  children="</h1>Hello World</h1>"/>).contains(<Content style={{ height: '100%' }}>"</h1>Hello World</h1"</Content>)).toBe(true)
-// });
+  it('should contains a h1 tag with Hello World as children of Dashboard', () => {
+  expect(shallow(<Dashboard> <h1>Hello World</h1></Dashboard>).contains(<h1>Hello World</h1>)).toBe(true)
+});
   it('should have a class name called Container', () => {
-   expect(shallow(<Dashboard children="</h1>Hello World</h1>"/>).exists('.Container')).toBe(true)
+   expect(shallow(<Dashboard> <h1>Hello World</h1></Dashboard>).exists('.Container')).toBe(true)
  });
 })

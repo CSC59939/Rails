@@ -105,7 +105,10 @@ exports[`SampleComponent Expect SampleComponent to return a div with its name 1`
         }
       }
     >
-      &lt;/h1&gt;Hello World&lt;/h1&gt;
+       
+      <h1>
+         Hello Word 
+      </h1>
     </div>
   </div>
 </div>
