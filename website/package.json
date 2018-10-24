@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "regen": "react-scripts test -u",
-    "lint": "node_modules/.bin/eslint src/ | node_modules/.bin/stylelint src/ *.css",
+    "lint": "eslint src/ | stylelint src/ *.css",
     "eject": "react-scripts eject"
   },
   "husky": {

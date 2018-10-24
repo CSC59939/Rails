@@ -1,30 +1,44 @@
 .signup {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.title{
-    color: white;
-    font-size: 4.3rem;
-    margin: 0 !important;
-    margin-top: 10px !important;
-    text-align: center;
-    font-weight: 400;
+
+.title {
+  color: white;
+  font-size: 4.3rem;
+  margin: 0 !important;
+  margin-top: 10px !important;
+  text-align: center;
+  font-weight: 400;
 }
-.tag-line{
-    color: white;
-    font-size: 1.2rem;
-    margin: 0 !important;
-    margin-top: -15px !important;
-    text-align: center;
-    font-weight: 100;
+
+.tag-line {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0 !important;
+  margin-top: -15px !important;
+  text-align: center;
+  font-weight: 100;
 }
-.signup-card{
-    width: 400px;
-    margin-top: 10px !important;
-    border-radius: 15px !important;
-    filter: drop-shadow(0px 1px 2px rgba(190,190,190,0.5));
+
+.signup-card {
+  width: 400px;
+  margin-top: 10px !important;
+  border-radius: 15px !important;
+  filter: drop-shadow(0 1px 2px rgba(190, 190, 190, 0.5));
+}
+
+.user-type-radio {
+  width: 100% !important;
+  display: flex !important;
+  margin-bottom: 10px !important;
+}
+
+.user-type-radio label {
+  flex: 1;
+  text-align: center !important;
 }
