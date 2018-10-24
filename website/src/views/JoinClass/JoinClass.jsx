@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { Form, Input, Button, Card, Tabs, Select} from 'antd';
+import { Form, Input, Button, Card, Select} from 'antd';
+import axios from 'axios';
 import './JoinClass.css';
 
 const FormItem = Form.Item;
-const TabPane = Tabs.TabPane;
 
-export default class JoinClass extends Component
+class JoinClass extends Component
 {
     constructor(props) {
         super(props);
@@ -22,21 +22,32 @@ export default class JoinClass extends Component
         const prefix = "https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=";
         const name = encodeURI(collegeName);
         const suffix = "&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK";
-        fetch(prefix+name+suffix)
-        .then(res => res.json())
+        axios.get(prefix+name+suffix)
         .then((result) => {
-            const schools = result.results;
+            const schools = result.data.results;
             let schoolOptions = [];
             schools.forEach(element => {
-                schoolOptions.push(
-                <Select.Option key={element['school.name']}>
-                    {element['school.name']}
-                </Select.Option>);
+                schoolOptions.push(element['school.name'])
+                //console.log(this.state.collegeOptions)
             });
             this.setState({
                 collegeOptions: schoolOptions
             });
-        });
+        })
+        .catch(e=> {
+            console.log(e);
+        })
+    }
+
+    getSchoolOptions() {
+        let schools = this.state.collegeOptions;
+        //let schoolsObj = []
+        return schools.map(v => {
+            return (
+                <Select.Option key={v}>
+                    {v}
+                </Select.Option>)
+        })
     }
     
     render() {
@@ -46,13 +57,9 @@ export default class JoinClass extends Component
           }
         
         const formItemLayout = {
-          labelCol: {
-            xs: { span: 24 },
-            sm: { span: 9 },
-          },
           wrapperCol: {
             xs: { span: 24 },
-            sm: { span: 7 },
+            sm: { span: 24 },
           },
         };
     
@@ -68,23 +75,21 @@ export default class JoinClass extends Component
                     >
                     <Form className="regiform">
                         <FormItem
-                            {...formItemLayout}
-                            label="University/College">
+                            {...formItemLayout}>
                             <Select
                                 size="default"
-                                mode="multiple"
+                                showSearch
                                 onSearch={this.getColleges}
-                                placeholder="University"
+                                placeholder="University/College"
                                 style={{width:'100%'}}
                                 onChange={(e)=> this.setState({universities: e})}>
-                                {this.state.collegeOptions}
+                                {this.state.collegeOptions && this.getSchoolOptions()}
                             </Select>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Class and Section code">
+                            {...formItemLayout}>
                             <Select 
-                                placeholder="Ex: CSC22000 - Algorithm"
+                                placeholder="Class and Section code"
                                 mode="multiple" />
                         </FormItem>
                         <div className="registerButton">
@@ -100,24 +105,21 @@ export default class JoinClass extends Component
                     >
                     <Form className="permission_form">
                         <FormItem
-                            {...formItemLayout}
-                            label="Class and Section code">
+                            {...formItemLayout}>
                             <Select 
-                                placeholder="Ex: CSC22000 - Algorithm"
+                                placeholder="Class and Section code"
                                 mode="multiple" />
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Student ID">
+                            {...formItemLayout}>
                             <Input placeholder="Student ID #"/>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="College Email">
-                            <Input/>
+                            {...formItemLayout}>
+                            <Input placeholder="College Email"/>
                         </FormItem>
                         <div className="registerButton">
-                            <Button margin="auto" type="primary" htmlType="submit">Join</Button>
+                            <Button margin="auto" type="primary" htmlType="submit">Request</Button>
                         </div>
                     </Form>
                 </Card>
@@ -125,3 +127,4 @@ export default class JoinClass extends Component
         );
     }
 }
+export default JoinClass;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Form, Input, Tooltip, Icon, Button, Card, DatePicker, TimePicker, Checkbox, Select} from 'antd';
+import axios from 'axios';
 import './CreateClass.css';
 
 const FormItem = Form.Item;
@@ -9,7 +10,7 @@ const CheckboxGroup = Checkbox.Group;
 const plainOptions = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const format = 'HH:mm';
 
-export default class CreateClass extends Component
+class CreateClass extends Component
 {
     constructor(props) {
         super(props);
@@ -29,21 +30,29 @@ export default class CreateClass extends Component
         const prefix = "https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=";
         const name = encodeURI(collegeName);
         const suffix = "&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK";
-        fetch(prefix+name+suffix)
-        .then(res => res.json())
+        axios.get(prefix+name+suffix)
         .then((result) => {
-            const schools = result.results;
+            const schools = result.data.results;
             let schoolOptions = [];
             schools.forEach(element => {
-                schoolOptions.push(
-                <Select.Option key={element['school.name']}>
-                    {element['school.name']}
-                </Select.Option>);
+                schoolOptions.push(element['school.name'])
+                //console.log(this.state.collegeOptions)
             });
             this.setState({
                 collegeOptions: schoolOptions
             });
         });
+    }
+
+    getSchoolOptions() {
+        let schools = this.state.collegeOptions;
+        //let schoolsObj = []
+        return schools.map(v => {
+            return (
+                <Select.Option key={v}>
+                    {v}
+                </Select.Option>)
+        })
     }
 
     render() {
@@ -82,14 +91,14 @@ export default class CreateClass extends Component
                             {...formItemLayout}
                             label="University/College">
                             <Select 
-                                size="large"
-                                mode="multiple"
+                                showSearch
+                                size="default"
                                 onSearch={this.getColleges}
                                 prefix={<Icon type="bank" />} 
                                 placeholder="University"
                                 style={{width:'100%'}}
                                 onChange={(e)=> this.setState({universities: e})}>
-                                {this.state.collegeOptions}
+                                {this.state.collegeOptions && this.getSchoolOptions()}
                             </Select>
                         </FormItem>
                         <FormItem
@@ -134,3 +143,4 @@ export default class CreateClass extends Component
         );
     }
 }
+export default CreateClass;

@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "3.10.0",
     "aos": "^3.0.0-beta.6",
+    "axios": "^0.18.0",
     "firebase": "5.5.4",
     "react": "16.5.2",
     "react-big-calendar": "0.20.1",
