@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Form, Input, Button, Card, Select} from 'antd';
-import axios from 'axios';
 import './JoinClass.css';
 
 const FormItem = Form.Item;
@@ -22,13 +21,13 @@ class JoinClass extends Component
         const prefix = "https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=";
         const name = encodeURI(collegeName);
         const suffix = "&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK";
-        axios.get(prefix+name+suffix)
+        fetch(prefix+name+suffix)
+        .then(res => res.json())
         .then((result) => {
             const schools = result.data.results;
             let schoolOptions = [];
             schools.forEach(element => {
                 schoolOptions.push(element['school.name'])
-                //console.log(this.state.collegeOptions)
             });
             this.setState({
                 collegeOptions: schoolOptions
@@ -51,10 +50,6 @@ class JoinClass extends Component
     }
     
     render() {
-    
-        function callback(key) {
-            console.log(key);
-          }
         
         const formItemLayout = {
           wrapperCol: {
@@ -67,7 +62,6 @@ class JoinClass extends Component
             
             <div className="join">
                 <h1 className="title">Rails</h1>
-                <h5 className="tag-line">Keep students on track</h5>
                 <Card
                     className="joinclasscard"
                     title="Join Class"

@@ -1,6 +1,6 @@
 .join {
   width: 100%;
-  height: 100%;
+  height: 115%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +12,6 @@
   color: white;
   font-size: 3.8rem;
   margin-top: 20px !important;
-  padding: 60px;
   text-align: center;
   font-weight: 400;
 }
@@ -29,6 +28,7 @@
 .joinclasscard,
 .request_permission {
   width: 500px;
+  border-radius: 15px !important;
 }
 
 .registerButton {

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Form, Input, Tooltip, Icon, Button, Card, DatePicker, TimePicker, Checkbox, Select} from 'antd';
-import axios from 'axios';
 import './CreateClass.css';
 
 const FormItem = Form.Item;
@@ -30,13 +29,13 @@ class CreateClass extends Component
         const prefix = "https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=";
         const name = encodeURI(collegeName);
         const suffix = "&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK";
-        axios.get(prefix+name+suffix)
+        fetch(prefix+name+suffix)
+        .then(res => res.json())
         .then((result) => {
-            const schools = result.data.results;
+            const schools = result.results;
             let schoolOptions = [];
             schools.forEach(element => {
                 schoolOptions.push(element['school.name'])
-                //console.log(this.state.collegeOptions)
             });
             this.setState({
                 collegeOptions: schoolOptions
@@ -68,11 +67,7 @@ class CreateClass extends Component
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
-            sm: { span: 9 },
-          },
-          wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 9 },
+            sm: { span: 24 },
           },
         };
     
@@ -80,7 +75,6 @@ class CreateClass extends Component
             
             <div className="create">
                 <h1 className="title">Rails</h1>
-                <h5 className="tag-line">Keep students on track</h5>
                 <Card
                     className="createcard"
                     title="Create Class"
@@ -88,51 +82,47 @@ class CreateClass extends Component
                     >
                     <Form className="regiform">
                         <FormItem
-                            {...formItemLayout}
-                            label="University/College">
+                            {...formItemLayout}>
                             <Select 
                                 showSearch
                                 size="default"
                                 onSearch={this.getColleges}
                                 prefix={<Icon type="bank" />} 
-                                placeholder="University"
+                                placeholder="University/College"
                                 style={{width:'100%'}}
                                 onChange={(e)=> this.setState({universities: e})}>
                                 {this.state.collegeOptions && this.getSchoolOptions()}
                             </Select>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Class Name">
-                            <Input/>
+                            {...formItemLayout}>
+                            <Input placeholder="Class Name"/>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Section code">
-                            <Input />
+                            {...formItemLayout}>
+                            <Input placeholder="Section code"/>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Meeting Dates">
+                            {...formItemLayout}>
+                            <span>
+                                Meeting Dates&nbsp;
+                            </span>
                             <RangePicker onChange={DatesOnChange} />
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label="Days & Times">
+                            {...formItemLayout}>
+                            <span>
+                                Days & Times&nbsp;
+                            </span>
                             <CheckboxGroup options={plainOptions}/>
                             <TimePicker format={format} onChange={TimeOnChange}/>
                         </FormItem>
                         <FormItem
-                            {...formItemLayout}
-                            label={(
-                                <span>
-                                Email Address&nbsp;
-                                <Tooltip title="please make sure you're using the pre-approved E-mail address">
+                            {...formItemLayout}>
+                            <Tooltip title="please make sure you're using the pre-approved E-mail address">
                                     <Icon type="question-circle-o" />
                                 </Tooltip>
-                                </span>
-                            )}>
-                            <Input />
+                            <Input placeholder="Email"/>
                         </FormItem>
                         <div className="registerButton" align="center">
                             <Button margin="auto" type="primary" htmlType="submit">Create</Button>
