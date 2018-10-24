@@ -1,57 +1,46 @@
-/* eslint-disable react/prefer-stateless-function */
-/* eslint linebreak-style: ["error", "windows"] */
-/* eslint no-unused-expressions: 0 */
-
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import PropTypes from 'prop-types';
 import { Home, Signin, Signup } from './views';
 import { Dashboard } from './components';
 import './App.css';
+import withFirebase from './utils/firebase/firebase';
 
 class App extends PureComponent {
+  static propTypes = {
+    signoutHandler: PropTypes.func,
+  }
+
+  static defaultProps = {
+    signoutHandler: console.log('No signout handler inputted'),
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      signedin: false,
-    };
-    this.firebaseListener = null;
-    this.authStateListener = this.authStateListener.bind(this);
+    this.signout = this.signout.bind(this);
   }
 
-  componentDidMount() {
-    if (firebase.app()) this.authStateListener();
-  }
 
-  componentWillUnmount() {
-    this.firebaseListener && this.firebaseListener();
-    this.authStateListener = undefined;
-  }
-
-  authStateListener() {
-    this.firebaseListener = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ signedin: true });
-      } else {
-        this.setState({ signedin: false });
-      }
-    });
+  signout() {
+    const { signoutHandler } = this.props;
+    signoutHandler();
+    return <Redirect to="/" />;
   }
 
   render() {
-    const { signedin } = this.state;
     return (
       <Router>
         <div style={{ height: '100%' }}>
           <Route exact path="/" component={Home} />
           <Route path="/signup/:type?" component={Signup} />
           <Route path="/signin" component={Signin} />
-          <Route path="/dashboard/:trigger?" component={signedin ? Dashboard : <Redirect to="/" />} />
+          <Route path="/dashboard/:trigger?" render={() => (<Dashboard />)} />
+          <Route path="/signout" render={this.signout} />
         </div>
       </Router>
     );
   }
 }
 
-export default App;
+const WrappedApp = withFirebase(App);
+export default WrappedApp;
