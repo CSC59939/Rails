@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SampleComponent Expect SampleComponent to return a div with its name 1`] = `
+<div
+  className="Header ant-layout-header"
+>
+  <div
+    className="ProfileInfo"
+  >
+    <i
+      className="ProfileImage material-icons"
+      style={null}
+    >
+      person
+    </i>
+    <div
+      className="rightSide"
+    >
+      <p
+        className="name"
+      >
+        User Name
+      </p>
+      <p
+        className="email"
+      >
+        jdoe@gmail.com
+      </p>
+    </div>
+  </div>
+  <div
+    className="HeaderIcons"
+  >
+    <button
+      className="IconButton"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="material-icons"
+        style={null}
+      >
+        add_circle
+      </i>
+    </button>
+    <button
+      className="IconButton"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="material-icons"
+        style={null}
+      >
+        add_alert
+      </i>
+    </button>
+    <button
+      className="IconButton"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="material-icons"
+        style={null}
+      >
+        notifications_active
+      </i>
+    </button>
+    <button
+      className="IconButton"
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        className="material-icons"
+        style={null}
+      >
+        settings
+      </i>
+    </button>
+  </div>
+</div>
+`;

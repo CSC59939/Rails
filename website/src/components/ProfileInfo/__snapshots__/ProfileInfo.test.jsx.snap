@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SampleComponent Expect SampleComponent to return a div with its name 1`] = `
+<div
+  className="ProfileInfo"
+>
+  <i
+    className="ProfileImage material-icons"
+    style={null}
+  >
+    person
+  </i>
+  <div
+    className="rightSide"
+  >
+    <p
+      className="name"
+    >
+      User
+    </p>
+    <p
+      className="email"
+    >
+      User@gmail.com
+    </p>
+  </div>
+</div>
+`;
