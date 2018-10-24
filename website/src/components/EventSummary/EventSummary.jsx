@@ -4,20 +4,26 @@ import './EventSummary.css';
 
 class EventSummary extends PureComponent {
   static propTypes = {
-    classs: PropTypes.string.isRequired,
+    course: PropTypes.string.isRequired,
     eventName: PropTypes.string.isRequired,
     dueDate: PropTypes.string.isRequired,
+    color: PropTypes.string,
+  }
+
+  static defaultProps = {
+    color: 'red',
   }
 
   render() {
     const {
-      classs,
+      course,
       eventName,
       dueDate,
+      color,
     } = this.props;
     return (
-      <div>
-        <span className="classStyle">{classs}</span>
+      <div style={{ borderColor: color, color }} className="EventSummary">
+        <span className="course">{course}</span>
         <span className="eventName">{eventName}</span>
         <span className="dueDate">{dueDate}</span>
       </div>
