@@ -1,5 +1,6 @@
 import Home from './Home/Home';
-import SamplePage from './SamplePage/SamplePage';
 import DashboardHome from './DashboardHome/DashboardHome';
+import Signin from './Signin/Signin';
+import Signup from './Signup/Signup';
 
-export { Home, SamplePage, DashboardHome };
+export { Home, Signin, Signup, DashboardHome };

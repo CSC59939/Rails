@@ -7,8 +7,17 @@ import IconButton from './IconButton/IconButton';
 import SampleComponent from './SampleComponent/SampleComponent';
 import EventSummary from './EventSummary/EventSummary';
 import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
+import Notification from './Notification/Notification';
 
 export {
-  Dashboard, ProfileInfo, DashboardHeader, HeaderIcons, IconButton, MaterialIcon,
-  SampleComponent, EventSummary, EventSummaryCollection,
-}; // eslint-disable-line import/prefer-default-export
+  Dashboard,
+  ProfileInfo,
+  DashboardHeader,
+  HeaderIcons,
+  IconButton,
+  MaterialIcon,
+  SampleComponent,
+  Notification,
+  EventSummary,
+  EventSummaryCollection
+};
