@@ -24,12 +24,15 @@ Our development team is making use of various pre-built libraries to help us foc
 |------|--------|
 |Customer|Ayushya Amitabh|
 |Tracker|Ka Shing Wai|
-|Presenter||
+|Presenter|Ka Shing Wai|
 |Code Reviewer|Weicheng Huang|
 |Unit Tester|Yu Hao Liu|
-|Continuous Integrator and Deploy-er||
+|Continuous Integrator and Deploy-er|Mohamed Khelif|
 |Designer|Mohamed Khelif|
 |Documenter|Tobias He|
 
 #### Environment Setup
 _Please read the [GETTING_STARTED.md](./GETTING_STARTED.md)_
+
+#### API Documentation
+_API Documentation can be found in the functions folder [functions/API_DOCS.md](./functions/APIDOCS.md)_

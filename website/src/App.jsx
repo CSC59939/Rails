@@ -1,21 +1,46 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { PureComponent } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Home, CreateClass, JoinClass } from './views';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Home, Signin, Signup } from './views';
+import { Dashboard } from './components';
 import './App.css';
+import withFirebase from './utils/firebase/firebase';
 
 class App extends PureComponent {
+  static propTypes = {
+    signoutHandler: PropTypes.func,
+  }
+
+  static defaultProps = {
+    signoutHandler: console.log('No signout handler inputted'),
+  }
+
+  constructor(props) {
+    super(props);
+    this.signout = this.signout.bind(this);
+  }
+
+
+  signout() {
+    const { signoutHandler } = this.props;
+    signoutHandler();
+    return <Redirect to="/" />;
+  }
+
   render() {
     return (
       <Router>
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ height: '100%' }}>
           <Route exact path="/" component={Home} />
-          <Route exact path="/create/class" component={CreateClass} />
-          <Route exact path="/join/class" component={JoinClass} />
+          <Route path="/signup/:type?" component={Signup} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/dashboard/:trigger?" render={() => (<Dashboard />)} />
+          <Route path="/signout" render={this.signout} />
         </div>
       </Router>
     );
   }
 }
 
-export default App;
+const FirebaseApp = withFirebase(App);
+export { App, FirebaseApp };

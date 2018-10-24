@@ -1,5 +1,5 @@
 import Home from './Home/Home';
-import CreateClass from './CreateClass/CreateClass';
-import JoinClass from './JoinClass/JoinClass';
+import Signin from './Signin/Signin';
+import Signup from './Signup/Signup';
 
-export { Home, CreateClass, JoinClass };
+export { Home, Signin, Signup };

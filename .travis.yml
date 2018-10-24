@@ -1,0 +1,10 @@
+
+language: node_js
+node_js:
+  - "10"
+
+script:
+  - cd website
+  - npm install
+  - npm run lint
+  - npm test
