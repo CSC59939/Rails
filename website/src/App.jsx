@@ -1,7 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Home, SamplePage } from './views';
+import { Home, SamplePage, DashboardHome } from './views';
 import { Dashboard } from './components';
 import './App.css';
 
@@ -13,7 +13,7 @@ class App extends PureComponent {
           <Route exact path="/" component={Home} />
           <Route path="/sample" component={SamplePage} />
           <Dashboard>
-            <Route path="/dashboard" component={SamplePage} />
+            <Route path="/dashboard" component={DashboardHome} />
           </Dashboard>
         </div>
         {/* Example for route
