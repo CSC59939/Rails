@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Drawer, Button, Card } from 'antd';
+import PropTypes from 'prop-types';
+class Notification extends PureComponent {
+  static propTypes = {
+    notificationVisible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
+  }
 
-class Notification extends React.Component {
-  state = { visible: false };
-
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
+  static defaultProps = {
+    onClose: () => console.log("no close function passed")
+  }
   render() {
     const notificationArray = [
       {
@@ -27,18 +21,19 @@ class Notification extends React.Component {
         message: 'Message 2',
       },
     ];
+
+    const {
+      notificationVisible,
+      onClose
+    } = this.props;
     return (
-      <div>
-        <Button type="primary" onClick={this.showDrawer}>
-          Open
-        </Button>
         <Drawer
           title="Notifications"
           placement="right"
           width="500"
-          closable={false}
-          onClose={this.onClose}
-          visible={this.state.visible}
+          closable={true}
+          onClose={onClose}
+          visible={notificationVisible}
         >
           {notificationArray.map(data => (
             <Card title={data.title} style={{ marginBottom: 25, borderRadius: 30, width: 350 }}>
@@ -46,7 +41,6 @@ class Notification extends React.Component {
             </Card>
           ))}
         </Drawer>
-      </div>
     );
   }
 }
