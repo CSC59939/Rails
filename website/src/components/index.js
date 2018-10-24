@@ -16,4 +16,4 @@ export {
   MaterialIcon,
   SampleComponent,
   Notification,
-}; // eslint-disable-line import/prefer-default-export
+};
