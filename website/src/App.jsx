@@ -42,5 +42,5 @@ class App extends PureComponent {
   }
 }
 
-const WrappedApp = withFirebase(App);
-export default WrappedApp;
+const FirebaseApp = withFirebase(App);
+export { App, FirebaseApp };

@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase/app';
 import 'firebase/messaging';
-import App from './App';
+import {FirebaseApp} from './App';
 import * as serviceWorker from './serviceWorker';
 import './Google-Sans/stylesheet.css';
 
@@ -21,7 +21,7 @@ const messaging = firebase.messaging();
 messaging.usePublicVapidKey('BLTf1ScMkukM6eMWQ3c713ZwaJ2Relaal_FWIUjiNf-ztSlDVQWYi44HnOxK05ToNE9dHOABd7K0Yv7OfsC2ILA');
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<FirebaseApp />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
