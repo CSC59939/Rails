@@ -32,9 +32,8 @@ class App extends PureComponent {
       <Router>
         <div style={{ height: '100%' }}>
           <Route exact path="/" component={Home} />
-          <Route path="/sample" component={SamplePage} />
           <Dashboard>
-            <Route path="/dashboard" component={SamplePage} />
+            <Route path="/dashboard" component={null} />
           </Dashboard>
         </div>
       </Router>
