@@ -8,12 +8,8 @@ configure({ adapter: new Adapter() });
 const { Content } = Layout;
 
 describe("SampleComponent", () => {
-  it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
-    const component = renderer.create(
-      <Dashboard> <h1> Hello Word </h1></Dashboard>,
-    );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+  it('Should render the page wtihout any error', () => { // eslint-disable-line no-undef
+    expect(renderer.create(<Dashboard> <h1> Hello Word </h1></Dashboard>).toJSON()).toMatchSnapshot();
   });
   it('should contains a h1 tag with Hello World as children of Dashboard', () => {
   expect(shallow(<Dashboard> <h1>Hello World</h1></Dashboard>).contains(<h1>Hello World</h1>)).toBe(true)

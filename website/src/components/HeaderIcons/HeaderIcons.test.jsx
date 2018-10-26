@@ -13,14 +13,11 @@ const sampleFunction = () => {
 }
 describe("SampleComponent", () => {
   it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
-    const component = renderer.create(
-      <HeaderIcons />,
-    );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+    expect(renderer.create(<HeaderIcons />).toJSON()).toMatchSnapshot();
   });
 //   it('should contains a IconButton tag with a onclick function which returns Button Circle Clicked', () => {
-//   expect(shallow(<HeaderIcons  />).contains(<IconButton type="add_circle" onClick={() => console.log('Button Circle Clicked')} />)).toBe(true)
+//     const wrapper = shallow(<HeaderIcons/>);
+//     wrapper.find('.add_circle').simulate('click'); // this is the fucntion for simulate the onclick function, but it only runs single node.
 // });
   it('should have a class name called IconButton', () => {
    expect(shallow(<HeaderIcons />).exists('.HeaderIcons')).toBe(true)

@@ -1,5 +1,4 @@
-import { DashboardHeader } from '..';
-import { ProfileInfo } from '..';
+import { DashboardHeader, ProfileInfo } from '..';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { shallow, mount, render, configure} from 'enzyme';
@@ -9,12 +8,8 @@ import { Button, Card, Icon } from 'antd';
 configure({ adapter: new Adapter() });
 
 describe("SampleComponent", () => {
-  it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
-    const component = renderer.create(
-      <DashboardHeader />,
-    );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+  it('Should render the page without any error', () => { // eslint-disable-line no-undef
+    expect(renderer.create(<DashboardHeader />).toJSON()).toMatchSnapshot();
   });
   it('should contains a fake user information under the ProfileInfo tag', () => {
   expect(shallow(<DashboardHeader  />).contains(<ProfileInfo name="User Name" email="jdoe@gmail.com" />)).toBe(true)
