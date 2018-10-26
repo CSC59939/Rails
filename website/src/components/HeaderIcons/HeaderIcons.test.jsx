@@ -15,10 +15,6 @@ describe("SampleComponent", () => {
   it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
     expect(renderer.create(<HeaderIcons />).toJSON()).toMatchSnapshot();
   });
-//   it('should contains a IconButton tag with a onclick function which returns Button Circle Clicked', () => {
-//     const wrapper = shallow(<HeaderIcons/>);
-//     wrapper.find('.add_circle').simulate('click'); // this is the fucntion for simulate the onclick function, but it only runs single node.
-// });
   it('should have a class name called IconButton', () => {
    expect(shallow(<HeaderIcons />).exists('.HeaderIcons')).toBe(true)
  });
