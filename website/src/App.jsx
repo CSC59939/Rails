@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {
   Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound,
 } from './views';
-import { Dashboard } from './components';
+import { Dashboard, ProtectedRoute } from './components';
 import './App.css';
 import withFirebase from './utils/firebase/firebase';
 
@@ -44,8 +44,8 @@ class App extends PureComponent {
             <Route exact path="/" component={Home} />
             <Route path="/signup/:type?" component={Signup} />
             <Route path="/signin" component={Signin} />
-            <Route path="/create/class" component={CreateClass} />
-            <Route path="/join/class" component={JoinClass} />
+            <ProtectedRoute isAllowed={signedin} path="/create/class" component={CreateClass} />
+            <ProtectedRoute isAllowed={signedin} path="/join/class" component={JoinClass} />
             <Route path="/signout" render={this.signout} />
             {signedin ? (
               <Dashboard>

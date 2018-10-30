@@ -8,6 +8,7 @@ import SampleComponent from './SampleComponent/SampleComponent';
 import EventSummary from './EventSummary/EventSummary';
 import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
 import Notification from './Notification/Notification';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 export {
   Dashboard,
@@ -19,5 +20,6 @@ export {
   SampleComponent,
   Notification,
   EventSummary,
-  EventSummaryCollection
+  EventSummaryCollection,
+  ProtectedRoute,
 };
