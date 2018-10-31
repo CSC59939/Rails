@@ -37,23 +37,23 @@ class App extends PureComponent {
     const {
       signedin,
     } = this.props;
+    console.log(`signedin ${signedin}${new Date().valueOf()}`);
+
     return (
       <Router>
         <div style={{ height: '100%' }}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/signup/:type?" component={Signup} />
-            <Route path="/signin" component={Signin} />
-            <ProtectedRoute isAllowed={signedin} path="/create/class" component={CreateClass} />
-            <ProtectedRoute isAllowed={signedin} path="/join/class" component={JoinClass} />
-            <Route path="/signout" render={this.signout} />
-            {signedin ? (
-              <Dashboard>
-                <Route path="/dashboard" component={DashboardHome} />
-              </Dashboard>
-            ) : null}
-            <Route component={NotFound} />
-          </Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/signup/:type?" component={Signup} />
+          <Route path="/signin" component={Signin} />
+          <ProtectedRoute isAllowed={signedin} path="/create/class" component={CreateClass} />
+          <ProtectedRoute isAllowed={signedin} path="/join/class" component={JoinClass} />
+          <Route path="/signout" render={this.signout} />
+          {signedin ? (
+            <Dashboard>
+              <Route path="/dashboard" component={DashboardHome} />
+            </Dashboard>
+          ) : null}
+          <Route component={NotFound} />
         </div>
       </Router>
     );
