@@ -15,10 +15,8 @@ describe('Home Page', () => {
   expect(shallow(<Home />).contains(<h1 className="title">Rails</h1>)).toBe(true)
  })
  it('should contains a button with classname home-button and link to signup', () => {
- expect(shallow(<Home />).contains(    <Button className="home-button" href="/signup">
-                 Get Started
-       <Icon type="right-circle" theme="filled" />
-     </Button>)).toBe(true)
+   const component = <Button className="home-button" href="/signup">Get Started<Icon type="right-circle" theme="filled" /></Button>
+ expect(shallow(<Home />).contains(component)).toBe(true)
 })
  it('should have a class name home-button', () => {
   expect(shallow(<Home />).exists('.home-button')).toBe(true)
