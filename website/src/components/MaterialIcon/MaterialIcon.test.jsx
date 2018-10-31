@@ -14,11 +14,7 @@ describe("MaterialIcon", () => {
   });
 
   it('Expect MaterialIcon to return an icon with a settings cog with a custom class', () => { // eslint-disable-line no-undef
-    const component = renderer.create(
-      <MaterialIcon className="customClassnpm" type="settings" />,
-    );
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+    expect(renderer.create(<MaterialIcon className="customClassnpm" type="settings" />).toJSON()).toMatchSnapshot();
   });
   it('should contains a i tag with corresponding classname and type with text type argument(settings)', () => {
   expect(shallow(<MaterialIcon className="customClassnpm" type="settings" />).contains(<i style={null} className="customClassnpm material-icons">settings</i>)).toBe(true)
