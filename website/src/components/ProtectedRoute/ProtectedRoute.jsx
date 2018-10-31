@@ -26,7 +26,6 @@ class ProtectedRoute extends Component {
     const {
       isAllowed,
     } = this.props;
-    console.log(`Recieved Props${new Date().valueOf()} ${isAllowed}`);
     if (isAllowed !== prevProps.isAllowed) {
       this.setState({ hasRecievedUpdatedProps: true });
     }
