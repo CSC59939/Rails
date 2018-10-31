@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { Delayed } from '..';
 import PropTypes from 'prop-types';
 // const ProtectedRoute = ({ isAllowed, ...props }) => (isAllowed
 //   ? <Route {...props} />
 //   : <Redirect to="/signin" />);
 
-class ProtectedRoute extends PureComponent {
+class ProtectedRoute extends Component {
   static propTypes = {
     isAllowed: PropTypes.bool,
   }
@@ -25,6 +26,7 @@ class ProtectedRoute extends PureComponent {
     const {
       isAllowed,
     } = this.props;
+    console.log(`Recieved Props${new Date().valueOf()} ${isAllowed}`);
     if (isAllowed !== prevProps.isAllowed) {
       this.setState({ hasRecievedUpdatedProps: true });
     }
@@ -39,12 +41,19 @@ class ProtectedRoute extends PureComponent {
       hasRecievedUpdatedProps,
     } = this.state;
 
+    if (hasRecievedUpdatedProps) {
+      return (
+        <Fragment>
+          {isAllowed
+            ? <Route {...props} />
+            : <Redirect to="/signin" />}
+        </Fragment>
+      );
+    }
     return (
-      <React.Fragment>
-        {hasRecievedUpdatedProps ? isAllowed
-          ? <Route {...props} />
-          : <Redirect to="/signin" /> : null}
-      </React.Fragment>
+      <Delayed waitBeforeShow={300}>
+        <Redirect to="/signin" />
+      </Delayed>
     );
   }
 }

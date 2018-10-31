@@ -9,6 +9,7 @@ import EventSummary from './EventSummary/EventSummary';
 import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
 import Notification from './Notification/Notification';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import Delayed from './Delayed/Delayed';
 
 export {
   Dashboard,
@@ -22,4 +23,5 @@ export {
   EventSummary,
   EventSummaryCollection,
   ProtectedRoute,
+  Delayed,
 };
