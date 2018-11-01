@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Delayed } from '..';
 import PropTypes from 'prop-types';
+
 // const ProtectedRoute = ({ isAllowed, ...props }) => (isAllowed
 //   ? <Route {...props} />
 //   : <Redirect to="/signin" />);
@@ -50,7 +51,7 @@ class ProtectedRoute extends Component {
       );
     }
     return (
-      <Delayed waitBeforeShow={300}>
+      <Delayed waitBeforeShow={200}>
         <Redirect to="/signin" />
       </Delayed>
     );

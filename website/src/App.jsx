@@ -3,10 +3,11 @@ import {
   BrowserRouter as Router, Route, Redirect, Switch,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Transition from 'react-transition-group/Transition';
 import {
   Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound,
 } from './views';
-import { Dashboard, ProtectedRoute } from './components';
+import { Dashboard, ProtectedRoute, Delayed } from './components';
 import './App.css';
 import withFirebase from './utils/firebase/firebase';
 
@@ -37,7 +38,6 @@ class App extends PureComponent {
     const {
       signedin,
     } = this.props;
-    console.log(`signedin ${signedin} ${new Date().valueOf()}`);
 
     return (
       <Router>
