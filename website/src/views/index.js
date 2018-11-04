@@ -5,7 +5,8 @@ import Signup from './Signup/Signup';
 import JoinClass from './JoinClass/JoinClass';
 import CreateClass from './CreateClass/CreateClass';
 import NotFound from './NotFound/NotFound';
+import DashboardRouter from './Dashboard/DashboardRouter';
 
 export {
-  Home, Signin, Signup, JoinClass, CreateClass, DashboardHome, NotFound,
+  Home, Signin, Signup, JoinClass, CreateClass, DashboardHome, NotFound, DashboardRouter,
 };

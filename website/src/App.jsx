@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import {
-  Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound,
+  Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound, DashboardRouter,
 } from './views';
 import { Dashboard, ProtectedRoute, Delayed } from './components';
 import './App.css';
@@ -27,7 +27,6 @@ class App extends PureComponent {
     this.signout = this.signout.bind(this);
   }
 
-
   signout() {
     const { signoutHandler } = this.props;
     signoutHandler();
@@ -48,12 +47,13 @@ class App extends PureComponent {
             <Route path="/signin" component={Signin} />
             <ProtectedRoute isAllowed={signedin} path="/create/class" component={CreateClass} />
             <ProtectedRoute isAllowed={signedin} path="/join/class" component={JoinClass} />
+            <ProtectedRoute isAllowed={signedin} path="/dashboard/:optional?" component={DashboardRouter} />
             <Route path="/signout" render={this.signout} />
-            {signedin ? (
+            {/* {signedin ? (
               <Dashboard>
                 <Route path="/dashboard" component={DashboardHome} />
               </Dashboard>
-            ) : null}
+            ) : null} */}
             <Route component={NotFound} />
           </Switch>
         </div>
