@@ -22,7 +22,7 @@ exports.signup = functions.https.onRequest((req, res) => {
   function addToDatabase(uid, type) {
     admin.database().ref(`users/${uid}`).set({type: type})
     .then(()=> {
-      res.status(200).send({message: 'Signed up successfully'});
+      return res.status(200).send({message: 'Signed up successfully'});
     }).catch((err) => {
       res.status(400).send({message: 'Something went wrong.', error: err});
     });
@@ -39,6 +39,8 @@ exports.signup = functions.https.onRequest((req, res) => {
       }).then((user) => {
         if (user) {
           return addToDatabase(user.uid, type);
+        } else {
+          return res.status(400).send({message: 'User created, but couldn\'t be fetched.'});
         }
       }).catch((err) => {
         res.status(400).send({message: 'Something went wrong.', error: err});
@@ -80,9 +82,9 @@ exports.getclasses = functions.https.onRequest((req, res) => {
             const { approvedEmails, description, instructorName, meetingTimes, name } = uniData[key];
             processedData[key] = {approvedEmails, description, instructorName, meetingTimes, name};
           });
-          res.status(200).send({message: 'Classes found.', classList: processedData});
+          return res.status(200).send({message: 'Classes found.', classList: processedData});
         } else {
-          res.status(300).send({message: `No classes found for ${universityName}`});
+          return res.status(300).send({message: `No classes found for ${universityName}`});
         }
       }).catch((err) => {
         res.status(400).send({message: 'Something went wrong', error: err});
@@ -109,7 +111,7 @@ exports.joinclass = functions.https.onRequest((req, res) => {
     admin.database().ref(`users/${studentData.uid}/universities/${universityName}`)
     .set(classList)
     .then(()=>{
-      res.status(200).send({message: 'Successfully joined class.'});
+      return res.status(200).send({message: 'Successfully joined class.'});
     })
     .catch((err) => {
       res.status(400).send({message: 'Something went wrong updating student profile.', error: err});
@@ -150,10 +152,10 @@ exports.joinclass = functions.https.onRequest((req, res) => {
           if (classData.approvedEmails.indexOf(studentData.email) !== -1) {
             return addToStudentProfile(req.body);
           } else {
-            res.status(400).send({message: 'Not pre-approved for this class.'});
+            return res.status(400).send({message: 'Not pre-approved for this class.'});
           }
         } else {
-          res.status(400).send({message: 'Class is no longer available'});
+          return res.status(400).send({message: 'Class is no longer available'});
         }
       })
       .catch((err) => {
@@ -165,29 +167,39 @@ exports.joinclass = functions.https.onRequest((req, res) => {
 
 exports.createclass = functions.https.onRequest((req, res) => {
   /*
-    input = {
-      uid: user uid,
-      universityName: 'College Name',
-      classData: {
-        name: 'CSC 59939 (L)',
-        description: 'Topics in Software Engineering',
-        instructor: firebase.auth().currentUser.uid,
-        approvedEmails: ['1@email.com', '2@email.com'],
-        meetingTimes: {
-          from: '10:00',
-          to: '13:00'
-        }
-      }
+{
+  "uid": "XCRZgzLysNOaI9pN8neyU5AQxiT2",
+  "universityName": "CUNY City College",
+  "classData": {
+    "name": "CSC 59939 (L)",
+    "description": "Topics in Software Engineering",
+    "instructorUid": "XCRZgzLysNOaI9pN8neyU5AQxiT2",
+    "instructorName": "Full Test Name",
+    "approvedEmails": ["1@email.com", "2@email.com"],
+    "meetingTimes": {
+      "from": "18:30",
+      "to": "21:00"
+    },
+    "meetingDays" : {
+        "Monday": "false",
+        "Tuesday": "false",
+        "Wednesday": "true",
+        "Thursday": "false",
+        "Friday": "false",
+        "Saturday": "false",
+        "Sunday": "false"
     }
+  }
+}
   */
   function setTeacherProfile(query, classList) {
     const { uid, universityName, classData } = query;
     admin.database().ref(`users/${uid}/universities/${universityName}`)
     .set(classList)
     .then(()=>{
-      res.status(200).send({message: `Created class ${classData.name}`});
+      return res.status(200).send({message: `Created class ${classData.name}`});
     }).catch((err)=>{
-      res.status(400).send({message: 'Something went wrong updating teacher profile.', error: err});
+      return res.status(400).send({message: 'Something went wrong updating teacher profile.', error: err});
     });
   }
 
@@ -221,7 +233,7 @@ exports.createclass = functions.https.onRequest((req, res) => {
 
   return cors(req, res, () => {
     const { uid, universityName, classData } = req.body;
-    if (!(uid && universityName && classData)) {
+    if (!(uid && universityName && classData && classData.name && classData.description && classData.instructorName && classData.instructorUid && classData.meetingTimes && classData.meetingDays)) {
       res.status(400).send({message: 'Missing fields'});
     } else {
       admin.database().ref(`users/${uid}/type`)
@@ -231,9 +243,9 @@ exports.createclass = functions.https.onRequest((req, res) => {
         if (type && (type === 'teacher')) {
           return createClass(req.body);
         } else if (type && (type === 'student')) {
-          res.status(400).send({message: 'Not authorized to create class'});
+          return res.status(400).send({message: 'Not authorized to create class'});
         } else {
-          res.status(400).send({message: 'Can\'t authorize user.'});
+          return res.status(400).send({message: 'Can\'t authorize user.'});
         }
       }).catch((err)=>{
         res.status(400).send({message: 'Something went wrong.', error: err});
@@ -243,28 +255,34 @@ exports.createclass = functions.https.onRequest((req, res) => {
 });
 
 exports.requestclass = functions.https.onRequest((req, res) => {
-
+  /*
+    input = {
+      universityName: 'CUNY City College',
+      classUid: 'someclass-uid',
+      studentEmail: 'student@email.com'
+    }
+  */
   function updatePendingList(query, pendingList) {
     const { universityName, classUid } = query;
     admin.database().ref(`universities/${universityName}/${classUid}/pendingEmails`)
     .set(pendingList)
     .then(()=>{
-      res.status(200).send({message: 'Requested permission.'});
+      return res.status(200).send({message: 'Requested permission.'});
     }).catch((err) => {
       res.status(400).send({message: 'Something went wrong updating to pending list.', error: err});
     });
   }
 
   function addToPendingList(query) {
-    const { universityName, classUid, studentData } = query;
+    const { universityName, classUid, studentEmail } = query;
     admin.database().ref(`universities/${universityName}/${classUid}/pendingEmails`)
     .once('value')
     .then((snap) => {
       var pendingEmails = snap.val();
       if (pendingEmails) {
-        pendingEmails.push(studentData.email);
+        pendingEmails.push(studentEmail);
       } else {
-        pendingEmails = [studentData.email];
+        pendingEmails = [studentEmail];
       }
       return updatePendingList(query, pendingEmails);
     }).catch((err) => {
@@ -273,8 +291,8 @@ exports.requestclass = functions.https.onRequest((req, res) => {
   }
 
   return cors(req, res, () => {
-    const { universityName, classUid, studentData } = req.body;
-    if (!(universityName && classUid && studentData && studentData.uid && studentData.email)) {
+    const { universityName, classUid, studentEmail } = req.body;
+    if (!(universityName && classUid && studentEmail )) {
       res.status(400).send({message: 'Missing Fields'});
     } else {
       admin.database().ref(`universities/${universityName}/${classUid}`)
@@ -282,20 +300,165 @@ exports.requestclass = functions.https.onRequest((req, res) => {
       .then((snap) => {
         const classData = snap.val();
         if (classData) {
-          if ( classData.approvedEmails && (classData.approvedEmails.indexOf(studentData.email) !== -1)) {
-            res.status(400).send({message: 'Already approved for class, try joining instead.'});
-          } else if ( classData.pendingEmails && (classData.pendingEmails.indexOf(studentData.email) !== -1)) {
-            res.status(400).send({message: 'Already requested permission for this class.'});
+          if ( classData.approvedEmails && (classData.approvedEmails.indexOf(studentEmail) !== -1)) {
+            return res.status(400).send({message: 'Already approved for class, try joining instead.'});
+          } else if ( classData.pendingEmails && (classData.pendingEmails.indexOf(studentEmail) !== -1)) {
+            return res.status(400).send({message: 'Already requested permission for this class.'});
           } else {
             return addToPendingList(req.body);
           }
         } else {
-          res.status(400).send({message: 'Class is no longer available'});
+          return res.status(400).send({message: 'Class is no longer available'});
         }
       })
       .catch((err) => {
         res.status(400).send({message: 'Something went wrong.', error: err});
       });
     }
+  });
+});
+
+exports.approveclass = functions.https.onRequest((req, res) => {
+  /*
+    input = {
+      universityName: 'CUNY City College',
+      classUid: 'someclass-uid',
+      studentEmail: 'student@email.com',
+      uid: 'instructor=uid'
+    }
+  */
+  function updateStudentProfile(query, uid, classList) {
+    const { universityName } = query;
+    admin.database().ref(`users/${uid}/universities/${universityName}`)
+    .set(classList)
+    .then(() => {
+      return res.status(200).send({message: 'Approved and added student to class.'})
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function addToStudentProfile(query, uid) {
+    const { universityName, classUid } = query;
+    admin.database().ref(`users/${uid}/universities/${universityName}`)
+    .once('value')
+    .then((snap) => {
+      var classList = snap.val();
+      if (classList) {
+        classList.push(classUid);
+      } else {
+        classList = [classUid];
+      }
+      return updateStudentProfile(query, uid, classList);
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function getStudentProfile(query) {
+    const { studentEmail } = query;
+    admin.auth().getUserByEmail(studentEmail)
+    .then((user) => {
+      if (user) {
+        return addToStudentProfile(query, user.uid);
+      } else {
+        return res.status(400).send({message: 'Student account not found.'});
+      }
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function updateApprovedList(query, emailList) {
+    const { universityName, classUid } = query;
+    admin.database().ref(`universities/${universityName}/${classUid}/approvedEmails`)
+    .set(emailList)
+    .then(()=>{
+      return getStudentProfile(query);
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function addToApprovedList(query) {
+    const { universityName, classUid, studentEmail } = query;
+    admin.database().ref(`universities/${universityName}/${classUid}/approvedEmails`)
+    .once('value')
+    .then((snap)=>{
+      var approvedEmails = snap.val();
+      if (approvedEmails) {
+        approvedEmails.push(studentEmail);
+      } else {
+        approvedEmails = [studentEmail];
+      }
+      return updateApprovedList(query, approvedEmails);
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function updatePendingList(query, emailList) {
+    const { universityName, classUid } = query;
+    admin.database().ref(`universities/${universityName}/${classUid}/pendingEmails`)
+    .set(emailList)
+    .then(()=>{
+      return addToApprovedList(query);
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  function addToPendingList(query) {
+    const { universityName, classUid, studentEmail } = query;
+    admin.database().ref(`universities/${universityName}/${classUid}/pendingEmails`)
+    .once('value')
+    .then((snap) => {
+      var pendingEmails = snap.val();
+      if (pendingEmails) {
+        const emailIndex = pendingEmails.indexOf(studentEmail);
+        if ( emailIndex !== -1) {
+          pendingEmails.splice(emailIndex, 1);
+          return updatePendingList(req.body, pendingEmails);
+        } else {
+          return res.status(400).send({message: 'Student email not found.'});
+        }
+      } else {
+        return res.status(400).send({message: 'Couldn\'t get class details.'});
+      }
+    })
+    .catch((err) => {
+      return res.status(400).send({message: 'Something went wrong', error: err});
+    });
+  }
+
+  return cors(req, res, () => {
+    const { universityName, classUid, studentEmail, uid } = req.body;
+    if (!(universityName && classUid && studentEmail && uid)) {
+      return res.status(400).send({message: 'Missing fields'});
+    } else {
+      admin.database().ref(`users/${uid}/type`)
+      .once('value')
+      .then((snap) => {
+        const userType = snap.val();
+        if (userType) {
+          if (userType === 'teacher') {
+            return addToPendingList(req.body);
+          } else {
+            return res.status(400).send({message: 'User can\'t approve emails (not teacher).'})
+          }
+        } else {
+          return res.status(400).send({message: 'User not found - UID may be wrong.'});
+        }
+      })
+      .catch((err) => {
+        return res.status(400).send({message: 'Something went wrong', error: err});
+      });
+    }    
   });
 });
