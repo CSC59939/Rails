@@ -26,4 +26,10 @@ functions/rails-private-key.json
 .DS_Store
 .AppleDouble
 .LSOverride
-functions/firebase-debug.log
+
+# vscode/vs_studio_code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

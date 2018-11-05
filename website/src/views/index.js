@@ -1,4 +1,11 @@
 import Home from './Home/Home';
-import SamplePage from './SamplePage/SamplePage';
+import DashboardHome from './DashboardHome/DashboardHome';
+import Signin from './Signin/Signin';
+import Signup from './Signup/Signup';
+import JoinClass from './JoinClass/JoinClass';
+import CreateClass from './CreateClass/CreateClass';
+import NotFound from './NotFound/NotFound';
 
-export { Home, SamplePage };
+export {
+  Home, Signin, Signup, JoinClass, CreateClass, DashboardHome, NotFound,
+};
