@@ -15,11 +15,20 @@ class Profile extends React.Component {
   }
   changePassword() {
     const {userName,userEmail,oldPassword,newPassword} = this.state;
-    if (!userName || userName === '') {
+    if (!userName || !userEmail || !oldPassword || !newPassword) {
       message.error('Looks like you\'re missing something.');
+      return;
+    }
+    if (userName === '' || userEmail === '' || oldPassword === '' || newPassword === '') {
+      message.error('Looks like you\'re missing something.');
+      return;
     }
     else {
-    alert(this.state.userName + this.state.userEmail);
+    alert('username = ' + this.state.userName +
+          ' email: ' + this.state.userEmail +
+          ' oldPassword ' + this.state.oldPassword +
+          ' newPassword ' + this.state.newPassword
+        );
     }
   }
   render() {
