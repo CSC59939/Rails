@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, Icon, Input, Form, message} from 'antd';
 import './Profile.css';
-const FormItem = Form.Item;
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -24,11 +26,17 @@ class Profile extends React.Component {
       return;
     }
     else {
-    alert('username = ' + this.state.userName +
-          ' email: ' + this.state.userEmail +
-          ' oldPassword ' + this.state.oldPassword +
-          ' newPassword ' + this.state.newPassword
-        );
+      let user = firebase.auth().currentUser;
+      if (user.email === userEmail) {
+        user.updatePassword(newPassword).then(() => {
+          alert('updated');
+        }, (error) => {
+          alert('Please, Re Signin');
+        })
+      }
+      else {
+        message.error("incorrect email")
+      }
     }
   }
   render() {
