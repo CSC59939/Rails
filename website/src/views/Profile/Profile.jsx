@@ -27,16 +27,19 @@ class Profile extends React.Component {
     }
     else {
       let user = firebase.auth().currentUser;
-      if (user.email === userEmail) {
-        user.updatePassword(newPassword).then(() => {
-          alert('updated');
-        }, (error) => {
-          alert('Please, Re Signin');
-        })
-      }
-      else {
-        message.error("incorrect email")
-      }
+      const credential = firebase.auth.EmailAuthProvider.credential(
+                         userEmail,
+                         oldPassword
+                         );
+      user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
+          user.updatePassword(newPassword).then(() => {
+            alert('updated');
+          }, (error) => {
+            alert('Please, Re Signin');
+          })
+      },(error) => {
+        message.error('incorrect email or password, please re-signin')
+      })
     }
   }
   render() {
