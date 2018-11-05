@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound,
+  Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound,Profile
 } from './views';
 import { Dashboard } from './components';
 import './App.css';
@@ -46,6 +46,9 @@ class App extends PureComponent {
             <Route path="/signin" component={Signin} />
             <Route path="/create/class" component={CreateClass} />
             <Route path="/join/class" component={JoinClass} />
+            <Dashboard>
+            <Route path="/Profile" component={Profile} />
+            </Dashboard>
             <Route path="/signout" render={this.signout} />
             {signedin ? (
               <Dashboard>
