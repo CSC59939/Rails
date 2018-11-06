@@ -83,7 +83,11 @@ export default class Signup extends PureComponent {
           .then((user) => {
             if (user) {
               message.success('Signed Up. Redirecting..');
-              window.location = '/dashboard';
+              if (type === 'student') {
+                window.location = '/join/class';
+              } else if (type === 'teacher') {
+                window.location = '/create/class';
+              }
             }
           });
       } else {
