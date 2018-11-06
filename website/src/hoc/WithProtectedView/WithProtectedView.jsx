@@ -41,9 +41,10 @@ function WithProtectedView(Component) {
         ...props
       } = Component;
       const {
-        location,
-      } = props;
+        pathname,
+      } = this.props.location;
 
+      console.log(pathname);
       if (signedin !== null) {
         return (
           (
@@ -54,7 +55,7 @@ function WithProtectedView(Component) {
                   : (
                     <Redirect to={{
                       pathname: '/signin',
-                      state: { from: location },
+                      state: { from: pathname },
                     }}
                     />
                   ))}
