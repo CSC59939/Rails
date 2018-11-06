@@ -8,7 +8,6 @@ import SampleComponent from './SampleComponent/SampleComponent';
 import EventSummary from './EventSummary/EventSummary';
 import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
 import Notification from './Notification/Notification';
-import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 import Delayed from './Delayed/Delayed';
 
 export {
@@ -22,6 +21,5 @@ export {
   Notification,
   EventSummary,
   EventSummaryCollection,
-  ProtectedRoute,
   Delayed,
 };

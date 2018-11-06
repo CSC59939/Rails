@@ -128,5 +128,5 @@ class JoinClass extends Component {
     );
   }
 }
-const ProtectedJoinClass = WithProtectedView(JoinClass);
-export { JoinClass, ProtectedJoinClass };
+
+export default WithProtectedView(JoinClass);

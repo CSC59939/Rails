@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { Icon } from 'antd';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -12,12 +13,7 @@ function WithProtectedView(Component) {
         signedin: null,
       };
       this.authStateListener = this.authStateListener.bind(this);
-      // this.signoutHandler = this.signoutHandler.bind(this);
       if (firebase.app()) this.authStateListener();
-    }
-
-    componentDidMount() {
-      // if (firebase.app()) this.authStateListener();
     }
 
     componentWillUnmount() {
@@ -67,7 +63,12 @@ function WithProtectedView(Component) {
         );
       }
       return (
-        <span>Waiting for update</span>
+        <div style={{
+          width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        }}
+        >
+          <Icon className="protected-view-loading" type="loading" theme="outlined" />
+        </div>
       );
     }
   };

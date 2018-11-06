@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import { Dashboard } from '../../components';
 import { DashboardHome } from '..';
+import { WithProtectedView } from '../../hoc';
 
 const DashboardRouter = () => (
   <Router>
@@ -13,4 +14,4 @@ const DashboardRouter = () => (
   </Router>
 );
 
-export default DashboardRouter;
+export default WithProtectedView(DashboardRouter);
