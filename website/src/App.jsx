@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import {
   Home, Signin, Signup, ProtectedCreateClass, ProtectedJoinClass, NotFound,
-  ProtectedDashboardRouter,
+  ProtectedDashboardRouter, ProtectedProfileRouter,
 } from './views';
 import './App.css';
 import { withFirebase } from './hoc';
@@ -39,6 +39,7 @@ class App extends PureComponent {
             <Route path="/signup/:type?" component={Signup} />
             <Route path="/signin" component={Signin} />
             <Route path="/signout" render={this.signout} />
+            <Route path="/profile" component={ProtectedProfileRouter} />
             {/* Protected Routes */}
             <Route path="/create/class" component={ProtectedCreateClass} />
             <Route path="/join/class" component={ProtectedJoinClass} />

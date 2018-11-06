@@ -1,0 +1,92 @@
+.Profile {
+  height: 100%;
+  width: 100%;
+  background-color: #f6f6f6;
+}
+ .Body {
+  position: absolute;
+  top: 10%;
+  left: 1.5%;
+  width: 97%;
+  height: 82%;
+  border: 1px white solid;
+  background-color: white;
+}
+ .CalendarIcon {
+  margin-left: 75%;
+  font-size: 200%;
+}
+ .AboutYou,
+.YourAcademic {
+  color: grey;
+  font-size: 130%;
+  display: inline-block;
+  position: absolute;
+  top: 10%;
+}
+ .YourAcademic {
+  left: 57%;
+}
+ .AboutYou {
+  left: 10%;
+}
+ .Body_AboutYou,
+.Body_YourAcademics {
+  position: absolute;
+  top: 19%;
+}
+ .Body_AboutYou {
+  height: 60%;
+  width: 40%;
+  display: inline-block;
+  left: 10%;
+  border: 1px solid #bbb;
+  border-radius: 6%;
+  box-shadow: -1px 10px 5px -2px #ccc;
+}
+ .Body_YourAcademics {
+  height: 30%;
+  width: 30%;
+  display: inline-block;
+  left: 57%;
+}
+ .AboutYou_input {
+  position: absolute;
+  left: 10%;
+}
+ .input_UserName {
+  top: 10%;
+}
+ .input_UserEmail {
+  top: 15%;
+}
+ .input_OldPassword {
+  top: 20%;
+}
+ .input_NewPassword {
+  top: 25%;
+}
+ .Button_ChangePassword {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 70%;
+}
+ .Body_University {
+  height: 60%;
+  margin-bottom: 10%;
+  border-radius: 6%;
+  border: 1px solid #bbb;
+  box-shadow: -1px 10px 5px -2px #ccc;
+}
+ .Button_JoinAnotherClass,
+.Button_JoinAnotherUniversity {
+  width: 100%;
+  margin-bottom: 5%;
+}
+ .UniversityName {
+  margin-left: 3%;
+}
+ .IconSelect {
+  margin-left: 70%;
+}

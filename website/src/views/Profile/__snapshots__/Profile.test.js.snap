@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile View Expect the Profile page to match snap shot 1`] = `
+<div
+  className="Profile"
+>
+  <div
+    className="Body"
+  >
+    <div>
+      <p
+        className="AboutYou"
+      >
+        About You
+      </p>
+      <p
+        className="YourAcademic"
+      >
+        Your Academic
+      </p>
+    </div>
+    <form
+      className="ant-form ant-form-horizontal Body_AboutYou"
+      onSubmit={[Function]}
+    >
+      <input
+        className="ant-input AboutYou_input input_UserName"
+        disabled={false}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="User Name"
+        style={
+          Object {
+            "width": "70%",
+          }
+        }
+        type="text"
+      />
+      <input
+        className="ant-input AboutYou_input input_UserEmail"
+        disabled={false}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="User Email(Not EDITABLE)"
+        style={
+          Object {
+            "width": "70%",
+          }
+        }
+        type="email"
+      />
+      <input
+        className="ant-input AboutYou_input input_OldPassword"
+        disabled={false}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="Old Password(EMPTY INITIALLY)"
+        style={
+          Object {
+            "width": "70%",
+          }
+        }
+        type="password"
+      />
+      <input
+        className="ant-input AboutYou_input input_NewPassword"
+        disabled={false}
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder="New Password(EMPTY INITIALLY)"
+        style={
+          Object {
+            "width": "70%",
+          }
+        }
+        type="password"
+      />
+      <button
+        className="ant-btn Button_ChangePassword"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "#87ceeb",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Change Password
+        </span>
+      </button>
+    </form>
+    <div
+      className="Body_YourAcademics"
+    >
+      <div
+        className="Body_University"
+      >
+        <h3
+          className="UniversityName"
+        >
+          University 1
+        </h3>
+        <ul>
+          <li>
+            ClassA 
+            <i
+              className="anticon anticon-select IconSelect"
+            >
+              <svg
+                aria-hidden="true"
+                className=""
+                data-icon="select"
+                fill="currentColor"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h360c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H184V184h656v320c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V144c0-17.7-14.3-32-32-32zM653.3 599.4l52.2-52.2a8.01 8.01 0 0 0-4.7-13.6l-179.4-21c-5.1-.6-9.5 3.7-8.9 8.9l21 179.4c.8 6.6 8.9 9.4 13.6 4.7l52.4-52.4 256.2 256.2c3.1 3.1 8.2 3.1 11.3 0l42.4-42.4c3.1-3.1 3.1-8.2 0-11.3L653.3 599.4z"
+                />
+              </svg>
+            </i>
+          </li>
+          <li>
+            ClassB 
+            <i
+              className="anticon anticon-select IconSelect"
+            >
+              <svg
+                aria-hidden="true"
+                className=""
+                data-icon="select"
+                fill="currentColor"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h360c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H184V184h656v320c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V144c0-17.7-14.3-32-32-32zM653.3 599.4l52.2-52.2a8.01 8.01 0 0 0-4.7-13.6l-179.4-21c-5.1-.6-9.5 3.7-8.9 8.9l21 179.4c.8 6.6 8.9 9.4 13.6 4.7l52.4-52.4 256.2 256.2c3.1 3.1 8.2 3.1 11.3 0l42.4-42.4c3.1-3.1 3.1-8.2 0-11.3L653.3 599.4z"
+                />
+              </svg>
+            </i>
+          </li>
+        </ul>
+      </div>
+      <div
+        className="Body_University"
+      />
+      <button
+        className="ant-btn Button_JoinAnotherClass"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "#87ceeb",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Join Another Class
+        </span>
+      </button>
+      <button
+        className="ant-btn Button_JoinAnotherUniversity ant-btn-primary"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Join Another University 
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+`;
