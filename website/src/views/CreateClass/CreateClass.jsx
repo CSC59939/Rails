@@ -139,4 +139,6 @@ class CreateClass extends Component {
     );
   }
 }
-export default WithProtectedView(CreateClass);
+
+const ProtectedCreateClass = WithProtectedView(CreateClass);
+export { CreateClass, ProtectedCreateClass };

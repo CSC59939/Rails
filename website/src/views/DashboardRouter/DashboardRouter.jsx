@@ -14,4 +14,5 @@ const DashboardRouter = () => (
   </Router>
 );
 
-export default WithProtectedView(DashboardRouter);
+const ProtectedDashboardRouter = WithProtectedView(DashboardRouter);
+export { ProtectedDashboardRouter, DashboardRouter };
