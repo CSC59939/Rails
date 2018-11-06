@@ -5,11 +5,11 @@ import {
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import {
-  Home, Signin, Signup, CreateClass, JoinClass, DashboardHome, NotFound, DashboardRouter,
+  Home, Signin, Signup, CreateClass, ProtectedJoinClass, JoinClass, DashboardHome, NotFound, DashboardRouter,
 } from './views';
 import { Dashboard, ProtectedRoute, Delayed } from './components';
 import './App.css';
-import withFirebase from './utils/firebase/firebase';
+import { withFirebase } from './hoc';
 
 class App extends PureComponent {
   static propTypes = {
@@ -46,7 +46,7 @@ class App extends PureComponent {
             <Route path="/signup/:type?" component={Signup} />
             <Route path="/signin" component={Signin} />
             <ProtectedRoute isAllowed={signedin} path="/create/class" component={CreateClass} />
-            <ProtectedRoute isAllowed={signedin} path="/join/class" component={JoinClass} />
+            <Route path="/join/class" component={ProtectedJoinClass} />
             <ProtectedRoute isAllowed={signedin} path="/dashboard/:optional?" component={DashboardRouter} />
             <Route path="/signout" render={this.signout} />
             {/* {signedin ? (
