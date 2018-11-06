@@ -1,6 +1,7 @@
 import {
   Button, Card, Icon, Input, Select, Radio, message,
 } from 'antd';
+import { Redirect } from 'react-router-dom';
 import React, { PureComponent } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -49,6 +50,7 @@ export default class Signup extends PureComponent {
 
   signup() {
     this.setState({ loading: true });
+    const { history } = this.props;
     const {
       universities, name, password, type, email,
     } = this.state;
@@ -84,9 +86,9 @@ export default class Signup extends PureComponent {
             if (user) {
               message.success('Signed Up. Redirecting..');
               if (type === 'student') {
-                window.location = '/join/class';
-              } else if (type === 'teacher') {
-                window.location = '/create/class';
+                history.push('/join/class');
+              } if (type === 'teacher') {
+                history.push('/create/class');
               }
             }
           });
