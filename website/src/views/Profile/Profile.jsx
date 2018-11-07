@@ -11,8 +11,19 @@ import 'firebase/auth';
       userEmail: '',
       oldPassword: '',
       newPassword: '',
+      uid:'',
+      idToken:'',
+
     };
     this.changePassword = this.changePassword.bind(this);
+    this.test = this.test.bind(this);
+  }
+  componentWillMount() {
+    let user = firebase.auth().currentUser;
+    this.setState({uid:user.uid});
+    user.getIdToken(true).then((idToken) => {
+      this.setState({idToken:idToken});
+    })
   }
   changePassword() {
     const {userName,userEmail,oldPassword,newPassword} = this.state;
@@ -40,6 +51,30 @@ import 'firebase/auth';
         message.error('incorrect email or password, please re-signin')
       })
     }
+  }
+  test() {
+    const {uid,idToken} = this.state;
+    const reqData = {
+      uid,
+      idToken,
+    }
+    fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reqData),
+    }).then((result) => {
+      if (result.status === 200) {
+        alert(result.message)
+      } else {
+        //
+        message.error(result.message);
+      }
+    }).catch((err) => {
+      //
+    });
   }
   render() {
     return (
@@ -89,7 +124,7 @@ import 'firebase/auth';
           </div>
           <div className="Body_University">
           </div>
-          <Button className="Button_JoinAnotherClass" style={{ color: '#87ceeb' }}>Join Another Class</Button>
+          <Button className="Button_JoinAnotherClass" onClick={this.test} style={{ color: '#87ceeb' }}>Join Another Class</Button>
           <Button className="Button_JoinAnotherUniversity" type="primary" style={{ color: 'white' }}>Join Another University </Button>
         </div>
       </div>
