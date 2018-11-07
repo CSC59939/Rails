@@ -1,10 +1,10 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 import { handlers } from './handlers';
+import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 import * as serviceAccount from '../rails-private-key.json';
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(<any>serviceAccount),
     databaseURL: "https://rails-students.firebaseio.com"
   });
 

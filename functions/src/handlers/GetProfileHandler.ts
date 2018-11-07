@@ -56,54 +56,48 @@ export function getprofile (req, res) {
     }
     */
 
-    async function getClassEventsHelper(classUid) {
-        const eventsData = await admin.database().ref(`events/${classUid}`).once('value')
+    function getClassEvents(userData, classList) {
+        admin.database().ref('events')
+        .once('value')
         .then((snap) => {
-            const eventsSnap = snap.val();
-            if (eventsSnap) {
-                const tempEventsData = {};
-                Object.keys(eventsSnap).forEach((key) => {
-                    const { title, description, priority, postedDate, dueDate } = eventsSnap[key];
-                    tempEventsData[key] = { title, description, priority, postedDate, dueDate };
+            const eventsData = snap.val();
+            if (eventsData) {
+                Object.keys(classList).forEach((university) => {
+                    classList[university].forEach((classUid) => {
+                        userData.universities[university][classUid]['events'] = {};
+                        userData.universities[university][classUid]['events'] = eventsData[classUid];
+                    });
                 });
-                return tempEventsData;
+                return res.status(200).send({message: 'Got user profile.', userData: userData});
             } else {
-                return {};
+                return res.status(400).send({message: 'Error getting events'});
             }
         }).catch((err) => {
-            res.status(400).send({message: 'Something went wrong', error: err});
+            return res.status(400).send({message: 'Something went wrong - getClassEvents', error: err});
         });
-        return eventsData;
-    }
-
-    async function getClassDetailsHelper(universityName, classUid) {
-        const classData : any = await admin.database().ref(`universities/${universityName}/${classUid}`).once('value')
-        .then((snap) => {
-            const classSnap = snap.val();
-            if (classSnap) {
-                const { name, description, instructorName, meetingDays, meetingTimes } = classSnap;
-                return { name, description, instructorName, meetingDays, meetingTimes };
-            } else {
-                return res.status(400).send({message: 'Failed to get class details'});
-            }
-        }).catch((err) => {
-            res.status(400).send({message: 'Something went wrong', error: err});
-        });
-        classData['events'] = getClassEventsHelper(classUid);
-        return classData;
     }
 
     function getClassDetails(userData, classList) {
-        const universities = {};
-        Object.keys(classList).forEach((key) => {
-            const universityData = {};
-            classList[key].forEach((classUid) => {
-                universityData[classUid] = getClassDetailsHelper(key, classUid);
-            });
-            universities[key] = universityData;
+        admin.database().ref('universities')
+        .once('value')
+        .then((snap) => {
+            const universitiesData = snap.val();
+            userData.universities = {};
+            if (universitiesData) {
+                Object.keys(classList).forEach((university) => {
+                    userData.universities[university] = {};
+                    classList[university].forEach((classUid) => {
+                        const { name, description, instructorName, meetingDays, meetingTimes } = universitiesData[university][classUid];
+                        userData.universities[university][classUid] = { name, description, instructorName, meetingDays, meetingTimes };
+                    });
+                });
+                getClassEvents(userData, classList);
+            } else {
+                return res.status(400).send({message: 'Error getting universities'});
+            }
+        }).catch((err) => {
+            return res.status(400).send({message: 'Something went wrong - getClassDetails', error: err});
         });
-        userData['universities'] = universities;
-        return res.status(200).send({message: 'Got user profile.', userData: userData});
     }
 
     function getUserFromDatabase(query, userData) {
@@ -115,7 +109,7 @@ export function getprofile (req, res) {
             if (userSnapData) {
                 userData['type'] = userSnapData.type;
                 if (userSnapData.universities) {
-                    return getClassDetails(userData, userSnapData.universities);
+                    getClassDetails(userData, userSnapData.universities);
                 } else {
                     userData['universities'] = {};
                     return res.status(200).send({message: 'Got user profile.', userData: userData});
@@ -124,7 +118,7 @@ export function getprofile (req, res) {
                 return res.status(400).send({message: 'User type not found.'});
             }
         }).catch((err) => {
-            res.status(400).send({message: 'Something went wrong', error: err});
+            res.status(400).send({message: 'Something went wrong - getUserFromDatabase', error: err});
         });
     }
 
@@ -134,19 +128,18 @@ export function getprofile (req, res) {
         .then((user)=>{
             const { displayName, email } = user;
             const userData = { displayName, email };
-            return getUserFromDatabase(query, userData);
+            getUserFromDatabase(query, userData);
         }).catch((err) => {
-            res.status(400).send({message: 'Something went wrong', error: err});
+            res.status(400).send({message: 'Something went wrong - getUserData', error: err});
         });
     }
 
     return cors(req, res, () => {
-        const { idToken, uid, testingUid } = req.body;
+        const { idToken, uid } = req.body;
         admin.auth().verifyIdToken(idToken)
         .then((decodedToken) => {
-            if (testingUid === uid ) {
-            // if (decodedToken.uid === uid) {
-                return getUserData(req.body);
+            if (decodedToken.uid === uid) {
+                getUserData(req.body);
             } else {
                 return res.status(400).send({message: 'User authorization error'});
             }

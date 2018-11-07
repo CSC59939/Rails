@@ -52,7 +52,7 @@ export function createclass (req, res) {
       } else {
         existingClasses = [pushKey];
       }
-      return setTeacherProfile(query, existingClasses);
+      setTeacherProfile(query, existingClasses);
     }).catch((err)=>{
       res.status(400).send({message: 'Something went wrong adding to teacher profile.', error: err});
     });
@@ -63,7 +63,7 @@ export function createclass (req, res) {
     admin.database().ref(`universities/${universityName}`)
     .push(classData)
     .then((pushData)=>{
-      return addToTeacherProfile(query, pushData.key);
+      addToTeacherProfile(query, pushData.key);
     },(err)=>{
       res.status(400).send({message: 'Something went wrong creating class.', error: err});
     });
@@ -79,7 +79,7 @@ export function createclass (req, res) {
       .then((snap) => {
         const type = snap.val();
         if (type && (type === 'teacher')) {
-          return createClass(req.body);
+          createClass(req.body);
         } else if (type && (type === 'student')) {
           return res.status(400).send({message: 'Not authorized to create class'});
         } else {
