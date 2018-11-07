@@ -9,6 +9,6 @@ import { ProtectedDashboardRouter, DashboardRouter } from './DashboardRouter/Das
 import { ProfileRouter, ProtectedProfileRouter } from './Profile/ProfileRouter'
 ;
 export {
-  Home, Signin, Signup, CreateClass, DashboardHome, NotFound, DashboardRouter, JoinClass, ProtectedCreateClass, ProtectedDashboardRouter, ProtectedJoinClass,
-  ProfileRouter, ProtectedProfileRouter,
+  Home, Signin, Signup, CreateClass, DashboardHome, NotFound, DashboardRouter, JoinClass,
+  ProtectedCreateClass, ProtectedDashboardRouter, ProtectedJoinClass,
 };
