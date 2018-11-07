@@ -1,150 +1,118 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import {
-  Button, Icon, Input, Form, message,
+  Button, Icon, Input, Form, message, Card, InputNumber, Collapse,
 } from 'antd';
 import './Profile.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-class Profile extends React.Component {
+class Profile extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      userEmail: '',
-      oldPassword: '',
-      newPassword: '',
-      uid: '',
-      idToken: '',
-
+      gotUserProfile: false,
+      userData: null,
     };
-    this.changePassword = this.changePassword.bind(this);
-    this.test = this.test.bind(this);
   }
 
-  componentWillMount() {
-    const user = firebase.auth().currentUser;
-    this.setState({ uid: user.uid });
-    user.getIdToken(true).then((idToken) => {
-      this.setState({ idToken });
-    });
-  }
-
-  changePassword() {
-    const {
-      userName, userEmail, oldPassword, newPassword,
-    } = this.state;
-    if (!userName || !userEmail || !oldPassword || !newPassword) {
-      message.error('Looks like you\'re missing something.');
-      return;
-    }
-    if (userName === '' || userEmail === '' || oldPassword === '' || newPassword === '') {
-      message.error('Looks like you\'re missing something.');
-      return;
-    }
-
-    const user = firebase.auth().currentUser;
-    const credential = firebase.auth.EmailAuthProvider.credential(
-      userEmail,
-      oldPassword,
-    );
-    user.reauthenticateAndRetrieveDataWithCredential(credential).then(() => {
-      user.updatePassword(newPassword).then(() => {
-        alert('updated');
-      }, (error) => {
-        alert('Please, Re Signin');
+  componentDidMount() {
+    firebase.auth().currentUser
+      .getIdToken(true)
+      .then((idToken) => {
+        const { uid } = firebase.auth().currentUser;
+        const reqData = { uid, idToken };
+        const profileData = fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reqData),
+        }).then((result) => {
+          if (result.status === 200) {
+            return result.json();
+          }
+          message.error(result.message);
+        }).catch((err) => {
+          console.log(err);
+        });
+        profileData.then((data) => {
+          message.success(data.message);
+          console.log(data.userData);
+          this.setState({ userData: data.userData, gotUserProfile: true });
+        });
       });
-    }, (error) => {
-      message.error('incorrect email or password, please re-signin');
-    });
-  }
-
-  test() {
-    const { uid, idToken } = this.state;
-    const reqData = {
-      uid,
-      idToken,
-    };
-    fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then((result) => {
-      if (result.status === 200) {
-        alert(result.message);
-      } else {
-        //
-        message.error(result.message);
-      }
-    }).catch((err) => {
-      //
-    });
   }
 
   render() {
+    const { userData, gotUserProfile } = this.state;
     return (
-      <div className="Profile">
-        <div className="Body">
-          <div>
-            <p className="AboutYou">About You</p>
-            <p className="YourAcademic">Your Academic</p>
-          </div>
-          <Form className="Body_AboutYou">
-            <Input
-              style={{ width: '70%' }}
-              placeholder="User Name"
-              className="AboutYou_input input_UserName"
-              onChange={e => this.setState({ userName: e.target.value })}
-            />
-            <Input
-              type="email"
-              style={{ width: '70%' }}
-              placeholder="User Email(Not EDITABLE)"
-              className="AboutYou_input input_UserEmail"
-              onChange={e => this.setState({ userEmail: e.target.value })}
-            />
-            <Input
-              type="password"
-              style={{ width: '70%' }}
-              placeholder="Old Password(EMPTY INITIALLY)"
-              className="AboutYou_input input_OldPassword"
-              onChange={e => this.setState({ oldPassword: e.target.value })}
-            />
-            <Input
-              type="password"
-              style={{ width: '70%' }}
-              placeholder="New Password(EMPTY INITIALLY)"
-              className="AboutYou_input input_NewPassword"
-              onChange={e => this.setState({ newPassword: e.target.value })}
-            />
-            <Button className="Button_ChangePassword" style={{ color: '#87ceeb' }} onClick={this.changePassword}>Change Password</Button>
-          </Form>
-          <div className="Body_YourAcademics">
-            <div className="Body_University">
-              <h3 className="UniversityName">University 1</h3>
-              <ul>
-                <li>
-ClassA
-                  {' '}
-                  <Icon className="IconSelect" type="select" />
-                </li>
-                <li>
-ClassB
-                  {' '}
-                  <Icon className="IconSelect" type="select" />
-                </li>
-              </ul>
+      <div className="profile-page">
+        {
+        gotUserProfile
+          ? (
+            <div className="profile-page">
+
+              <Card
+                className="profile-card"
+                title="About You"
+              >
+                <Input placeholder="Full Name" value={userData ? userData.displayName : ''} />
+                <Input placeholder="E-Mail" value={userData ? userData.email : ''} />
+                <Input placeholder="Old Password" id="oldPasswordInput" />
+                <Input placeholder="New Password" id="oldPasswordInput" />
+                <Button type="primary" block>Change Password</Button>
+              </Card>
+              <Card
+                className="profile-card"
+                title="Your Academics"
+              >
+                {
+            userData.type === 'student'
+              ? <Button href="/join/class" type="primary" block>Join Class</Button>
+              : <Button href="/create/class" type="primary" block>Create Class</Button>
+          }
+                {
+              userData.universities === {}
+                ? (
+                  <p>You haven't joined any universities/classes yet.</p>
+
+                )
+                : (
+                  <Collapse>
+                    {
+                    Object.keys(userData.universities).map(university => (
+                      <Collapse.Panel header={university}>
+                        {
+                            Object.keys(userData.universities[university]).map(classUid => (
+                              <Card
+                                title={userData.university[university][classUid].name}
+                              >
+                                <p>{userData.universities[university][classUid].description}</p>
+                              </Card>
+                            ))
+                          }
+                      </Collapse.Panel>
+                    ))
+                  }
+                  </Collapse>
+                )
+            }
+              </Card>
             </div>
-            <div className="Body_University" />
-            <Button className="Button_JoinAnotherClass" onClick={this.test} style={{ color: '#87ceeb' }}>Join Another Class</Button>
-            <Button className="Button_JoinAnotherUniversity" type="primary" style={{ color: 'white' }}>Join Another University </Button>
-          </div>
-        </div>
+          )
+          : (
+            <div style={{
+              width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
+            }}
+            >
+              <Icon className="protected-view-loading" type="loading" theme="outlined" />
+            </div>
+          )
+      }
       </div>
     );
   }
 }
+
 export default Profile;
