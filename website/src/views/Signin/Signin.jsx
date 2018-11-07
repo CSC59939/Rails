@@ -31,7 +31,11 @@ export default class Signin extends PureComponent {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then((user) => {
         if (user) {
-          history.push(location.state.from || '/dashboard');
+          if (location.state !== undefined) {
+            history.push(location.state.from || '/dashboard');
+          } else {
+            history.push('/dashboard');
+          }
         }
       })
       .catch((err) => {
