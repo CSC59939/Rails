@@ -5,6 +5,7 @@ import {
 import './Profile.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { WithProtectedView } from '../../hoc';
 
 class Profile extends PureComponent {
   constructor(props) {
@@ -50,15 +51,15 @@ class Profile extends PureComponent {
     const oldPassword = document.getElementById('oldPasswordInput').value;
     const newPassword = document.getElementById('newPasswordInput').value;
     firebase.auth().signInWithEmailAndPassword(userData.email, oldPassword)
-    .then((user) => {
-      if (user) {
-        firebase.auth().currentUser.updatePassword(newPassword).then(() => {
-          message.success('Changed Password, please sign in again.', 1.5, ()=>{window.location='/signout';})
-        }).catch((err)=>{
-          console.log(err);
-        })
-      }
-    })
+      .then((user) => {
+        if (user) {
+          firebase.auth().currentUser.updatePassword(newPassword).then(() => {
+            message.success('Changed Password, please sign in again.', 1.5, () => { window.location = '/signout'; });
+          }).catch((err) => {
+            console.log(err);
+          });
+        }
+      });
   }
 
   render() {
@@ -86,17 +87,17 @@ class Profile extends PureComponent {
               >
                 {
             userData.type === 'student'
-              ? <Button style={{marginBottom: 10}} href="/join/class" type="primary" block>Join Class</Button>
-              : <Button style={{marginBottom: 10}} href="/create/class" type="primary" block>Create Class</Button>
+              ? <Button style={{ marginBottom: 10 }} href="/join/class" type="primary" block>Join Class</Button>
+              : <Button style={{ marginBottom: 10 }} href="/create/class" type="primary" block>Create Class</Button>
           }
                 {
                 Object.keys(userData.universities).length === 0
-                ? (
-                  <p>You haven't joined any universities/classes yet.</p>
-                )
-                : (
-                  <Collapse >
-                    {
+                  ? (
+                    <p>You haven't joined any universities/classes yet.</p>
+                  )
+                  : (
+                    <Collapse>
+                      {
                     Object.keys(userData.universities).map(university => (
                       <Collapse.Panel header={university}>
                         {
@@ -111,8 +112,8 @@ class Profile extends PureComponent {
                       </Collapse.Panel>
                     ))
                   }
-                  </Collapse>
-                )
+                    </Collapse>
+                  )
             }
               </Card>
             </div>
@@ -131,4 +132,5 @@ class Profile extends PureComponent {
   }
 }
 
-export default Profile;
+const ProtectedProfile = WithProtectedView(Profile);
+export { Profile, ProtectedProfile };

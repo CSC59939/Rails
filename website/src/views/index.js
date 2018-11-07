@@ -6,9 +6,9 @@ import { ProtectedJoinClass, JoinClass } from './JoinClass/JoinClass';
 import { CreateClass, ProtectedCreateClass } from './CreateClass/CreateClass';
 import NotFound from './NotFound/NotFound';
 import { ProtectedDashboardRouter, DashboardRouter } from './DashboardRouter/DashboardRouter';
-import { ProfileRouter, ProtectedProfileRouter } from './Profile/ProfileRouter'
-;
+import { Profile, ProtectedProfile } from './Profile/Profile';
+
 export {
   Home, Signin, Signup, CreateClass, DashboardHome, NotFound, DashboardRouter, JoinClass,
-  ProtectedCreateClass, ProtectedDashboardRouter, ProtectedJoinClass,
+  ProtectedCreateClass, ProtectedDashboardRouter, ProtectedJoinClass, Profile, ProtectedProfile,
 };
