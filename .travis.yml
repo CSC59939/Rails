@@ -1,22 +1,25 @@
 language: node_js
 node_js:
-- '10'
-branches:
-  only:
-  - master
-  - /^deploy-.*$/
+  - '10'
 cache:
   directories:
   - node_modules
 script:
-- cd ./functions && npm install && cd ..
-- cd ./website && npm install
-- npm run lint
-- npm test
-- npm run build
+  - cd ./functions && npm install && cd ..
+  - cd ./website && npm install
+  - npm run lint
+  - npm test
+  - npm run build && cd ..
 deploy:
   provider: firebase
+  token:
+    secure: Rx2xerfItobnZP3mMCSM6RGc4ENdQggWjaIk2xXmZN4eptqd2fsUPJ/5KVy8yEY6aMrks6VDEKbGYyGKZ3Mr5iyAE8Wkx08447KH43yEBcVuo1/l4wiQVdrIuSd5YVgfYBS20j0aKq0ppGFHevCRbYWgEFrzjcvpKTU9UDoK/XIpyxqdZnZ7HHqSGixr7DjjYLhNep+zn/RkhT4qVPbHDmZCIewAPawgw11e9qz2jTGd9O1gU14BsYIs8Rs3FWaBvX/vhRAaWqjo5MnbODBbyL6OyW6PNqPSme4q4qa2WqkHbseNxXyKYftxUgfFLGbM+c/UA5GE14lpk+F0Wi4medVTM4tyupQG/FD8PO23i+mq4tu8lZMDWgVvj7IYLVbT3D2rfdQsIeYlvVLrZiG36VxxVFieobB9kVkT3tOr3i2toHckn3/YEhsXoB6MW3qYRjN0lvjLdO2E1yUi7T95xSMEmqqyMDMF34qqoQRYndLUWoGF9xZ0UgegHfwezoIjqysKjZWTHCuSeTxLJKpFG68cJb7lZvURLYAnYEDJHRFFHFANlafh/6qDpndm77K4l3tCGL+ooteKqAVMAZFRUAT5RHY3cN1bvLacjDQBSIzCyQhfc9wf09B+F+O7r24UPvUZzxaGHJG7eH+9zNuL4fgez7/och3mtfVbwiID47s=
   skip_cleanup: true
-env:
-  global:
-    secure: gdG/1nnyDCPf+3rccbYnI4AyXXsnV29DAeulhi1EgWmL71p8JvC0d3ICNHnn/PPjGHDUk8GE3ibg4TZg9f/SdsVhEU9yUgOqJIjcJKDpSMJScaPMWIENrFn/NlVhUVYfrQxr8qM3y0X3sny7w6INTsI6yZZp4BzjWpf3nuE/X8hjBBGqJpDbSuuXkW4UsNqCG9KFYu8QkglohUYl500vJL6k4jqFLYFCq58DPiH4yNIjWAQrR8v77uSt4TygxWirAI4OvuYLHGDn6mv4joEshzJku4iBdTKvGdSLc443BuF9LQV6q2XY/aA444dTOFm+uMZboUTozKGkRKx/onX6C6nWVYB6HIBp/ZbXFrBxQ2BZMZoGQixPCuT8LgzHHzSEl+b+iwBHOQHIcAPBHeYmH1EsX7dKIm8XP3rXB8nLYmvfPXZ5lT2hh5QjMyBT75PHWXog+BXSqubWr3eCOyZQv7cGveZijGXc6BgPBz7lUIUkK4uuUxkGMMOBTk3HFBquBLaZpwnByxaIxzoRK5bJOf+McK6dBZ0PRsyYlKqZXiMdQJDpNBBqQu4eD3/AeIg2xwgTYujHzVh2SyXt44VR9zlX4SPmPekFTNMxQxWsZkavgC4/F+M14I8a3LTvrIwebkdQihFqOW8ZQEncMEYlEbwrVB5k5Cn33mVfiGlr05E=
+  on:
+    branch: master
+  provider: firebase
+  token:
+    secure: Rx2xerfItobnZP3mMCSM6RGc4ENdQggWjaIk2xXmZN4eptqd2fsUPJ/5KVy8yEY6aMrks6VDEKbGYyGKZ3Mr5iyAE8Wkx08447KH43yEBcVuo1/l4wiQVdrIuSd5YVgfYBS20j0aKq0ppGFHevCRbYWgEFrzjcvpKTU9UDoK/XIpyxqdZnZ7HHqSGixr7DjjYLhNep+zn/RkhT4qVPbHDmZCIewAPawgw11e9qz2jTGd9O1gU14BsYIs8Rs3FWaBvX/vhRAaWqjo5MnbODBbyL6OyW6PNqPSme4q4qa2WqkHbseNxXyKYftxUgfFLGbM+c/UA5GE14lpk+F0Wi4medVTM4tyupQG/FD8PO23i+mq4tu8lZMDWgVvj7IYLVbT3D2rfdQsIeYlvVLrZiG36VxxVFieobB9kVkT3tOr3i2toHckn3/YEhsXoB6MW3qYRjN0lvjLdO2E1yUi7T95xSMEmqqyMDMF34qqoQRYndLUWoGF9xZ0UgegHfwezoIjqysKjZWTHCuSeTxLJKpFG68cJb7lZvURLYAnYEDJHRFFHFANlafh/6qDpndm77K4l3tCGL+ooteKqAVMAZFRUAT5RHY3cN1bvLacjDQBSIzCyQhfc9wf09B+F+O7r24UPvUZzxaGHJG7eH+9zNuL4fgez7/och3mtfVbwiID47s=
+  skip_cleanup: true
+  on:
+    branch: deploy_test
