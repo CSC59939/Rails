@@ -10,5 +10,16 @@ cache:
 script:
   - cd website
   - npm install
+  - cd ..
+  - cd functions
+  - npm install
+  - cd ..
+  - cd website
   - npm run lint
   - npm test
+  - npm run build
+
+deploy:
+  provider: firebase
+  token:
+    secure: 1/3yrZh014EvnM1hma8b4QQ4olrwh1SQFJV5rQUt1hZsg
