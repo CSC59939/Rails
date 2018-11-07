@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, Button, Card, Select,
+  Form, Input, Button, Card, Select, message
 } from 'antd';
 import { WithProtectedView } from '../../hoc';
 import './JoinClass.css';
+import firebase from 'firebase';
+import 'firebase/auth';
 
 const FormItem = Form.Item;
 
@@ -11,12 +13,19 @@ class JoinClass extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      collegeOptions: [],
+      classOptions: {},
       university: null,
       classSelection: null,
       studentID: null,
       email: null,
+      loading: false,
+      preapproved: true,
     };
     this.getColleges = this.getColleges.bind(this);
+    this.joinclass = this.joinclass.bind(this);
+    this.requestclass = this.requestclass.bind(this);
+    this.getclassSelection = this.getclassSelection.bind(this);
   }
 
   getColleges(collegeName) {
@@ -26,30 +35,100 @@ class JoinClass extends Component {
     fetch(prefix + name + suffix)
       .then(res => res.json())
       .then((result) => {
-        const schools = result.data.results;
-        const schoolOptions = [];
-        schools.forEach((element) => {
-          schoolOptions.push(element['school.name']);
-        });
         this.setState({
-          collegeOptions: schoolOptions,
+          collegeOptions: result.results,
         });
-      })
-      .catch((e) => {
-        console.log(e);
       });
   }
 
-  getSchoolOptions() {
-    const schools = this.state.collegeOptions;
-    // let schoolsObj = []
-    return schools.map(v => (
-      <Select.Option key={v}>
-        {v}
-      </Select.Option>));
+  getclassSelection(collegeName) {
+    this.setState({ university: collegeName})
+    const reqData = { universityName: collegeName };
+    const fetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/getclasses', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type' : 'application/json',
+      },
+      body: JSON.stringify(reqData),
+    }).then((result) => {
+      if(result.status === 200) {
+        return result.json();
+      }
+      else{
+        this.setState({ loading: false });
+        message.error(result.message);
+      }
+    }).catch((err) => {
+      console.log('Error', err);
+      this.setState({loading: false});
+    });
+    fetchData.then((data) => {
+      this.setState({
+        classOptions: data.classList
+      })
+    });
+  }
+
+  joinclass() {
+    this.setState({loading : true});
+    const {university, classSelection } = this.state;
+    const reqData = {
+      universityName: university,
+      classUid: classSelection,
+      studentData : {
+        email: firebase.auth().currentUser.email,
+        uid: firebase.auth().currentUser.uid,
+      },
+    };
+    const joinFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/joinclass', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(reqData),
+    }).then((result) => {
+      if(result.status === 200) {
+        return result.json();
+      }
+    });
+    joinFetchData.then((data) => {
+      message.success(data.message);
+      window.location.reload();
+    })
+  }
+
+  requestclass() {
+    this.setState({loading : true});
+    const {university, classSelection } = this.state;
+    const reqData = {
+      universityName: university,
+      classUid: classSelection,
+      studentEmail: firebase.auth().currentUser.email,
+    };
+    const joinFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/requestclass', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(reqData),
+    }).then((result) => {
+      if(result.status === 200) {
+        return result.json();
+      }
+    });
+    joinFetchData.then((data) => {
+      message.success(data.message);
+      window.location.reload();
+    })
   }
 
   render() {
+
+    const { collegeOptions, classOptions, preapproved } = this.state;
+
     const formItemLayout = {
       wrapperCol: {
         xs: { span: 24 },
@@ -75,9 +154,16 @@ class JoinClass extends Component {
                 onSearch={this.getColleges}
                 placeholder="University/College"
                 style={{ width: '100%' }}
-                onChange={e => this.setState({ universities: e })}
+                onChange={e => { this.getclassSelection(e) } }
               >
-                {this.state.collegeOptions && this.getSchoolOptions()}
+              {
+                    collegeOptions.map(element => (
+                      <Select.Option key={element['school.name']}>
+                        {element['school.name']}
+                      </Select.Option>
+                    ))
+
+                }
               </Select>
             </FormItem>
             <FormItem
@@ -85,43 +171,41 @@ class JoinClass extends Component {
             >
               <Select
                 placeholder="Class and Section code"
-                mode="multiple"
-              />
+                onChange={ e => {
+                  console.log(e);
+                  this.setState({ classSelection: e })
+                  const userEmail = firebase.auth().currentUser.email; 
+                  if (classOptions[e].approvedEmails.indexOf(userEmail) === -1) {
+                    this.setState({preapproved: false});
+                    message.info('Not pre-approved. Use the request permission card.')
+                  }
+                }}
+              >
+                {
+                  Object.keys(classOptions).map((classUid) => {
+                    return (
+                      <Select.Option key={classUid}>
+                        <p>{classOptions[classUid].name}</p>
+                        <p>{classOptions[classUid].description}</p>
+                        <p>{classOptions[classUid].instructorName}</p>
+                      </Select.Option>
+                    );
+                  })
+                }
+              </Select>
             </FormItem>
-            <div className="registerButton">
-              <Button margin="auto" type="primary" htmlType="submit">Join</Button>
-            </div>
+            {
+              this.state.preapproved ?
+              <div className="registerButton">
+                <Button disabled={!preapproved} margin="auto" type="primary" onClick={this.joinclass}>Join Class</Button>
+              </div>:
+              <div className="registerButton">
+                <Button disabled={preapproved} margin="auto" type="primary" onClick={this.requestclass}>Request Permission</Button>
+              </div>
+            }
           </Form>
         </Card>
         <br />
-        <Card
-          className="request_permission"
-          title="Request Permission"
-        >
-          <Form className="permission_form">
-            <FormItem
-              {...formItemLayout}
-            >
-              <Select
-                placeholder="Class and Section code"
-                mode="multiple"
-              />
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Input placeholder="Student ID #" />
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Input placeholder="College Email" />
-            </FormItem>
-            <div className="registerButton">
-              <Button margin="auto" type="primary" htmlType="submit">Request</Button>
-            </div>
-          </Form>
-        </Card>
       </div>
     );
   }
