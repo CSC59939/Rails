@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Delayed extends Component {
   static propTypes = {
     waitBeforeShow: PropTypes.number.isRequired,
+    children: PropTypes.node.isRequired,
   }
 
   constructor(props) {
@@ -27,7 +28,7 @@ class Delayed extends Component {
     const {
       children,
     } = this.props;
-    return this.state.hidden ? '' : this.props.children;
+    return hidden ? '' : children;
   }
 }
 
