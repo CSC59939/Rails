@@ -5,16 +5,8 @@ cache:
   directories:
   - node_modules
 script:
-- cd website
-- npm install
-- cd ..
-- cd functions
-- npm install
-- cd ..
-- cd website
-- npm run lint
-- npm test
-- npm run build
+- cd ./functions && npm install && cd ..
+- cd ./website && npm install && npm run lint && npm test && npm run build
 deploy:
   provider: firebase
   skip_cleanup: true
