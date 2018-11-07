@@ -5,18 +5,23 @@
   display: flex;
   flex-direction: row;
 }
-.profile-card{
+
+.profile-card {
   flex: 1;
   height: fit-content !important;
   margin: 0 10px !important;
   border-radius: 15px !important;
 }
-.profile-card Button, Input {
+
+.profile-card .cust-button,
+.cust-input {
   margin-top: 10px !important;
 }
-.profile-card Input {
+
+.profile-card .cust-input {
   border-radius: 15px !important;
 }
-.profile-card Button {
+
+.profile-card .cust-button {
   border-radius: 15px !important;
 }

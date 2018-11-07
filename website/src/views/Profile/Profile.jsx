@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  Button, Icon, Input, Form, message, Card, InputNumber, Collapse,
+  Button, Icon, Input, Form, message, Card, Collapse,
 } from 'antd';
 import './Profile.css';
 import firebase from 'firebase/app';
@@ -13,6 +13,7 @@ class Profile extends PureComponent {
       gotUserProfile: false,
       userData: null,
     };
+    this.changePassword = this.changePassword.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,22 @@ class Profile extends PureComponent {
       });
   }
 
+  changePassword() {
+    const { userData } = this.state;
+    const oldPassword = document.getElementById('oldPasswordInput').value;
+    const newPassword = document.getElementById('newPasswordInput').value;
+    firebase.auth().signInWithEmailAndPassword(userData.email, oldPassword)
+    .then((user) => {
+      if (user) {
+        firebase.auth().currentUser.updatePassword(newPassword).then(() => {
+          message.success('Changed Password, please sign in again.', 1.5, ()=>{window.location='/signout';})
+        }).catch((err)=>{
+          console.log(err);
+        })
+      }
+    })
+  }
+
   render() {
     const { userData, gotUserProfile } = this.state;
     return (
@@ -57,11 +74,11 @@ class Profile extends PureComponent {
                 className="profile-card"
                 title="About You"
               >
-                <Input placeholder="Full Name" value={userData ? userData.displayName : ''} />
-                <Input placeholder="E-Mail" value={userData ? userData.email : ''} />
-                <Input placeholder="Old Password" id="oldPasswordInput" />
-                <Input placeholder="New Password" id="oldPasswordInput" />
-                <Button type="primary" block>Change Password</Button>
+                <Input className="cust-input" placeholder="Full Name" value={userData ? userData.displayName : ''} />
+                <Input className="cust-input" placeholder="E-Mail" value={userData ? userData.email : ''} />
+                <Input className="cust-input" placeholder="Old Password" id="oldPasswordInput" />
+                <Input className="cust-input" placeholder="New Password" id="newPasswordInput" />
+                <Button className="cust-button" type="primary" onClick={this.changePassword} block>Change Password</Button>
               </Card>
               <Card
                 className="profile-card"
@@ -69,24 +86,23 @@ class Profile extends PureComponent {
               >
                 {
             userData.type === 'student'
-              ? <Button href="/join/class" type="primary" block>Join Class</Button>
-              : <Button href="/create/class" type="primary" block>Create Class</Button>
+              ? <Button style={{marginBottom: 10}} href="/join/class" type="primary" block>Join Class</Button>
+              : <Button style={{marginBottom: 10}} href="/create/class" type="primary" block>Create Class</Button>
           }
                 {
-              userData.universities === {}
+                Object.keys(userData.universities).length === 0
                 ? (
                   <p>You haven't joined any universities/classes yet.</p>
-
                 )
                 : (
-                  <Collapse>
+                  <Collapse >
                     {
                     Object.keys(userData.universities).map(university => (
                       <Collapse.Panel header={university}>
                         {
                             Object.keys(userData.universities[university]).map(classUid => (
                               <Card
-                                title={userData.university[university][classUid].name}
+                                title={userData.universities[university][classUid].name}
                               >
                                 <p>{userData.universities[university][classUid].description}</p>
                               </Card>
