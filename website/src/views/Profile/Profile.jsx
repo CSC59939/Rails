@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  Button, Icon, Input, Form, message, Card, Collapse,
+  Button, Icon, Input, message, Card, Collapse,
 } from 'antd';
 import './Profile.css';
 import firebase from 'firebase/app';
