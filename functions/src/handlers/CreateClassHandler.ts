@@ -1,7 +1,9 @@
-const cors = require('cors')({origin: true});
-const admin = require('firebase-admin');
+import * as admin from 'firebase-admin';
+import * as _cors from 'cors';
 
-exports.handler = function (req, res) {
+const cors = _cors({origin: true});
+
+export function createclass (req, res) {
     /*
     {
     "uid": "XCRZgzLysNOaI9pN8neyU5AQxiT2",
@@ -44,7 +46,7 @@ exports.handler = function (req, res) {
     admin.database().ref(`users/${uid}/universities/${universityName}`)
     .once('value')
     .then((snap)=>{
-      var existingClasses = snap.val();
+      let existingClasses = snap.val();
       if (existingClasses) {
         existingClasses.push(pushKey);
       } else {
@@ -62,7 +64,7 @@ exports.handler = function (req, res) {
     .push(classData)
     .then((pushData)=>{
       return addToTeacherProfile(query, pushData.key);
-    }).catch((err)=>{
+    },(err)=>{
       res.status(400).send({message: 'Something went wrong creating class.', error: err});
     });
   }

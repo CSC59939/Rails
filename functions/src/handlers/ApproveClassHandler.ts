@@ -1,7 +1,9 @@
-const cors = require('cors')({origin: true});
-const admin = require('firebase-admin');
+import * as admin from 'firebase-admin';
+import * as _cors from 'cors';
 
-exports.handler = function (req, res) {
+const cors = _cors({origin: true});
+
+export function approveclass (req, res) {
     /*
     {
       universityName: 'CUNY City College',
@@ -119,7 +121,7 @@ exports.handler = function (req, res) {
         return res.status(400).send({message: 'Something went wrong', error: err});
         });
     }
-
+    
     return cors(req, res, () => {
         const { universityName, classUid, studentEmail, uid } = req.body;
         if (!(universityName && classUid && studentEmail && uid)) {

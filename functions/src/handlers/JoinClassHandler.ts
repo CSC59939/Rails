@@ -1,6 +1,3 @@
-const cors = require('cors')({origin: true});
-const admin = require('firebase-admin');
-
 exports.handler = function (req, res)  {
 
     /*
