@@ -3,8 +3,7 @@ import {
   Layout,
 } from 'antd';
 import PropTypes from 'prop-types';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import { WithFirebaseSimple } from '../../hoc';
 import { ProfileInfo, HeaderIcons } from '..';
 import './DisplayHeader.css';
 
@@ -13,10 +12,18 @@ const { Header } = Layout;
 class DashboardHeader extends Component {
   static propTypes = {
     showDrawer: PropTypes.func,
+    firebase: PropTypes.object,
   }
 
   static defaultProps = {
     showDrawer: () => console.log('Never passed showDrawer'),
+    firebase: {
+      auth() {
+        return {
+          currentUser: undefined,
+        };
+      },
+    },
   }
 
   constructor(props) {
@@ -28,13 +35,32 @@ class DashboardHeader extends Component {
   render() {
     const {
       showDrawer,
+      firebase,
     } = this.props;
+    const Icons = [
+      {
+        type: 'add_circle',
+        onClick: () => console.log('add button clicked'),
+      },
+      {
+        type: 'add_alert',
+        onClick: () => console.log('add button clicked'),
+      },
+      {
+        type: 'notifications_active',
+        onClick: () => console.log('add button clicked'),
+      },
+    ];
     return (
       <Header className="Header">
         <ProfileInfo name={firebase.auth().currentUser ? firebase.auth().currentUser.displayName : 'User Name'} email={firebase.auth().currentUser ? firebase.auth().currentUser.email : 'email@domain.com'} />
-        <HeaderIcons showDrawer={showDrawer} />
+        <HeaderIcons Icons={Icons} howDrawer={showDrawer} />
       </Header>
     );
   }
 }
-export default DashboardHeader;
+
+const FirebaseDashboardHeader = WithFirebaseSimple(DashboardHeader);
+export default { DashboardHeader, FirebaseDashboardHeader };
+// export default FirebaseDashboardHeader;
+// export { DashboardHeader, FirebaseDashboardHeader };

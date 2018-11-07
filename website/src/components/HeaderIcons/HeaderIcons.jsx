@@ -1,11 +1,20 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
+import PropTypes from 'prop-types';
 import 'firebase/auth';
 import { IconButton } from '..';
 import './HeaderIcons.css';
 
 class HeaderIcons extends PureComponent {
+  static propTypes = {
+    showDrawer: PropTypes.func,
+  }
+
+  static defaultProps = {
+    showDrawer: () => console.log('Show Drawer Button Clicked'),
+  }
+
   render() {
     const {
       showDrawer,
