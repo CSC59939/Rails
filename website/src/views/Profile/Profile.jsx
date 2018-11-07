@@ -13,17 +13,9 @@ import 'firebase/auth';
       newPassword: '',
       uid:'',
       idToken:'',
-
     };
     this.changePassword = this.changePassword.bind(this);
-    this.test = this.test.bind(this);
-  }
-  componentWillMount() {
-    let user = firebase.auth().currentUser;
-    this.setState({uid:user.uid});
-    user.getIdToken(true).then((idToken) => {
-      this.setState({idToken:idToken});
-    })
+    this.getUserProfile = this.getUserProfile.bind(this);
   }
   changePassword() {
     const {userName,userEmail,oldPassword,newPassword} = this.state;
@@ -52,36 +44,44 @@ import 'firebase/auth';
       })
     }
   }
-  test() {
-    const {uid,idToken} = this.state;
+  getUserProfile() {
+    const { uid, idToken } = this.state;
     const reqData = {
       uid,
       idToken,
-    }
-    fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then((result) => {
-      if (result.status === 200) {
-        alert(result.message)
-      } else {
+    };
+    const profileData = fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }).then((result) => {
+        if (result.status === 200) {
+          return result.json();
+        }
         //
         message.error(result.message);
-      }
-    }).catch((err) => {
-      //
-    });
+      }).catch((err) => {
+        console.log(err);
+      });
+      profileData.then((data) => {
+        console.log(data); // Data from API is here, do data.message, or data.userData
+  });
   }
   render() {
+    let user = firebase.auth().currentUser;
+    const uid = user.uid;
+    // const idToken = '';
+    // user.getIdToken(true).then((idToken_arg) => {
+    //   idToken = idToken_arg
+    // })
     return (
     <div className="Profile">
       <div className="Body">
         <div>
-          <p className="AboutYou">About You</p>
+          <p className="AboutYou">{uid}</p>
           <p className="YourAcademic">Your Academic</p>
         </div>
         <Form className="Body_AboutYou">
@@ -124,7 +124,7 @@ import 'firebase/auth';
           </div>
           <div className="Body_University">
           </div>
-          <Button className="Button_JoinAnotherClass" onClick={this.test} style={{ color: '#87ceeb' }}>Join Another Class</Button>
+          <Button className="Button_JoinAnotherClass" onClick={this.getUserProfile} style={{ color: '#87ceeb' }}>Join Another Class</Button>
           <Button className="Button_JoinAnotherUniversity" type="primary" style={{ color: 'white' }}>Join Another University </Button>
         </div>
       </div>
