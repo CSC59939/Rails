@@ -45,6 +45,11 @@ export default class Signin extends PureComponent {
 
   render() {
     const { email, password, loading } = this.state;
+    const { history } = this.props;
+    const user = firebase.auth().currentUser;
+    if (user) {
+      history.push('/dashboard');
+    }
     return (
       <div className="signin">
         <h1 className="title">Rails</h1>
