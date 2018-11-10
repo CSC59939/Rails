@@ -8,23 +8,23 @@ import './HeaderIcons.css';
 
 class HeaderIcons extends PureComponent {
   static propTypes = {
-    showDrawer: PropTypes.func,
+    Icons: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string,
+      onClick: PropTypes.func,
+    })),
   }
 
   static defaultProps = {
-    showDrawer: () => console.log('Show Drawer Button Clicked'),
+    Icons: [],
   }
 
   render() {
     const {
-      showDrawer,
+      Icons,
     } = this.props;
     return (
       <div className="HeaderIcons">
-        <IconButton type="add_circle" onClick={() => console.log('Button Circle Clicked')} />
-        <IconButton type="add_alert" onClick={() => console.log('Button Bell1 Clicked')} />
-        <IconButton type="notifications_active" onClick={() => showDrawer()} />
-        <IconButton type="settings" onClick={() => console.log('Button Settings Clicked')} />
+        {Icons.map(icon => (<IconButton type={icon.type} onClick={icon.onClick} />))}
         <Link to="/signout">
           <IconButton type="exit_to_app" onClick={() => { firebase.auth().signOut(); }} />
         </Link>

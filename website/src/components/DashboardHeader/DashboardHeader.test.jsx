@@ -9,11 +9,11 @@ import DashboardHeader from './DashboardHeader';
 
 configure({ adapter: new Adapter() });
 
-describe('DashboardHeader', () => {
+describe('DashboardHeader', () => { // eslint-disable-line no-undef
   it('Expect DashboardHeader to match snapshot', () => { // eslint-disable-line no-undef
     const component = renderer.create(
       <MemoryRouter>
-        <DashboardHeader.DashboardHeader />
+        <DashboardHeader />
       </MemoryRouter>,
     );
     const tree = component.toJSON();

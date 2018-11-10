@@ -7,26 +7,17 @@ function WithFirebaseSimple(App) {
     constructor(props) {
       super(props);
       this.firebaseListener = null;
-      this.authStateListener = this.authStateListener.bind(this);
-      if (firebase.app()) this.authStateListener();
+      // this.authStateListener = this.authStateListener.bind(this);
+      // if (firebase.app()) this.authStateListener();
     }
 
     componentWillUnmount() {
       if (this.firebaseListener) {
         this.firebaseListener();
       }
-      this.authStateListener = undefined;
+      // this.authStateListener = undefined;
     }
 
-    authStateListener() {
-      this.firebaseListener = firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.setState({ signedin: true });
-        } else {
-          this.setState({ signedin: false });
-        }
-      });
-    }
 
     render() {
       return (
