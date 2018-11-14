@@ -13,7 +13,6 @@ jobs:
         - npm run lint
         - npm test
     - stage: build
-      if: branch = master
       script:
         - npm run build && cd ..
 deploy:
