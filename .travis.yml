@@ -4,6 +4,8 @@ node_js:
 cache:
   directories:
   - node_modules
+before_install:
+  - npm install -g firebase-tools
 jobs:
   include:
     - stage: test
@@ -15,10 +17,6 @@ jobs:
     - stage: build
       script:
         - npm run build && cd ..
-deploy:
-  provider: firebase
-  token: $FIREBASE_TOKEN
-  skip_cleanup: true
-  on:
-    branch:
-      - deploy
+    - stage: deploy
+      script:
+        - firebase deploy --token $FIREBASE_TOKEN
