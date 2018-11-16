@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - '10'
+# Only build pushed master and pushed pull request to master
+branches:
+  only:
+  - master
 cache:
   directories:
   - node_modules
