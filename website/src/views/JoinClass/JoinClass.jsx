@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, Button, Card, Select, message
+  Form, Button, Card, Select, message,
 } from 'antd';
-import { WithProtectedView } from '../../hoc';
 import './JoinClass.css';
 import firebase from 'firebase';
 import 'firebase/auth';
+import { WithProtectedView } from '../../hoc';
 
 const FormItem = Form.Item;
 
@@ -42,41 +42,40 @@ class JoinClass extends Component {
   }
 
   getclassSelection(collegeName) {
-    this.setState({ university: collegeName})
+    this.setState({ university: collegeName });
     const reqData = { universityName: collegeName };
     const fetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/getclasses', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-type' : 'application/json',
+        'Content-type': 'application/json',
       },
       body: JSON.stringify(reqData),
     }).then((result) => {
-      if(result.status === 200) {
+      if (result.status === 200) {
         return result.json();
       }
-      else{
-        this.setState({ loading: false });
-        message.error(result.message);
-      }
+
+      this.setState({ loading: false });
+      message.error(result.message);
     }).catch((err) => {
       console.log('Error', err);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     });
     fetchData.then((data) => {
       this.setState({
-        classOptions: data.classList
-      })
+        classOptions: data.classList,
+      });
     });
   }
 
   joinclass() {
-    this.setState({loading : true});
-    const {university, classSelection } = this.state;
+    this.setState({ loading: true });
+    const { university, classSelection } = this.state;
     const reqData = {
       universityName: university,
       classUid: classSelection,
-      studentData : {
+      studentData: {
         email: firebase.auth().currentUser.email,
         uid: firebase.auth().currentUser.uid,
       },
@@ -89,19 +88,19 @@ class JoinClass extends Component {
       },
       body: JSON.stringify(reqData),
     }).then((result) => {
-      if(result.status === 200) {
+      if (result.status === 200) {
         return result.json();
       }
     });
     joinFetchData.then((data) => {
       message.success(data.message);
       window.location.reload();
-    })
+    });
   }
 
   requestclass() {
-    this.setState({loading : true});
-    const {university, classSelection } = this.state;
+    this.setState({ loading: true });
+    const { university, classSelection } = this.state;
     const reqData = {
       universityName: university,
       classUid: classSelection,
@@ -115,19 +114,20 @@ class JoinClass extends Component {
       },
       body: JSON.stringify(reqData),
     }).then((result) => {
-      if(result.status === 200) {
+      if (result.status === 200) {
         return result.json();
       }
     });
     joinFetchData.then((data) => {
       message.success(data.message);
       window.location.reload();
-    })
+    });
   }
 
   render() {
-
-    const { collegeOptions, classOptions, preapproved } = this.state;
+    const {
+      collegeOptions, classOptions, preapproved, loading,
+    } = this.state;
 
     const formItemLayout = {
       wrapperCol: {
@@ -154,9 +154,9 @@ class JoinClass extends Component {
                 onSearch={this.getColleges}
                 placeholder="University/College"
                 style={{ width: '100%' }}
-                onChange={e => { this.getclassSelection(e) } }
+                onChange={(e) => { this.getclassSelection(e); }}
               >
-              {
+                {
                     collegeOptions.map(element => (
                       <Select.Option key={element['school.name']}>
                         {element['school.name']}
@@ -171,37 +171,39 @@ class JoinClass extends Component {
             >
               <Select
                 placeholder="Class and Section code"
-                onChange={ e => {
+                onChange={(e) => {
                   console.log(e);
-                  this.setState({ classSelection: e })
-                  const userEmail = firebase.auth().currentUser.email; 
+                  this.setState({ classSelection: e });
+                  const userEmail = firebase.auth().currentUser.email;
                   if (classOptions[e].approvedEmails.indexOf(userEmail) === -1) {
-                    this.setState({preapproved: false});
-                    message.info('Not pre-approved. Use the request permission card.')
+                    this.setState({ preapproved: false });
+                    message.info('Not pre-approved. Use the request permission card.');
                   }
                 }}
               >
                 {
-                  Object.keys(classOptions).map((classUid) => {
-                    return (
-                      <Select.Option key={classUid}>
-                        <p>{classOptions[classUid].name}</p>
-                        <p>{classOptions[classUid].description}</p>
-                        <p>{classOptions[classUid].instructorName}</p>
-                      </Select.Option>
-                    );
-                  })
+                  Object.keys(classOptions).map(classUid => (
+                    <Select.Option key={classUid}>
+                      <p>{classOptions[classUid].name}</p>
+                      <p>{classOptions[classUid].description}</p>
+                      <p>{classOptions[classUid].instructorName}</p>
+                    </Select.Option>
+                  ))
                 }
               </Select>
             </FormItem>
             {
-              this.state.preapproved ?
-              <div className="registerButton">
-                <Button disabled={!preapproved} margin="auto" type="primary" onClick={this.joinclass}>Join Class</Button>
-              </div>:
-              <div className="registerButton">
-                <Button disabled={preapproved} margin="auto" type="primary" onClick={this.requestclass}>Request Permission</Button>
-              </div>
+              this.state.preapproved
+                ? (
+                  <div className="registerButton">
+                    <Button disabled={!preapproved} margin="auto" type="primary" onClick={this.joinclass} loading={loading}>Join Class</Button>
+                  </div>
+                )
+                : (
+                  <div className="registerButton">
+                    <Button disabled={preapproved} margin="auto" type="primary" onClick={this.requestclass} loading={loading}>Request Permission</Button>
+                  </div>
+                )
             }
           </Form>
         </Card>

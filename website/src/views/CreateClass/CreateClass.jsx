@@ -1,30 +1,44 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
-  Form, Input, Tooltip, Icon, Button, Card, DatePicker, TimePicker, Checkbox, Select,
+  Form, Input, Tooltip, Icon, Button, Card, TimePicker, Checkbox, Select, message,
 } from 'antd';
 import './CreateClass.css';
+import firebase from 'firebase';
+import 'firebase/auth';
 import { WithProtectedView } from '../../hoc';
 
 const FormItem = Form.Item;
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const CheckboxGroup = Checkbox.Group;
-const plainOptions = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const plainOptions = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const format = 'HH:mm';
 
-class CreateClass extends Component {
+class CreateClass extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       universities: null,
       classname: null,
       sectioncode: null,
-      meetingDates: null,
-      days: null,
-      times: null,
+      fromtime: null,
+      totime: null,
       collegeOptions: null,
+      email: [],
+      loading: false,
+      Monday: false,
+      Tuesday: false,
+      Wednesday: false,
+      Thursday: false,
+      Friday: false,
+      Saturday: false,
+      Sunday: false,
     };
     this.getColleges = this.getColleges.bind(this);
+    this.createclass = this.createclass.bind(this);
+    this.timeFromChange = this.timeFromChange.bind(this);
+    this.timeToChange = this.timeToChange.bind(this);
+    this.checkOnChange = this.checkOnChange.bind(this);
   }
 
   getColleges(collegeName) {
@@ -46,22 +60,101 @@ class CreateClass extends Component {
   }
 
   getSchoolOptions() {
-    const schools = this.state.collegeOptions;
-    // let schoolsObj = []
+    const { collegeOptions } = this.state;
+    const schools = collegeOptions;
     return schools.map(v => (
       <Select.Option key={v}>
         {v}
       </Select.Option>));
   }
 
-  render() {
-    function DatesOnChange(date, dateString) {
-      console.log(date, dateString);
-    }
+  createclass() {
+    this.setState({ loading: true });
+    const {
+      universities, classname, sectioncode, email, fromtime, totime,
+    } = this.state;
+    const reqData = {
+      universityName: universities,
+      classData: {
+        name: sectioncode,
+        description: classname,
+        instructorName: firebase.auth().currentUser.email,
+        approvedEmails: email,
+        meetingTimes: {
+          from: fromtime,
+          to: totime,
+        },
+      },
+      meetingDays: {
+        Monday: false,
+        Tuesday: false,
+        Wednesday: false,
+        Thursday: false,
+        Friday: false,
+        Saturday: false,
+        Sunday: false,
+      },
+    };
+    const createFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/createclass', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(reqData),
+    }).then((result) => {
+      if (result.status === 200) {
+        return result.json();
+      }
+    });
+    createFetchData.then((data) => {
+      message.success(data.message);
+      window.location.reload();
+    });
+  }
 
-    function TimeOnChange(time, timeString) {
-      console.log(time, timeString);
-    }
+  timeFromChange(time, timeString) {
+    this.setState({ fromtime: timeString });
+  }
+
+  timeToChange(time, timeString) {
+    this.setState({ totime: timeString });
+  }
+
+  checkOnChange(checkedValues) {
+    const days = {
+      Monday: false,
+      Tuesday: false,
+      Wednesday: false,
+      Thursday: false,
+      Friday: false,
+      Saturday: false,
+      Sunday: false,
+    };
+    checkedValues.forEach((day) => {
+      days[day] = true;
+    });
+    this.setState({
+      Monday: days[0],
+      Tuesday: days[1],
+      Wednesday: days[2],
+      Thursday: days[3],
+      Friday: days[4],
+      Saturday: days[5],
+      Sunday: days[6],
+    });
+  }
+
+  render() {
+    // function DatesOnChange(date, dateString) {
+    //   this.setState({});
+    //   console.log(dateString);
+    // }
+
+    const {
+      collegeOptions, loading, fromtime, totime,
+      Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,
+    } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -92,35 +185,49 @@ class CreateClass extends Component {
                 style={{ width: '100%' }}
                 onChange={e => this.setState({ universities: e })}
               >
-                {this.state.collegeOptions && this.getSchoolOptions()}
+                {collegeOptions && this.getSchoolOptions()}
               </Select>
             </FormItem>
             <FormItem
               {...formItemLayout}
             >
-              <Input placeholder="Class Name" />
+              <Input
+                onChange={(e) => { this.setState({ classname: e.target.value }); }}
+                placeholder="Class Name"
+              />
             </FormItem>
             <FormItem
               {...formItemLayout}
             >
-              <Input placeholder="Section code" />
+              <Input
+                onChange={(e) => { this.setState({ sectioncode: e.target.value }); }}
+                placeholder="Section code"
+              />
             </FormItem>
-            <FormItem
+            {/* <FormItem
               {...formItemLayout}
             >
               <span>
                                 Meeting Dates&nbsp;
               </span>
               <RangePicker onChange={DatesOnChange} />
-            </FormItem>
+            </FormItem> */}
             <FormItem
               {...formItemLayout}
             >
               <span>
                                 Days & Times&nbsp;
               </span>
-              <CheckboxGroup options={plainOptions} />
-              <TimePicker format={format} onChange={TimeOnChange} />
+              <CheckboxGroup options={plainOptions} onChange={this.checkOnChange} />
+              <span>
+                                From:&nbsp;
+              </span>
+              <TimePicker onChange={this.timeFromChange} format={format} />
+              &nbsp;&nbsp;
+              <span>
+                                To:&nbsp;
+              </span>
+              <TimePicker onChange={this.timeToChange} format={format} />
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -128,10 +235,10 @@ class CreateClass extends Component {
               <Tooltip title="please make sure you're using the pre-approved E-mail address">
                 <Icon type="question-circle-o" />
               </Tooltip>
-              <Input placeholder="Email" />
+              <Input onChange={(e) => { this.setState({ email: e.target.value }); }} placeholder="Email" />
             </FormItem>
             <div className="registerButton" align="center">
-              <Button margin="auto" type="primary" htmlType="submit">Create</Button>
+              <Button margin="auto" type="primary" onClick={this.createclass} loading={loading}>Create</Button>
             </div>
           </Form>
         </Card>
