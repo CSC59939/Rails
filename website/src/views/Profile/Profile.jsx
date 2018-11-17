@@ -40,7 +40,6 @@ class Profile extends PureComponent {
         });
         profileData.then((data) => {
           message.success(data.message);
-          console.log(data.userData);
           this.setState({ userData: data.userData, gotUserProfile: true });
         });
       });
