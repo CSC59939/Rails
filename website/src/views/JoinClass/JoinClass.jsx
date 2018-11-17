@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
 import {
   Form, Button, Card, Select, message,
 } from 'antd';
 import './JoinClass.css';
-import firebase from 'firebase';
 import 'firebase/auth';
 import { WithProtectedView } from '../../hoc';
 
@@ -17,10 +17,8 @@ class JoinClass extends Component {
       classOptions: {},
       university: null,
       classSelection: null,
-      studentID: null,
-      email: null,
-      loading: false,
       preapproved: true,
+      loading: false,
     };
     this.getColleges = this.getColleges.bind(this);
     this.joinclass = this.joinclass.bind(this);
@@ -184,24 +182,28 @@ class JoinClass extends Component {
                 {
                   Object.keys(classOptions).map(classUid => (
                     <Select.Option key={classUid}>
-                      <p>{classOptions[classUid].name}</p>
-                      <p>{classOptions[classUid].description}</p>
-                      <p>{classOptions[classUid].instructorName}</p>
+                      <p>
+                        {classOptions[classUid].name}
+                        <br />
+                        {classOptions[classUid].description}
+                        <br />
+                        {classOptions[classUid].instructorName}
+                      </p>
                     </Select.Option>
                   ))
                 }
               </Select>
             </FormItem>
             {
-              this.state.preapproved
+              preapproved
                 ? (
                   <div className="registerButton">
-                    <Button disabled={!preapproved} margin="auto" type="primary" onClick={this.joinclass} loading={loading}>Join Class</Button>
+                    <Button loading={loading} disabled={!preapproved || loading} margin="auto" type="primary" onClick={this.joinclass}>Join Class</Button>
                   </div>
                 )
                 : (
                   <div className="registerButton">
-                    <Button disabled={preapproved} margin="auto" type="primary" onClick={this.requestclass} loading={loading}>Request Permission</Button>
+                    <Button loading={loading} disabled={preapproved || loading} margin="auto" type="primary" onClick={this.requestclass}>Request Permission</Button>
                   </div>
                 )
             }
