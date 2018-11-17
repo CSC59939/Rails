@@ -36,7 +36,8 @@ class DashboardHeader extends Component {
     const {
       firebase,
     } = this.props;
-    console.log(firebase);
+    console.log('firebase');
+    console.log(firebase.auth());
     if (firebase.auth().currentUser !== undefined) {
       firebase.auth().currentUser
         .getIdToken(true)
@@ -70,13 +71,11 @@ class DashboardHeader extends Component {
     const {
       showDrawer,
       firebase,
-      history,
     } = this.props;
     const {
       teacher,
     } = this.state;
-    console.log(`teacher${teacher}`);
-    console.log(history);
+
     const Icons = [
       {
         type: 'add_alert',
@@ -90,7 +89,7 @@ class DashboardHeader extends Component {
       },
       {
         type: 'settings',
-        onclick: () => (() => { window.location = '/profile'; }),
+        onclick: () => { window.location = '/profile'; },
         key: 'settings',
       },
     ];

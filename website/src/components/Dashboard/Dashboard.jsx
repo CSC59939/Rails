@@ -21,26 +21,26 @@ class Dashboard extends PureComponent {
 
   showDrawer = () => {
     this.setState({
-      visible: true,
+      drawerVisible: true,
     });
   };
 
   onClose = () => {
     this.setState({
-      visible: false,
+      drawerVisible: false,
     });
   };
 
   render() {
     const { children } = this.props;
-    const { loggedIn, visible } = this.state;
+    const { loggedIn, drawerVisible } = this.state;
     return (
       <Layout className="Container" style={{ height: '100%' }}>
         {loggedIn && <DashboardHeader showDrawer={this.showDrawer} />}
         <Layout style={{ height: '100%' }}>
           <Content style={{ height: '100%' }}>{children}</Content>
         </Layout>
-        <Notification notificationVisible={visible} onClose={this.onClose} />
+        <Notification notificationVisible={drawerVisible} onClose={this.onClose} />
       </Layout>
     );
   }

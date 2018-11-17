@@ -24,7 +24,13 @@ class HeaderIcons extends PureComponent {
     } = this.props;
     return (
       <div className="HeaderIcons">
-        {Icons.map(icon => (<IconButton type={icon.type} onClick={icon.onClick} />))}
+        {Icons.map(icon => (
+          <IconButton
+            key={icon.type}
+            type={icon.type}
+            onClick={icon.onClick}
+          />
+        ))}
         <Link to="/signout">
           <IconButton type="exit_to_app" onClick={() => { firebase.auth().signOut(); }} />
         </Link>
