@@ -1,6 +1,6 @@
 import Dashboard from './Dashboard/Dashboard';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import DashboardHeader from './DashboardHeader/DashboardHeader';
+import { FirebaseDashboardHeader as DashboardHeader } from './DashboardHeader/DashboardHeader';
 import MaterialIcon from './MaterialIcon/MaterialIcon';
 import HeaderIcons from './HeaderIcons/HeaderIcons';
 import IconButton from './IconButton/IconButton';

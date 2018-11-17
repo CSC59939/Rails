@@ -4,6 +4,7 @@ import {
 } from 'antd';
 import PropTypes from 'prop-types';
 import { ProfileInfo, HeaderIcons } from '..';
+import { WithFirebaseSimple } from '../../hoc';
 import './DisplayHeader.css';
 
 const { Header } = Layout;
@@ -36,8 +37,6 @@ class DashboardHeader extends Component {
     const {
       firebase,
     } = this.props;
-    console.log('firebase');
-    console.log(firebase.auth());
     if (firebase.auth().currentUser !== undefined) {
       firebase.auth().currentUser
         .getIdToken(true)
@@ -109,6 +108,5 @@ class DashboardHeader extends Component {
   }
 }
 
-export default DashboardHeader;
-// export default FirebaseDashboardHeader;
-// export { DashboardHeader, FirebaseDashboardHeader };
+const FirebaseDashboardHeader = WithFirebaseSimple(DashboardHeader);
+export { DashboardHeader, FirebaseDashboardHeader };
