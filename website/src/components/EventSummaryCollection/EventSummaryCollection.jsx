@@ -5,7 +5,7 @@ import './EventSummaryCollection.css';
 
 class EventSummaryCollection extends Component {
   static propTypes = {
-    event: PropTypes.array,
+    event: PropTypes.object,
   }
 
   static defaultProps = {
