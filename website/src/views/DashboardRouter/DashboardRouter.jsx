@@ -46,6 +46,5 @@ class DashboardRouter extends PureComponent {
     );
   }
 }
-export default DashboardRouter;
 const ProtectedDashboardRouter = WithProtectedView(DashboardRouter);
 export { ProtectedDashboardRouter, DashboardRouter };

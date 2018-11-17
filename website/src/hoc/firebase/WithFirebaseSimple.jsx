@@ -4,21 +4,6 @@ import 'firebase/auth';
 
 function WithFirebaseSimple(App) {
   return class extends PureComponent {
-    constructor(props) {
-      super(props);
-      this.firebaseListener = null;
-      // this.authStateListener = this.authStateListener.bind(this);
-      // if (firebase.app()) this.authStateListener();
-    }
-
-    componentWillUnmount() {
-      if (this.firebaseListener) {
-        this.firebaseListener();
-      }
-      // this.authStateListener = undefined;
-    }
-
-
     render() {
       return (
         <App
