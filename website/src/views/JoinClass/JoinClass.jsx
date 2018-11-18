@@ -24,6 +24,7 @@ class JoinClass extends Component {
     this.joinclass = this.joinclass.bind(this);
     this.requestclass = this.requestclass.bind(this);
     this.getclassSelection = this.getclassSelection.bind(this);
+    this.searchClasses = this.searchClasses.bind(this);
   }
 
   getColleges(collegeName) {
@@ -50,19 +51,18 @@ class JoinClass extends Component {
       },
       body: JSON.stringify(reqData),
     }).then((result) => {
-      if (result.status === 200) {
-        return result.json();
-      }
-
+      return result.json();
       this.setState({ loading: false });
-      message.error(result.message);
     }).catch((err) => {
-      console.log('Error', err);
       this.setState({ loading: false });
+      console.log('Get Classes Err', err);
     });
     fetchData.then((data) => {
+      if (!data) message.info('No classes found.');
+      else message.info(data.message, 3);
       this.setState({
-        classOptions: data.classList,
+        classOptions: (data && data.classList) ? data.classList : {},
+        classSelection: '',
       });
     });
   }
@@ -85,14 +85,9 @@ class JoinClass extends Component {
         'Content-type': 'application/json',
       },
       body: JSON.stringify(reqData),
-    }).then((result) => {
-      if (result.status === 200) {
-        return result.json();
-      }
-    });
+    }).then(result => result.json());
     joinFetchData.then((data) => {
       message.success(data.message);
-      window.location.reload();
     });
   }
 
@@ -111,20 +106,20 @@ class JoinClass extends Component {
         'Content-type': 'application/json',
       },
       body: JSON.stringify(reqData),
-    }).then((result) => {
-      if (result.status === 200) {
-        return result.json();
-      }
-    });
+    }).then(result => result.json());
     joinFetchData.then((data) => {
+      console.log(data);
       message.success(data.message);
-      window.location.reload();
     });
+  }
+
+  searchClasses(className) {
+
   }
 
   render() {
     const {
-      collegeOptions, classOptions, preapproved, loading,
+      collegeOptions, classOptions, preapproved, loading, university, classSelection,
     } = this.state;
 
     const formItemLayout = {
@@ -147,7 +142,7 @@ class JoinClass extends Component {
               {...formItemLayout}
             >
               <Select
-                size="default"
+                size="large"
                 showSearch
                 onSearch={this.getColleges}
                 placeholder="University/College"
@@ -168,14 +163,18 @@ class JoinClass extends Component {
               {...formItemLayout}
             >
               <Select
-                placeholder="Class and Section code"
+                size="large"
+                showSearch
+                onSearch={this.searchClasses}
+                placeholder="Class and Section"
+                value={classSelection}
                 onChange={(e) => {
                   console.log(e);
                   this.setState({ classSelection: e });
                   const userEmail = firebase.auth().currentUser.email;
                   if (classOptions[e].approvedEmails.indexOf(userEmail) === -1) {
                     this.setState({ preapproved: false });
-                    message.info('Not pre-approved. Use the request permission card.');
+                    message.info('Not pre-approved. Please request permission.');
                   }
                 }}
               >
@@ -184,9 +183,9 @@ class JoinClass extends Component {
                     <Select.Option key={classUid}>
                       <p>
                         {classOptions[classUid].name}
-                        <br />
+                        {' - '}
                         {classOptions[classUid].description}
-                        <br />
+                        {' by '}
                         {classOptions[classUid].instructorName}
                       </p>
                     </Select.Option>
@@ -195,6 +194,10 @@ class JoinClass extends Component {
               </Select>
             </FormItem>
             {
+              (university && (university.length > 0)) && (classSelection)
+                ? (
+                  <div>
+                    {
               preapproved
                 ? (
                   <div className="registerButton">
@@ -206,6 +209,10 @@ class JoinClass extends Component {
                     <Button loading={loading} disabled={preapproved || loading} margin="auto" type="primary" onClick={this.requestclass}>Request Permission</Button>
                   </div>
                 )
+            }
+                  </div>
+                )
+                : null
             }
           </Form>
         </Card>

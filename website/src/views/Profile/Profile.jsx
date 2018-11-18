@@ -13,6 +13,8 @@ class Profile extends PureComponent {
     this.state = {
       gotUserProfile: false,
       userData: null,
+      oldPass: '',
+      newPass: '',
     };
     this.changePassword = this.changePassword.bind(this);
   }
@@ -35,35 +37,43 @@ class Profile extends PureComponent {
             return result.json();
           }
           message.error(result.message);
+          return null;
         }).catch((err) => {
           console.log(err);
         });
         profileData.then((data) => {
           message.success(data.message);
-          console.log(data.userData);
           this.setState({ userData: data.userData, gotUserProfile: true });
         });
       });
   }
 
   changePassword() {
-    const { userData } = this.state;
-    const oldPassword = document.getElementById('oldPasswordInput').value;
-    const newPassword = document.getElementById('newPasswordInput').value;
-    firebase.auth().signInWithEmailAndPassword(userData.email, oldPassword)
+    const { userData, oldPass, newPass } = this.state;
+    if (oldPass.length < 6 || newPass.length < 6) {
+      if (oldPass.length < 6) message.error('Wrong old password.', 3);
+      else if (newPass.length < 6) message.error('New password should be atleast 6 characters long', 2);
+      return;
+    }
+    firebase.auth().signInWithEmailAndPassword(userData.email, oldPass)
       .then((user) => {
         if (user) {
-          firebase.auth().currentUser.updatePassword(newPassword).then(() => {
+          firebase.auth().currentUser.updatePassword(newPass).then(() => {
             message.success('Changed Password, please sign in again.', 1.5, () => { window.location = '/signout'; });
           }).catch((err) => {
             console.log(err);
           });
         }
+      }).catch((err) => {
+        if (err.code === 'auth/wrong-password') message.error('Wrong old password.', 3);
+        else message.error(err.message, 3);
       });
   }
 
   render() {
-    const { userData, gotUserProfile } = this.state;
+    const {
+      oldPass, newPass, userData, gotUserProfile,
+    } = this.state;
     return (
       <div className="profile-page">
         {
@@ -75,10 +85,10 @@ class Profile extends PureComponent {
                 className="profile-card"
                 title="About You"
               >
-                <Input className="cust-input" placeholder="Full Name" value={userData ? userData.displayName : ''} />
-                <Input className="cust-input" placeholder="E-Mail" value={userData ? userData.email : ''} />
-                <Input className="cust-input" placeholder="Old Password" id="oldPasswordInput" />
-                <Input className="cust-input" placeholder="New Password" id="newPasswordInput" />
+                <Input disabled className="cust-input" placeholder="Full Name" value={userData ? userData.displayName : ''} />
+                <Input disabled className="cust-input" placeholder="E-Mail" value={userData ? userData.email : ''} />
+                <Input onChange={(e) => { this.setState({ oldPass: e.target.value }); }} className="cust-input" placeholder="Old Password" value={oldPass} />
+                <Input onChange={(e) => { this.setState({ newPass: e.target.value }); }} className="cust-input" placeholder="New Password" value={newPass} />
                 <Button className="cust-button" type="primary" onClick={this.changePassword} block>Change Password</Button>
               </Card>
               <Card
