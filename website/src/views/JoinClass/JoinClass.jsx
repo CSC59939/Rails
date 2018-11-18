@@ -3,9 +3,9 @@ import firebase from 'firebase/app';
 import {
   Form, Button, Card, Select, message,
 } from 'antd';
-import { WithProtectedView } from '../../hoc';
 import './JoinClass.css';
 import 'firebase/auth';
+import { WithProtectedView } from '../../hoc';
 
 const FormItem = Form.Item;
 
