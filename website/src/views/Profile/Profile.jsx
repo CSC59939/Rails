@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  Button, Icon, Input, message, Card, Collapse,
+  Button, Icon, Input, message, Card, Collapse, List,
 } from 'antd';
 import './Profile.css';
 import firebase from 'firebase/app';
@@ -96,35 +96,57 @@ class Profile extends PureComponent {
                 title="Your Academics"
               >
                 {
-            userData.type === 'student'
-              ? <Button style={{ marginBottom: 10 }} href="/join/class" type="primary" block>Join Class</Button>
-              : <Button style={{ marginBottom: 10 }} href="/create/class" type="primary" block>Create Class</Button>
-          }
+                  userData.type === 'student'
+                    ? <Button style={{ marginBottom: 10 }} href="/join/class" type="primary" block>Join Class</Button>
+                    : <Button style={{ marginBottom: 10 }} href="/create/class" type="primary" block>Create Class</Button>
+                }
                 {
-                Object.keys(userData.universities).length === 0
-                  ? (
-                    <p>You haven't joined any universities/classes yet.</p>
-                  )
-                  : (
-                    <Collapse>
-                      {
-                    Object.keys(userData.universities).map(university => (
-                      <Collapse.Panel header={university}>
+                  Object.keys(userData.universities).length === 0
+                    ? (
+                      <p>{'You haven\'t joined any universities/classes yet.'}</p>
+                    )
+                    : (
+                      <Collapse>
                         {
-                            Object.keys(userData.universities[university]).map(classUid => (
-                              <Card
-                                title={userData.universities[university][classUid].name}
-                              >
-                                <p>{userData.universities[university][classUid].description}</p>
-                              </Card>
-                            ))
-                          }
-                      </Collapse.Panel>
-                    ))
+                          Object.keys(userData.universities).map((university) => {
+                            const classList = [];
+                            Object.keys(userData.universities[university]).forEach((classUid) => {
+                              classList.push(`${userData.universities[university][classUid].name} - ${userData.universities[university][classUid].description}`);
+                            });
+                            return (
+                              <Collapse.Panel header={university} key={university}>
+                                <List
+                                  dataSource={classList}
+                                  renderItem={item => (
+                                    <List.Item
+                                      actions={[
+                                        <Button icon="eye" size="small" shape="circle" />,
+                                        <Button icon="close" size="small" shape="circle" type="danger" />,
+                                      ]}
+                                    >
+                                      {item}
+                                    </List.Item>
+                                  )}
+                                />
+                              </Collapse.Panel>
+                            );
+                            // <Collapse.Panel header={university} key={university}>
+                            //   {
+                            //       Object.keys(userData.universities[university]).map(classUid => (
+                            //         <Card
+                            //           key={`university-${classUid}`}
+                            //           title={userData.universities[university][classUid].name}
+                            //         >
+                            //           <p>{userData.universities[university][classUid].description}</p>
+                            //         </Card>
+                            //       ))
+                            //     }
+                            // </Collapse.Panel>
+                          })
+                        }
+                      </Collapse>
+                    )
                   }
-                    </Collapse>
-                  )
-            }
               </Card>
             </div>
           )
@@ -133,7 +155,7 @@ class Profile extends PureComponent {
               width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
             }}
             >
-              <Icon className="protected-view-loading" type="loading" theme="outlined" />
+              <Icon className="profile-loading" type="loading" theme="outlined" />
             </div>
           )
       }

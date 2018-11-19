@@ -1,44 +1,30 @@
 import React, { PureComponent } from 'react';
-import {
-  Form, Input, Tooltip, Icon, Button, Card, TimePicker, Checkbox, Select, message,
-} from 'antd';
-import './CreateClass.css';
 import firebase from 'firebase';
-import 'firebase/auth';
+import {
+  Input, Button, Card, TimePicker, Checkbox, Select, message, Alert,
+} from 'antd';
 import { WithProtectedView } from '../../hoc';
-
-const FormItem = Form.Item;
-// const { RangePicker } = DatePicker;
-
-const CheckboxGroup = Checkbox.Group;
-const plainOptions = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const format = 'HH:mm';
+import 'firebase/auth';
+import './CreateClass.css';
 
 class CreateClass extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      universities: null,
-      classname: null,
-      sectioncode: null,
-      fromtime: null,
-      totime: null,
-      collegeOptions: null,
-      email: [],
+      selectedUniversity: '',
+      className: '',
+      sectionCode: '',
+      days: new Array(7).fill(false),
+      fromTime: '',
+      toTime: '',
+      approvedEmails: [],
+      collegeOptions: [],
+      validatedEmails: true,
       loading: false,
-      Monday: false,
-      Tuesday: false,
-      Wednesday: false,
-      Thursday: false,
-      Friday: false,
-      Saturday: false,
-      Sunday: false,
     };
     this.getColleges = this.getColleges.bind(this);
-    this.createclass = this.createclass.bind(this);
-    this.timeFromChange = this.timeFromChange.bind(this);
-    this.timeToChange = this.timeToChange.bind(this);
-    this.checkOnChange = this.checkOnChange.bind(this);
+    this.processEmailList = this.processEmailList.bind(this);
+    this.sendCreateClass = this.sendCreateClass.bind(this);
   }
 
   getColleges(collegeName) {
@@ -48,81 +34,59 @@ class CreateClass extends PureComponent {
     fetch(prefix + name + suffix)
       .then(res => res.json())
       .then((result) => {
-        const schools = result.results;
-        const schoolOptions = [];
-        schools.forEach((element) => {
-          schoolOptions.push(element['school.name']);
-        });
         this.setState({
-          collegeOptions: schoolOptions,
+          collegeOptions: result.results,
         });
       });
   }
 
-  getSchoolOptions() {
-    const { collegeOptions } = this.state;
-    const schools = collegeOptions;
-    return schools.map(v => (
-      <Select.Option key={v}>
-        {v}
-      </Select.Option>));
-  }
-
-  createclass() {
-    this.setState({ loading: true });
-    const {
-      universities, classname, sectioncode, email, fromtime, totime,
-    } = this.state;
-    const reqData = {
-      universityName: universities,
-      classData: {
-        name: sectioncode,
-        description: classname,
-        instructorName: firebase.auth().currentUser.email,
-        approvedEmails: email,
-        meetingTimes: {
-          from: fromtime,
-          to: totime,
-        },
-      },
-      meetingDays: {
-        Monday: false,
-        Tuesday: false,
-        Wednesday: false,
-        Thursday: false,
-        Friday: false,
-        Saturday: false,
-        Sunday: false,
-      },
-    };
-    const createFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/createclass', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then((result) => {
-      if (result.status === 200) {
-        return result.json();
+  processEmailList(e) {
+    function checkEmail(email) {
+      const filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!filter.test(email)) return false;
+      return true;
+    }
+    const value = e.target.value;
+    const newLineSeparated = value.split('\n');
+    const emailList = [];
+    newLineSeparated.forEach((email) => {
+      const commaSeparated = email.split(',');
+      commaSeparated.forEach((cse, i) => {
+        commaSeparated[i] = cse.trim();
+      });
+      emailList.push(...commaSeparated);
+    });
+    this.setState({ approvedEmails: emailList });
+    let validatedEmails = true;
+    emailList.forEach((email) => {
+      if (!checkEmail(email) && email !== '') {
+        validatedEmails = false;
       }
     });
-    createFetchData.then((data) => {
-      message.success(data.message);
-      window.location.reload();
-    });
+    this.setState({ validatedEmails });
   }
 
-  timeFromChange(time, timeString) {
-    this.setState({ fromtime: timeString });
-  }
-
-  timeToChange(time, timeString) {
-    this.setState({ totime: timeString });
-  }
-
-  checkOnChange(checkedValues) {
-    const days = {
+  sendCreateClass() {
+    const {
+      isValidated, selectedUniversity, className, sectionCode, days, fromTime, toTime, approvedEmails,
+    } = this.state;
+    this.setState({ loading: true });
+    if (isValidated === false) {
+      message.error('Looks like one or more of your emails is incorrect.');
+      this.setState({ loading: false });
+      return;
+    }
+    if ((selectedUniversity === '') || (className === '') || (sectionCode === '') || (fromTime === '') || (toTime === '')) {
+      message.error('Looks like you\'re missing something.');
+      this.setState({ loading: false });
+      return;
+    }
+    if (days.length < 1) {
+      message.error('You must pick at least one meeting day.');
+      this.setState({ loading: false });
+      return;
+    }
+    const meetingDays = {
       Monday: false,
       Tuesday: false,
       Wednesday: false,
@@ -131,116 +95,142 @@ class CreateClass extends PureComponent {
       Saturday: false,
       Sunday: false,
     };
-    checkedValues.forEach((day) => {
-      days[day] = true;
+    days.forEach((day) => {
+      meetingDays[day] = true;
     });
-    this.setState({
-      Monday: days[0],
-      Tuesday: days[1],
-      Wednesday: days[2],
-      Thursday: days[3],
-      Friday: days[4],
-      Saturday: days[5],
-      Sunday: days[6],
-    });
+    const reqData = {
+      uid: firebase.auth().currentUser.uid,
+      universityName: selectedUniversity,
+      classData: {
+        name: sectionCode,
+        description: className,
+        instructorUid: firebase.auth().currentUser.uid,
+        instructorName: firebase.auth().currentUser.displayName,
+        approvedEmails,
+        meetingTimes: {
+          from: fromTime,
+          to: toTime,
+        },
+        meetingDays,
+      },
+    };
+    console.log(reqData);
+    fetch('https://us-central1-rails-students.cloudfunctions.net/createclass',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }).then(res => res.json())
+      .then((result) => {
+        message.info(result.message, 3, () => {
+          window.location.reload();
+        });
+      })
+      .catch((err) => {
+        console.log('Create class err', err);
+        this.setState({ loading: false });
+      });
   }
 
   render() {
-    // function DatesOnChange(date, dateString) {
-    //   this.setState({});
-    //   console.log(dateString);
-    // }
-
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const {
-      collegeOptions, loading, fromtime, totime,
-      Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday,
+      collegeOptions, className, sectionCode, selectedUniversity, validatedEmails, loading,
     } = this.state;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 24 },
-      },
-    };
-
     return (
-
-      <div className="create">
+      <div className="create-class-page">
         <h1 className="title">Rails</h1>
         <Card
-          className="createcard"
+          className="create-card"
           title="Create Class"
-          extra={<a href="/join/class">Already have a class code? Join Class</a>}
+          extra={<Button href="/dashboard" type="danger">Back to  Dashboard</Button>}
         >
-          <Form className="regiform">
-            <FormItem
-              {...formItemLayout}
-            >
-              <Select
-                showSearch
-                size="default"
-                onSearch={this.getColleges}
-                prefix={<Icon type="bank" />}
-                placeholder="University/College"
-                style={{ width: '100%' }}
-                onChange={e => this.setState({ universities: e })}
-              >
-                {collegeOptions && this.getSchoolOptions()}
-              </Select>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Input
-                onChange={(e) => { this.setState({ classname: e.target.value }); }}
-                placeholder="Class Name"
-              />
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Input
-                onChange={(e) => { this.setState({ sectioncode: e.target.value }); }}
-                placeholder="Section code"
-              />
-            </FormItem>
-            {/* <FormItem
-              {...formItemLayout}
-            >
-              <span>
-                                Meeting Dates&nbsp;
-              </span>
-              <RangePicker onChange={DatesOnChange} />
-            </FormItem> */}
-            <FormItem
-              {...formItemLayout}
-            >
-              <span>
-                                Days & Times&nbsp;
-              </span>
-              <CheckboxGroup options={plainOptions} onChange={this.checkOnChange} />
-              <span>
-                                From:&nbsp;
-              </span>
-              <TimePicker onChange={this.timeFromChange} format={format} />
-              &nbsp;&nbsp;
-              <span>
-                                To:&nbsp;
-              </span>
-              <TimePicker onChange={this.timeToChange} format={format} />
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Tooltip title="please make sure you're using the pre-approved E-mail address">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-              <Input onChange={(e) => { this.setState({ email: e.target.value }); }} placeholder="Email" />
-            </FormItem>
-            <div className="registerButton" align="center">
-              <Button margin="auto" type="primary" onClick={this.createclass} loading={loading}>Create</Button>
-            </div>
-          </Form>
+          <Select
+            showSearch
+            size="large"
+            onSearch={this.getColleges}
+            placeholder="University/College"
+            style={{ width: '100%' }}
+            onChange={(e) => { this.setState({ selectedUniversity: e }); }}
+          >
+            {
+                collegeOptions.map(element => (
+                  <Select.Option key={element['school.name']}>
+                    {element['school.name']}
+                  </Select.Option>
+                ))
+
+            }
+          </Select>
+          <Input
+            disabled={selectedUniversity === ''}
+            className="create-class-input"
+            size="large"
+            placeholder="Class Name: Topics in Software Engineering"
+            value={className}
+            onChange={e => this.setState({ className: e.target.value })}
+          />
+          <Input
+            disabled={selectedUniversity === ''}
+            className="create-class-input"
+            size="large"
+            placeholder="Class Code: CSC 59939 (L) [0001]"
+            value={sectionCode}
+            onChange={e => this.setState({ sectionCode: e.target.value })}
+          />
+          <p className="create-class-days-label">Meeting Days</p>
+          <Checkbox.Group
+            disabled={selectedUniversity === ''}
+            className="create-class-days create-class-input"
+            options={days}
+            onChange={e => this.setState({ days: e })}
+          />
+          <p className="create-class-days-label">Meeting Times</p>
+          <div className="time-container">
+            <TimePicker
+              disabled={selectedUniversity === ''}
+              placeholder="From Time"
+              className="create-class-input"
+              onChange={e => this.setState({ fromTime: e ? e.format('HH:mm') : '' })}
+              style={{ marginRight: 20 }}
+              minuteStep={5}
+              format="HH:mm"
+            />
+            <TimePicker
+              disabled={selectedUniversity === ''}
+              placeholder="To Time"
+              className="create-class-input"
+              onChange={e => this.setState({ toTime: e ? e.format('HH:mm') : '' })}
+              minuteStep={5}
+              format="HH:mm"
+            />
+          </div>
+          <p className="create-class-days-label">Pre-approved Student Emails</p>
+          {
+            !validatedEmails
+              ? <Alert style={{ margin: '10px auto' }} message="Some e-mail(s) might not be formatted properly." type="error" />
+              : null
+          }
+          <Input.TextArea
+            disabled={selectedUniversity === ''}
+            className="create-class-input"
+            placeholder="Pre-approved e-mails, separate e-mails with commas"
+            autosize
+            onChange={this.processEmailList}
+          />
+          <Button
+            className="create-class-input"
+            block
+            disabled={selectedUniversity === ''}
+            loading={loading}
+            type="primary"
+            onClick={this.sendCreateClass}
+          >
+            Create Class
+          </Button>
         </Card>
       </div>
     );

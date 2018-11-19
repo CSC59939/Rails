@@ -1,33 +1,34 @@
 import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import {
-  Form, Button, Card, Select, message,
+  Button, Card, Select, message, Table, Modal, Alert,
 } from 'antd';
 import './JoinClass.css';
 import 'firebase/auth';
 import { WithProtectedView } from '../../hoc';
 
-const FormItem = Form.Item;
 
 class JoinClass extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedUniversity: '',
       collegeOptions: [],
-      classOptions: {},
-      university: null,
-      classSelection: null,
-      preapproved: true,
+      classOptions: [],
       loading: false,
+      showModal: false,
+      selectedClass: {},
     };
+
     this.getColleges = this.getColleges.bind(this);
-    this.joinclass = this.joinclass.bind(this);
-    this.requestclass = this.requestclass.bind(this);
-    this.getclassSelection = this.getclassSelection.bind(this);
-    this.searchClasses = this.searchClasses.bind(this);
+    this.getClasses = this.getClasses.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.openClassModal = this.openClassModal.bind(this);
+    this.confirmClass = this.confirmClass.bind(this);
   }
 
   getColleges(collegeName) {
+    this.setState({ loading: true });
     const prefix = 'https://api.data.gov/ed/collegescorecard/v1/schools/?fields=school.name&per_page=20&school.name=';
     const name = encodeURI(collegeName);
     const suffix = '&school.operating=1&latest.student.size__range=1..&latest.academics.program_available.assoc_or_bachelors=true&school.degrees_awarded.predominant__range=1..3&school.degrees_awarded.highest__range=2..4&api_key=EvH8zAC2Qq6JywcjnHmNHwBnzGkOwSsVHsjXf2bK';
@@ -36,187 +37,217 @@ class JoinClass extends Component {
       .then((result) => {
         this.setState({
           collegeOptions: result.results,
+          loading: false,
         });
       });
   }
 
-  getclassSelection(collegeName) {
-    this.setState({ university: collegeName });
-    const reqData = { universityName: collegeName };
-    const fetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/getclasses', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then((result) => {
-      return result.json();
-      this.setState({ loading: false });
-    }).catch((err) => {
-      this.setState({ loading: false });
-      console.log('Get Classes Err', err);
-    });
-    fetchData.then((data) => {
-      if (!data) message.info('No classes found.');
-      else message.info(data.message, 3);
-      this.setState({
-        classOptions: (data && data.classList) ? data.classList : {},
-        classSelection: '',
+  getClasses(su) {
+    const selectedUniversity = su.split('-')[0];
+    this.setState({ selectedUniversity, loading: true });
+    const reqData = { universityName: selectedUniversity };
+    fetch('https://us-central1-rails-students.cloudfunctions.net/getclasses',
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }).then(res => res.json())
+      .then((result) => {
+        message.info(result.message);
+        if (result.classList) {
+          const classes = result.classList;
+          const classOptions = [];
+          Object.keys(classes).forEach((c) => {
+            classes[c].uid = c;
+            classes[c].time = `${classes[c].meetingTimes.from} to ${classes[c].meetingTimes.to}`;
+            classOptions.push(classes[c]);
+          });
+          this.setState({ classOptions });
+        }
+        this.setState({ loading: false });
       });
+  }
+
+  openClassModal(r) {
+    const rec = r;
+    if (rec.approvedEmails && rec.approvedEmails.indexOf(firebase.auth().currentUser.email) === -1) {
+      rec.isApproved = false;
+    } else {
+      rec.isApproved = true;
+    }
+    rec.days = 'M-W';
+    this.setState({
+      selectedClass: rec,
+      showModal: true,
     });
   }
 
-  joinclass() {
+  closeModal() {
+    this.setState({
+      selectedClass: false,
+      showModal: false,
+    });
+  }
+
+  confirmClass() {
+    const { selectedClass, selectedUniversity } = this.state;
     this.setState({ loading: true });
-    const { university, classSelection } = this.state;
-    const reqData = {
-      universityName: university,
-      classUid: classSelection,
-      studentData: {
-        email: firebase.auth().currentUser.email,
-        uid: firebase.auth().currentUser.uid,
-      },
-    };
-    const joinFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/joinclass', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then(result => result.json());
-    joinFetchData.then((data) => {
-      message.success(data.message);
-    });
-  }
-
-  requestclass() {
-    this.setState({ loading: true });
-    const { university, classSelection } = this.state;
-    const reqData = {
-      universityName: university,
-      classUid: classSelection,
-      studentEmail: firebase.auth().currentUser.email,
-    };
-    const joinFetchData = fetch('https://us-central1-rails-students.cloudfunctions.net/requestclass', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(reqData),
-    }).then(result => result.json());
-    joinFetchData.then((data) => {
-      console.log(data);
-      message.success(data.message);
-    });
-  }
-
-  searchClasses(className) {
-
+    let API_URL = '';
+    let reqData = {};
+    if (selectedClass.isApproved === true) {
+      API_URL = 'https://us-central1-rails-students.cloudfunctions.net/joinclass';
+      reqData = {
+        universityName: selectedUniversity,
+        classUid: selectedClass.uid,
+        studentData: {
+          email: firebase.auth().currentUser.email,
+          uid: firebase.auth().currentUser.uid,
+        },
+      };
+    } else {
+      API_URL = 'https://us-central1-rails-students.cloudfunctions.net/requestclass';
+      reqData = {
+        universityName: selectedUniversity,
+        classUid: selectedClass.uid,
+        studentEmail: firebase.auth().currentUser.email,
+      };
+    }
+    fetch(API_URL,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(reqData),
+      }).then(res => res.json())
+      .then((result) => {
+        message.info(result.message);
+        this.setState({ loading: false });
+      }).catch((err) => {
+        this.setState({ loading: false });
+        console.log(err);
+      });
   }
 
   render() {
     const {
-      collegeOptions, classOptions, preapproved, loading, university, classSelection,
+      collegeOptions, loading, classOptions, showModal, selectedClass,
     } = this.state;
-
-    const formItemLayout = {
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 24 },
+    const columns = [
+      {
+        title: 'Class Code',
+        dataIndex: 'name',
+        key: 'name',
       },
-    };
-
+      {
+        title: 'Class Name',
+        dataIndex: 'description',
+        key: 'description',
+      },
+      {
+        title: 'Instructor',
+        dataIndex: 'instructorName',
+        key: 'instructorName',
+      },
+      {
+        title: 'Time',
+        dataIndex: 'time',
+        key: 'time',
+      },
+      {
+        title: 'Days',
+        dataIndex: 'days',
+        key: 'days',
+      },
+    ];
     return (
-
-      <div className="join">
+      <div className="join-class-page">
         <h1 className="title">Rails</h1>
         <Card
-          className="joinclasscard"
+          className="join-card"
           title="Join Class"
+          extra={<Button href="/dashboard" type="danger">Back to  Dashboard</Button>}
         >
-          <Form className="regiform">
-            <FormItem
-              {...formItemLayout}
-            >
-              <Select
-                size="large"
-                showSearch
-                onSearch={this.getColleges}
-                placeholder="University/College"
-                style={{ width: '100%' }}
-                onChange={(e) => { this.getclassSelection(e); }}
+          <Modal
+            onCancel={this.closeModal}
+            className="class-modal"
+            centered
+            visible={showModal}
+            title={selectedClass.description}
+            footer={[
+              <Button
+                loading={loading}
+                key="cancel-button"
+                onClick={this.closeModal}
+              >
+                Cancel
+              </Button>,
+              <Button
+                key="join-button"
+                loading={loading}
+                type="primary"
+                onClick={this.confirmClass}
               >
                 {
-                    collegeOptions.map(element => (
-                      <Select.Option key={element['school.name']}>
-                        {element['school.name']}
-                      </Select.Option>
-                    ))
-
+                  selectedClass.isApproved
+                    ? 'Join Class'
+                    : 'Request Permission'
                 }
-              </Select>
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-            >
-              <Select
-                size="large"
-                showSearch
-                onSearch={this.searchClasses}
-                placeholder="Class and Section"
-                value={classSelection}
-                onChange={(e) => {
-                  console.log(e);
-                  this.setState({ classSelection: e });
-                  const userEmail = firebase.auth().currentUser.email;
-                  if (classOptions[e].approvedEmails.indexOf(userEmail) === -1) {
-                    this.setState({ preapproved: false });
-                    message.info('Not pre-approved. Please request permission.');
-                  }
-                }}
-              >
-                {
-                  Object.keys(classOptions).map(classUid => (
-                    <Select.Option key={classUid}>
-                      <p>
-                        {classOptions[classUid].name}
-                        {' - '}
-                        {classOptions[classUid].description}
-                        {' by '}
-                        {classOptions[classUid].instructorName}
-                      </p>
-                    </Select.Option>
-                  ))
-                }
-              </Select>
-            </FormItem>
+              </Button>,
+            ]}
+          >
             {
-              (university && (university.length > 0)) && (classSelection)
-                ? (
-                  <div>
-                    {
-              preapproved
-                ? (
-                  <div className="registerButton">
-                    <Button loading={loading} disabled={!preapproved || loading} margin="auto" type="primary" onClick={this.joinclass}>Join Class</Button>
-                  </div>
-                )
-                : (
-                  <div className="registerButton">
-                    <Button loading={loading} disabled={preapproved || loading} margin="auto" type="primary" onClick={this.requestclass}>Request Permission</Button>
-                  </div>
-                )
+              selectedClass.isApproved
+                ? <Alert message="Pre-approved for this class" type="success" showIcon />
+                : <Alert message="Not pre-approved for this class" type="info" showIcon />
             }
-                  </div>
-                )
-                : null
+            <p className="join-class-label">
+              <span>Section Code: </span>
+              {selectedClass.name}
+            </p>
+            <p className="join-class-label">
+              <span>Instructor: </span>
+              {selectedClass.instructorName}
+            </p>
+            <p className="join-class-label">
+              <span>Time: </span>
+              {selectedClass.time}
+            </p>
+            <p className="join-class-label">
+              <span>Day(s): </span>
+              {selectedClass.days}
+            </p>
+          </Modal>
+          <Select
+            showSearch
+            size="large"
+            onSearch={this.getColleges}
+            placeholder="University/College"
+            style={{ width: '100%' }}
+            onChange={this.getClasses}
+          >
+            {
+                collegeOptions.map((element, ei) => (
+                  <Select.Option key={`${element['school.name']}-${ei}`}>
+                    {element['school.name']}
+                  </Select.Option>
+                ))
             }
-          </Form>
+          </Select>
+          <Table
+            className="join-class-table"
+            loading={loading}
+            columns={columns}
+            dataSource={classOptions}
+            onRow={rec => ({
+              onClick: () => this.openClassModal(rec),
+            })}
+          />
         </Card>
-        <br />
       </div>
     );
   }
