@@ -1,4 +1,3 @@
-import Dashboard from './Dashboard/Dashboard';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import DashboardHeader from './DashboardHeader/DashboardHeader';
 import MaterialIcon from './MaterialIcon/MaterialIcon';
@@ -8,10 +7,8 @@ import SampleComponent from './SampleComponent/SampleComponent';
 import EventSummary from './EventSummary/EventSummary';
 import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
 import Notification from './Notification/Notification';
-import Delayed from './Delayed/Delayed';
 
 export {
-  Dashboard,
   ProfileInfo,
   DashboardHeader,
   HeaderIcons,
@@ -21,5 +18,4 @@ export {
   Notification,
   EventSummary,
   EventSummaryCollection,
-  Delayed,
 };

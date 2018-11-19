@@ -1,7 +1,6 @@
 import {
   Button, Card, Icon, Input, Select, Radio, message,
 } from 'antd';
-import { Redirect } from 'react-router-dom';
 import React, { PureComponent } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -106,6 +105,11 @@ export default class Signup extends PureComponent {
     const {
       type, name, loading, collegeOptions,
     } = this.state;
+    const { history } = this.props;
+    const user = firebase.auth().currentUser;
+    if (user) {
+      history.push('/dashboard');
+    }
     return (
       <div className="signup">
         <h1 className="title">Rails</h1>
