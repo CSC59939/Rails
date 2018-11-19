@@ -4,6 +4,10 @@ import { shallow, mount, render, configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Button, Card, Icon } from 'antd';
 import {Signup} from '..';
+import config from '../firebaseconfig';
+import firebase from 'firebase/app';
+
+firebase.initializeApp(config);
 
 configure({ adapter: new Adapter() });
 
