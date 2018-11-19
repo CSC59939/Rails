@@ -63,9 +63,19 @@ class JoinClass extends Component {
           Object.keys(classes).forEach((c) => {
             classes[c].uid = c;
             classes[c].time = `${classes[c].meetingTimes.from} to ${classes[c].meetingTimes.to}`;
+            if (classes[c].meetingDays) {
+              const daysArr = [];
+              Object.keys(classes[c].meetingDays).forEach((day) => {
+                if (classes[c].meetingDays[day] === true) daysArr.push(day.substr(0, 2));
+              });
+              classes[c].days = daysArr.join('-');
+              if (daysArr.length === 0) classes[c].days = 'N/A';
+            }
             classOptions.push(classes[c]);
           });
           this.setState({ classOptions });
+        } else {
+          this.setState({ classOptions: [] });
         }
         this.setState({ loading: false });
       });
@@ -78,7 +88,6 @@ class JoinClass extends Component {
     } else {
       rec.isApproved = true;
     }
-    rec.days = 'M-W';
     this.setState({
       selectedClass: rec,
       showModal: true,

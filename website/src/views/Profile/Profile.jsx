@@ -130,18 +130,6 @@ class Profile extends PureComponent {
                                 />
                               </Collapse.Panel>
                             );
-                            // <Collapse.Panel header={university} key={university}>
-                            //   {
-                            //       Object.keys(userData.universities[university]).map(classUid => (
-                            //         <Card
-                            //           key={`university-${classUid}`}
-                            //           title={userData.universities[university][classUid].name}
-                            //         >
-                            //           <p>{userData.universities[university][classUid].description}</p>
-                            //         </Card>
-                            //       ))
-                            //     }
-                            // </Collapse.Panel>
                           })
                         }
                       </Collapse>
@@ -151,12 +139,7 @@ class Profile extends PureComponent {
             </div>
           )
           : (
-            <div style={{
-              width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center',
-            }}
-            >
-              <Icon className="profile-loading" type="loading" theme="outlined" />
-            </div>
+            <Icon className="profile-loading" type="loading" theme="outlined" />
           )
       }
       </div>

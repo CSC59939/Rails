@@ -114,7 +114,6 @@ class CreateClass extends PureComponent {
         meetingDays,
       },
     };
-    console.log(reqData);
     fetch('https://us-central1-rails-students.cloudfunctions.net/createclass',
       {
         method: 'POST',
