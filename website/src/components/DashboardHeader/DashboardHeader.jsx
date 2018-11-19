@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   Layout,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { ProfileInfo, HeaderIcons } from '..';
-import { WithFirebaseSimple } from '../../hoc';
 import './DisplayHeader.css';
 
 const { Header } = Layout;
 
-class DashboardHeader extends Component {
+class DashboardHeader extends PureComponent {
   static propTypes = {
     showDrawer: PropTypes.func,
     firebase: PropTypes.shape({}),
+    teacher: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -24,56 +24,17 @@ class DashboardHeader extends Component {
         };
       },
     },
+    teacher: false,
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      teacher: false,
-    };
-  }
-
-  componentDidMount() {
-    const {
-      firebase,
-    } = this.props;
-    if (firebase.auth().currentUser !== undefined) {
-      firebase.auth().currentUser
-        .getIdToken(true)
-        .then((idToken) => {
-          const { uid } = firebase.auth().currentUser;
-          const reqData = { uid, idToken };
-          const profileData = fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqData),
-          }).then((result) => {
-            if (result.status === 200) {
-              return result.json();
-            }
-            // alert(result.message);
-          }).catch((err) => {
-            console.log(err);
-          });
-          profileData.then((data) => {
-            console.log(data.userData);
-            this.setState({ teacher: data.userData.type === 'teacher' });
-          });
-        });
-    }
-  }
 
   render() {
     const {
       showDrawer,
       firebase,
-    } = this.props;
-    const {
       teacher,
-    } = this.state;
+    } = this.props;
+
 
     const Icons = [
       {
@@ -108,5 +69,4 @@ class DashboardHeader extends Component {
   }
 }
 
-const FirebaseDashboardHeader = WithFirebaseSimple(DashboardHeader);
-export { DashboardHeader, FirebaseDashboardHeader };
+export default DashboardHeader;
