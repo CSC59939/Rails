@@ -42,7 +42,7 @@ export default class Signin extends PureComponent {
     const { email, password } = this.state;
     const { location, history } = this.props;
     if ( !this.validateEmail(email) || !this.validatePassword(password) ) {
-      message.error("Please enter valid eamil and password ");
+      message.error('Please enter valid eamil and password');
       return;
     }
     firebase
@@ -80,7 +80,7 @@ export default class Signin extends PureComponent {
   handleOk() {
     const { email } =  this.state;
     if ( !this.validateEmail(email) ) {
-      message.error("Please enter valid eamil");
+      message.error('Please enter valid eamil');
       return;
     }
     firebase.auth().sendPasswordResetEmail(email).then(function() {
