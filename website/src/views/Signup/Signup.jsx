@@ -127,8 +127,8 @@ export default class Signup extends PureComponent {
     if (hasSpecial(e.target.value)) strength += 1;
     if (hasMixed(e.target.value)) strength += 1;
     if (strength === 0) this.setState({ strengthColor: 'red', password: e.target.value });
-    if (strength === 1) this.setState({ strengthColor: 'yellow', password: e.target.value });
-    if (strength === 2) this.setState({ strengthColor: 'orange', password: e.target.value });
+    if (strength === 1) this.setState({ strengthColor: 'orange', password: e.target.value });
+    if (strength === 2) this.setState({ strengthColor: 'yellow', password: e.target.value });
     if (e.target.value.length >= 6 && strength === 3) this.setState({ strengthColor: 'green', password: e.target.value });
     else if (e.target.value.length < 6 && strength === 3) this.setState({ strengthColor: 'lightgreen', password: e.target.value });
   }
