@@ -2,11 +2,10 @@
 
 exports[`JoinClass Render JoinClass without any eror 1`] = `
 <div
-<<<<<<< 2ebf9cacff8b7efc1af6bba5b68999698f8505d5
-  className="join"
+  className="join-class-page"
 =======
   className="join-class-page"
->>>>>>> rebase from the master, and remodified all the snapshot cases, using the mock firebase and fix stylelint of each cases
+>>>>>>> do a small change
 >
   <h1
     className="title"
@@ -14,11 +13,10 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
     Rails
   </h1>
   <div
-<<<<<<< 2ebf9cacff8b7efc1af6bba5b68999698f8505d5
-    className="ant-card joinclasscard ant-card-bordered"
+    className="ant-card join-card ant-card-bordered"
 =======
     className="ant-card join-card ant-card-bordered"
->>>>>>> rebase from the master, and remodified all the snapshot cases, using the mock firebase and fix stylelint of each cases
+>>>>>>> do a small change
   >
     <div
       className="ant-card-head"
@@ -32,7 +30,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
         >
           Join Class
         </div>
-<<<<<<< 2ebf9cacff8b7efc1af6bba5b68999698f8505d5
 =======
         <div
           className="ant-card-extra"
@@ -47,7 +44,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
             </span>
           </a>
         </div>
->>>>>>> rebase from the master, and remodified all the snapshot cases, using the mock firebase and fix stylelint of each cases
       </div>
     </div>
     <div
@@ -133,7 +129,7 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
                           <span
                             className="ant-select-search__field__mirror"
                           >
-                            
+
                              
                           </span>
                         </div>
@@ -277,7 +273,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
     </div>
   </div>
   <br />
-=======
       <div
         className="ant-select-lg ant-select ant-select-enabled"
         onBlur={[Function]}
@@ -340,7 +335,7 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
                 <span
                   className="ant-select-search__field__mirror"
                 >
-                  
+
                    
                 </span>
               </div>
@@ -525,6 +520,5 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
       </div>
     </div>
   </div>
->>>>>>> rebase from the master, and remodified all the snapshot cases, using the mock firebase and fix stylelint of each cases
 </div>
 `;
