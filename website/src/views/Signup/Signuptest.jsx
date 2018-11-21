@@ -9,7 +9,6 @@ import { Signup } from '..';
 
 configure({ adapter: new Adapter() });
 
-
 describe('Signup', () => {
   jest.spyOn(firebase, 'auth')
     .mockImplementation(() => ({
