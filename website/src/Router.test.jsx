@@ -13,7 +13,7 @@ import {
 } from './views';
 
 
-configure({ adapter: new Adapter() }); // configure of enzyme and react
+configure({ adapter: new Adapter() });
 describe('Router Test', () => {
   // mock Firebase
   jest.spyOn(firebase, 'auth') // mock the auth function with user is defined
@@ -23,27 +23,28 @@ describe('Router Test', () => {
         email: 'test@test.com',
       },
     }));
+
   jest.spyOn(firebase, 'app').mockImplementation(() => {
   }); // mock the app firebase app.
+
   it('/ path should redirect to Home', () => {
     const wrapper = mount(
       /* mount with MemoryRouter, initialEntries is a props for visit different router */
       // path to home
       <MemoryRouter initialEntries={['/']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(Home)).toHaveLength(1); // 1 for true, this is home page
     expect(wrapper.find(NotFound)).toHaveLength(0); // 0 for false, this is not NotFound
   });
 
-  // same format as above
   // Sign In
   it('/signin path should redirect to signin', () => {
     const wrapper = mount(
       <MemoryRouter initialEntries={['/signin']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(Signin)).toHaveLength(1); // check for sign in page
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
@@ -55,13 +56,14 @@ describe('Router Test', () => {
       // path to signup
       <MemoryRouter initialEntries={['/signup']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
+    // TODO: Fix this don't like this
     expect(wrapper.find(Signup)).toHaveLength(0); // check for sign out page
     expect(wrapper.find(ProtectedDashboardRouter)).toHaveLength(1);
-    // since userdefine, this should pass
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
+
   // signup when user is not defined
   it('/signup with undefined user path should redirect to signup', () => {
     jest.spyOn(firebase, 'auth') // remock auth when current user is undefined
@@ -72,20 +74,21 @@ describe('Router Test', () => {
       // path to signup
       <MemoryRouter initialEntries={['/signup']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
+
     expect(wrapper.find(Signup)).toHaveLength(1); // check for sign out page
     expect(wrapper.find(ProtectedDashboardRouter)).toHaveLength(0);
-    // should not redirect to dashbaord
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
+
   // create class
   it('/create/class path should redirect to signup', () => {
     const wrapper = mount(
       // path to create class
       <MemoryRouter initialEntries={['/create/class']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(ProtectedCreateClass)).toHaveLength(1); // check for create page page
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
@@ -97,7 +100,7 @@ describe('Router Test', () => {
     const wrapper = mount(
       <MemoryRouter initialEntries={['/join/class']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(ProtectedJoinClass)).toHaveLength(1); // check for join page page
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
@@ -109,7 +112,7 @@ describe('Router Test', () => {
     const wrapper = mount(
       <MemoryRouter initialEntries={['/dashboard']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(ProtectedDashboardRouter)).toHaveLength(1); // check for dashboard page
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
@@ -117,11 +120,10 @@ describe('Router Test', () => {
 
   // 404 page testing
   it('random path should redirect to NotFound', () => {
-    // path to some random pathes
     const wrapper = mount(
-      <MemoryRouter initialEntries={['/random']}>
+      <MemoryRouter initialEntries={['/notARealPage']}>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(wrapper.find(NotFound)).toHaveLength(1); // check for 404 pages
   });
