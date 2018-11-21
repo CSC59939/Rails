@@ -5,11 +5,13 @@ import {
 } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import firebase from 'firebase';
-import { Signin } from '..';
+import { MemoryRouter } from 'react-router-dom';
+import { DashboardRouter } from '..';
 
 configure({ adapter: new Adapter() });
 
-describe('Signin', () => {
+
+describe('DashboardRouter', () => {
   jest.spyOn(firebase, 'auth')
     .mockImplementation(() => ({
       currentUser: {
@@ -23,8 +25,13 @@ describe('Signin', () => {
         })),
       },
     }));
-  const array = [1, 2, 3];
-  it('Render Signin without any eror', () => {
-    expect(renderer.create(<Signin history={array} />).toJSON()).toMatchSnapshot();
+  it('Render DashboardRouter without any eror', () => { // eslint-disable-line no-undef
+    const component = renderer.create(
+      <MemoryRouter>
+        <DashboardRouter />
+      </MemoryRouter>,
+    );
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
