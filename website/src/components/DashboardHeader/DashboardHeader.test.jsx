@@ -17,7 +17,6 @@ describe('DashboardHeader', () => {
         currentUser: {
           displayName: 'testDisplayName',
           email: 'test@test.com',
-          emailVerified: true,
         },
       }));
     const component = renderer.create(
