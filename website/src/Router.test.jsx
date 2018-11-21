@@ -15,7 +15,7 @@ import {
 
 configure({ adapter: new Adapter() });
 describe('Router Test', () => {
-  // mock Firebase
+  /* mock Firebase */
   jest.spyOn(firebase, 'auth') // mock the auth function with user is defined
     .mockImplementation(() => ({
       currentUser: {
@@ -39,7 +39,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // 0 for false, this is not NotFound
   });
 
-  // Sign In
+  /* Sign In */
   it('/signin path should redirect to signin', () => {
     const wrapper = mount(
       <MemoryRouter initialEntries={['/signin']}>
@@ -50,7 +50,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // signup when user is defined
+  /* signup when user is defined */
   it('/signup with defined user, path should redirect to dashboard', () => {
     const wrapper = mount(
       // path to signup
@@ -64,7 +64,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // signup when user is not defined
+  /* signup when user is not defined */
   it('/signup with undefined user path should redirect to signup', () => {
     jest.spyOn(firebase, 'auth') // remock auth when current user is undefined
       .mockImplementation(() => ({
@@ -82,7 +82,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // create class
+  /* create class */
   it('/create/class path should redirect to signup', () => {
     const wrapper = mount(
       // path to create class
@@ -94,7 +94,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // join class
+  /* join class */
   it('/join/class path should redirect to signup', () => {
     // path to join class
     const wrapper = mount(
@@ -106,7 +106,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // dashboard router
+  /* dashboard router */
   it('/dashboard path should redirect to signup', () => {
     // path to dashboard
     const wrapper = mount(
@@ -118,7 +118,7 @@ describe('Router Test', () => {
     expect(wrapper.find(NotFound)).toHaveLength(0); // not a 404 page
   });
 
-  // 404 page testing
+  /* 404 page testing */
   it('random path should redirect to NotFound', () => {
     const wrapper = mount(
       <MemoryRouter initialEntries={['/notARealPage']}>
