@@ -23,12 +23,12 @@ exports[`DashboardHeader Expect DashboardHeader to match snapshot 1`] = `
       <p
         className="name"
       >
-        User Name
+        testDisplayName
       </p>
       <p
         className="email"
       >
-        email@domain.com
+        test@test.com
       </p>
     </div>
   </div>
@@ -61,7 +61,7 @@ exports[`DashboardHeader Expect DashboardHeader to match snapshot 1`] = `
     </button>
     <button
       className="IconButton"
-      onClick={null}
+      onClick={[Function]}
       type="button"
     >
       <i

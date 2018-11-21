@@ -2,28 +2,15 @@ import React, { PureComponent } from 'react';
 import {
   BrowserRouter as Router, Route,
 } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { DashboardHome, Profile } from '..';
 import { Layout } from 'antd';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { DashboardHeader, Notification } from '../../components';
-import { WithProtectedView, WithFirebaseSimple } from '../../hoc';
+import { WithProtectedView } from '../../hoc';
 import './Dashboard.css';
 
 class DashboardRouter extends PureComponent {
-  static propTypes = {
-    firebase: PropTypes.shape({}),
-  }
-
-  static defaultProps = {
-    firebase: {
-      auth() {
-        return {
-          currentUser: undefined,
-        };
-      },
-    },
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -33,9 +20,6 @@ class DashboardRouter extends PureComponent {
   }
 
   componentDidMount() {
-    const {
-      firebase,
-    } = this.props;
     if (firebase.auth().currentUser !== undefined) {
       firebase.auth().currentUser
         .getIdToken(true)
@@ -53,7 +37,6 @@ class DashboardRouter extends PureComponent {
             if (result.status === 200) {
               return result.json();
             }
-            // alert(result.message);
           }).catch((err) => {
             console.log(err);
           });
@@ -78,11 +61,10 @@ class DashboardRouter extends PureComponent {
 
 
   render() {
-    const { firebase } = this.props;
     const { visible, teacher } = this.state;
     return (
       <Layout className="Container" style={{ height: '100%' }}>
-        <DashboardHeader firebase={firebase} teacher={teacher} showDrawer={this.showDrawer} />
+        <DashboardHeader teacher={teacher} showDrawer={this.showDrawer} />
         <Layout style={{ height: '100%' }}>
           <Router>
             <div>
@@ -96,5 +78,5 @@ class DashboardRouter extends PureComponent {
     );
   }
 }
-const ProtectedDashboardRouter = WithProtectedView(WithFirebaseSimple(DashboardRouter));
+const ProtectedDashboardRouter = WithProtectedView(DashboardRouter);
 export { ProtectedDashboardRouter, DashboardRouter };

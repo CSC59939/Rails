@@ -3,6 +3,7 @@ import {
   Layout,
 } from 'antd';
 import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
 import { ProfileInfo, HeaderIcons } from '..';
 import './DisplayHeader.css';
 
@@ -11,30 +12,19 @@ const { Header } = Layout;
 class DashboardHeader extends PureComponent {
   static propTypes = {
     showDrawer: PropTypes.func,
-    firebase: PropTypes.shape({}),
     teacher: PropTypes.bool,
   }
 
   static defaultProps = {
     showDrawer: () => console.log('Never passed showDrawer'),
-    firebase: {
-      auth() {
-        return {
-          currentUser: undefined,
-        };
-      },
-    },
     teacher: false,
   }
-
 
   render() {
     const {
       showDrawer,
-      firebase,
       teacher,
     } = this.props;
-
 
     const Icons = [
       {
@@ -49,14 +39,14 @@ class DashboardHeader extends PureComponent {
       },
       {
         type: 'settings',
-        onclick: () => { window.location = '/profile'; },
+        onClick: () => { window.location = '/dashboard/profile'; },
         key: 'settings',
       },
     ];
     if (teacher) {
-      Icons.push({
+      Icons.unshift({
         type: 'add_circle',
-        onClick: () => console.log('add button clicked'),
+        onClick: () => { window.location = '/create/class'; },
         key: 'add_circle',
       });
     }

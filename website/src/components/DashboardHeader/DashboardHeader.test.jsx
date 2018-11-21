@@ -5,18 +5,27 @@ import {
 } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { MemoryRouter } from 'react-router-dom';
+import firebase from 'firebase';
 import DashboardHeader from './DashboardHeader';
 
 configure({ adapter: new Adapter() });
 
-describe('DashboardHeader', () => { // eslint-disable-line no-undef
-  it('Expect DashboardHeader to match snapshot', () => { // eslint-disable-line no-undef
+describe('DashboardHeader', () => {
+  it('Expect DashboardHeader to match snapshot', () => {
+    jest.spyOn(firebase, 'auth')
+      .mockImplementation(() => ({
+        currentUser: {
+          displayName: 'testDisplayName',
+          email: 'test@test.com',
+          emailVerified: true,
+        },
+      }));
     const component = renderer.create(
       <MemoryRouter>
         <DashboardHeader />
       </MemoryRouter>,
     );
     const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+    expect(tree).toMatchSnapshot();
   });
 });
