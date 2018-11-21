@@ -26,6 +26,10 @@ class DashboardHeader extends PureComponent {
       teacher,
     } = this.props;
 
+    const {
+      currentUser,
+    } = firebase.auth();
+
     const TeacherIcons = [
       {
         type: 'add_circle',
@@ -57,8 +61,8 @@ class DashboardHeader extends PureComponent {
     return (
       <Header className="Header">
         <ProfileInfo
-          name={firebase.auth().currentUser ? firebase.auth().currentUser.displayName : 'User Name'}
-          email={firebase.auth().currentUser ? firebase.auth().currentUser.email : 'email@domain.com'}
+          name={currentUser ? currentUser.displayName : 'User Name'}
+          email={currentUser ? currentUser.email : 'email@domain.com'}
         />
         <HeaderIcons Icons={Icons} />
       </Header>
