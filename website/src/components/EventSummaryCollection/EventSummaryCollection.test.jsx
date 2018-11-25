@@ -29,7 +29,7 @@ const classArray = {
 
 // problem need unique key for each iteration
 describe('EventSummaryCollection', () => {
-  it('Render EventSummaryCollection without any eror', () => { // eslint-disable-line no-undef
+  it('Render EventSummaryCollection without any eror', () => {
     expect(renderer.create(<EventSummaryCollection event={classArray} />)
       .toJSON()).toMatchSnapshot();
   });

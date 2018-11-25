@@ -10,7 +10,7 @@ import { HeaderIcons } from '..';
 configure({ adapter: new Adapter() });
 
 describe('Headerlcons', () => {
-  it('Render Headerlcons without any eror', () => { // eslint-disable-line no-undef
+  it('Render Headerlcons without any eror', () => {
     const component = renderer.create(
       <MemoryRouter>
         <HeaderIcons />

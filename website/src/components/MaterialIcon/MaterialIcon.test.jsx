@@ -11,11 +11,11 @@ import '../../utils/tests/test.css';
 configure({ adapter: new Adapter() });
 
 describe('MaterialIcon', () => {
-  it('Expect MaterialIcon to return an icon with a settings cog', () => { // eslint-disable-line no-undef
+  it('Expect MaterialIcon to return an icon with a settings cog', () => {
     expect(renderer.create(<MaterialIcon type="settings" />).toJSON()).toMatchSnapshot();
   });
 
-  it('Expect MaterialIcon to return an icon with a settings cog with a custom class', () => { // eslint-disable-line no-undef
+  it('Expect MaterialIcon to return an icon with a settings cog with a custom class', () => {
     expect(renderer.create(<MaterialIcon className="customClassnpm" type="settings" />).toJSON()).toMatchSnapshot();
   });
   it('should contains a i tag with corresponding classname and type with text type argument(settings)', () => {

@@ -13,12 +13,12 @@ const sampleFunction = () => {
 
 };
 describe('IconButton', () => {
-  it('Render IconButon without any errors', () => { // eslint-disable-line no-undef
+  it('Render IconButon without any errors', () => {
     const component = renderer.create(
       <IconButton type="setting" onClick={sampleFunction} />,
     );
     const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+    expect(tree).toMatchSnapshot();
   });
   it('should have a class name called IconButton', () => {
     expect(shallow(<IconButton type="setting" onClick={sampleFunction} />).exists('.IconButton')).toBe(true);

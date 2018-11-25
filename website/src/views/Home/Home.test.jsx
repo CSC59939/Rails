@@ -14,7 +14,7 @@ import {
 configure({ adapter: new Adapter() });
 
 describe('Home Page', () => {
-  it('Should render home page without any errors', () => { // eslint-disable-line no-undef
+  it('Should render home page without any errors', () => {
     expect(renderer.create(<Home />).toJSON()).toMatchSnapshot();
   });
   it('should contains a h1 tag with class name Title with text Rails', () => {
