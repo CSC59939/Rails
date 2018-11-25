@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 
 
 describe('DashboardHome', () => {
-  it('Render DashboardHome without any eror', () => { // eslint-disable-line no-undef
+  it('Render DashboardHome without any eror', () => {
     expect(renderer.create(<DashboardHome />).toJSON()).toMatchSnapshot();
   });
 });

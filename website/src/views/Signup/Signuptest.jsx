@@ -23,7 +23,7 @@ describe('Signup', () => {
         })),
       },
     }));
-  it('Render Signup without any eror', () => { // eslint-disable-line no-undef
+  it('Render Signup without any eror', () => {
     expect(renderer.create(<Signup />).toJSON()).toMatchSnapshot();
   });
 });

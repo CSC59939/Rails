@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 
 
 describe('JoinClass', () => {
-  it('Render JoinClass without any eror', () => { // eslint-disable-line no-undef
+  it('Render JoinClass without any eror', () => {
     expect(renderer.create(<JoinClass />).toJSON()).toMatchSnapshot();
   });
 });

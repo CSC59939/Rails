@@ -8,7 +8,7 @@ import { SampleComponent } from '..';
 configure({ adapter: new Adapter() });
 
 describe("SampleComponent", () => {
-  it('Expect SampleComponent to return a div with its name', () => { // eslint-disable-line no-undef
+  it('Expect SampleComponent to return a div with its name', () => { 
     expect(renderer.create(<SampleComponent />).toJSON()).toMatchSnapshot();
   });
 })

@@ -15,19 +15,21 @@ const classArray = {
       eventName: 'Review of First Exam',
       dueTime: '3:30pm',
       color: '#d83a42',
+      key: 0,
     },
     {
       course: 'CSC 220',
       eventName: 'Homework 1',
       dueTime: '5:00pm',
       color: '#62c4f9',
+      key: 1,
     },
   ],
 };
 
 // problem need unique key for each iteration
 describe('EventSummaryCollection', () => {
-  it('Render EventSummaryCollection without any eror', () => { // eslint-disable-line no-undef
+  it('Render EventSummaryCollection without any eror', () => {
     expect(renderer.create(<EventSummaryCollection event={classArray} />)
       .toJSON()).toMatchSnapshot();
   });

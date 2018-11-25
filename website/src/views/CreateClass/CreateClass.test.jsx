@@ -9,7 +9,7 @@ import { CreateClass } from '..';
 configure({ adapter: new Adapter() });
 
 describe('CreateClass', () => {
-  it('Render CreateClass without any eror', () => { // eslint-disable-line no-undef
+  it('Render CreateClass without any eror', () => {
     expect(renderer.create(<CreateClass />).toJSON()).toMatchSnapshot();
   });
 });

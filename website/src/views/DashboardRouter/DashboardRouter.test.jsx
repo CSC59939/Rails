@@ -25,7 +25,7 @@ describe('DashboardRouter', () => {
         })),
       },
     }));
-  it('Render DashboardRouter without any eror', () => { // eslint-disable-line no-undef
+  it('Render DashboardRouter without any eror', () => {
     const component = renderer.create(
       <MemoryRouter>
         <DashboardRouter />
