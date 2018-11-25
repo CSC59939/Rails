@@ -23,7 +23,13 @@ describe('Signup', () => {
         })),
       },
     }));
+  const array = [1, 2, 3];
+  const match = {
+    params: {
+      type: 'student',
+    },
+  };
   it('Render Signup without any eror', () => {
-    expect(renderer.create(<Signup />).toJSON()).toMatchSnapshot();
+    expect(renderer.create(<Signup history={array} match={match} />).toJSON()).toMatchSnapshot();
   });
 });

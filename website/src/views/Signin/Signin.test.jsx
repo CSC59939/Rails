@@ -23,7 +23,8 @@ describe('Signin', () => {
         })),
       },
     }));
+  const array = [1, 2, 3];
   it('Render Signin without any eror', () => {
-    expect(renderer.create(<Signin />).toJSON()).toMatchSnapshot();
+    expect(renderer.create(<Signin history={array} />).toJSON()).toMatchSnapshot();
   });
 });
