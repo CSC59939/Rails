@@ -183,6 +183,27 @@ exports[`Signin Render Signin without any eror 1`] = `
             Don't have an account? Sign Up.
           </p>
         </a>
+        <button
+          className="ant-btn ant-btn-lg ant-btn-block"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginTop": 10,
+            }
+          }
+          type="button"
+        >
+          <p
+            style={
+              Object {
+                "display": "inline",
+                "margin": 0,
+              }
+            }
+          >
+            Forgot Password?
+          </p>
+        </button>
       </div>
     </div>
   </div>

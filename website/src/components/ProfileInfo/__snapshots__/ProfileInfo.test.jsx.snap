@@ -4,16 +4,15 @@ exports[`ProfileInfo Render ProfileInfo without any eror 1`] = `
 <div
   className="ProfileInfo"
 >
-  <i
-    className="ProfileImage material-icons"
-    style={
-      Object {
-        "color": "black",
-      }
-    }
+  <a
+    href="/dashboard"
   >
-    account_circle
-  </i>
+    <img
+      alt="Rails"
+      className="header-logo"
+      src="logo.svg"
+    />
+  </a>
   <div
     className="rightSide"
   >

@@ -3,9 +3,6 @@
 exports[`JoinClass Render JoinClass without any eror 1`] = `
 <div
   className="join-class-page"
-=======
-  className="join-class-page"
->>>>>>> do a small change
 >
   <h1
     className="title"
@@ -14,9 +11,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
   </h1>
   <div
     className="ant-card join-card ant-card-bordered"
-=======
-    className="ant-card join-card ant-card-bordered"
->>>>>>> do a small change
   >
     <div
       className="ant-card-head"
@@ -30,7 +24,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
         >
           Join Class
         </div>
-=======
         <div
           className="ant-card-extra"
         >
@@ -50,229 +43,6 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
       className="ant-card-body"
       style={Object {}}
     >
-<<<<<<< 2ebf9cacff8b7efc1af6bba5b68999698f8505d5
-      <form
-        className="ant-form ant-form-horizontal regiform"
-        onSubmit={[Function]}
-      >
-        <div
-          className="ant-row ant-form-item"
-        >
-          <div
-            className="ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-24"
-          >
-            <div
-              className="ant-form-item-control"
-            >
-              <span
-                className="ant-form-item-children"
-              >
-                <div
-                  className="ant-select ant-select-enabled"
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onFocus={[Function]}
-                  onMouseDown={[Function]}
-                  onTouchStart={[Function]}
-                  style={
-                    Object {
-                      "width": "100%",
-                    }
-                  }
-                >
-                  <div
-                    aria-autocomplete="list"
-                    aria-expanded={false}
-                    aria-haspopup="true"
-                    className="ant-select-selection
-            ant-select-selection--single"
-                    onKeyDown={[Function]}
-                    role="combobox"
-                    tabIndex={0}
-                  >
-                    <div
-                      className="ant-select-selection__rendered"
-                    >
-                      <div
-                        className="ant-select-selection__placeholder"
-                        onClick={[Function]}
-                        onMouseDown={[Function]}
-                        style={
-                          Object {
-                            "WebkitUserSelect": "none",
-                            "display": "block",
-                            "userSelect": "none",
-                          }
-                        }
-                        unselectable="on"
-                      >
-                        University/College
-                      </div>
-                      <div
-                        className="ant-select-search ant-select-search--inline"
-                        style={
-                          Object {
-                            "display": "none",
-                          }
-                        }
-                      >
-                        <div
-                          className="ant-select-search__field__wrap"
-                        >
-                          <input
-                            autoComplete="off"
-                            className="ant-select-search__field"
-                            onChange={[Function]}
-                            onKeyDown={[Function]}
-                            value=""
-                          />
-                          <span
-                            className="ant-select-search__field__mirror"
-                          >
-
-                             
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <span
-                      className="ant-select-arrow"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "WebkitUserSelect": "none",
-                          "userSelect": "none",
-                        }
-                      }
-                      unselectable="on"
-                    >
-                      <i
-                        className="anticon anticon-down ant-select-arrow-icon"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className=""
-                          data-icon="down"
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="64 64 896 896"
-                          width="1em"
-                        >
-                          <path
-                            d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                          />
-                        </svg>
-                      </i>
-                    </span>
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="ant-row ant-form-item"
-        >
-          <div
-            className="ant-form-item-control-wrapper ant-col-xs-24 ant-col-sm-24"
-          >
-            <div
-              className="ant-form-item-control"
-            >
-              <span
-                className="ant-form-item-children"
-              >
-                <div
-                  className="ant-select ant-select-enabled"
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onFocus={[Function]}
-                  onMouseDown={[Function]}
-                  onTouchStart={[Function]}
-                >
-                  <div
-                    aria-autocomplete="list"
-                    aria-expanded={false}
-                    aria-haspopup="true"
-                    className="ant-select-selection
-            ant-select-selection--single"
-                    onKeyDown={[Function]}
-                    role="combobox"
-                    tabIndex={0}
-                  >
-                    <div
-                      className="ant-select-selection__rendered"
-                    >
-                      <div
-                        className="ant-select-selection__placeholder"
-                        onClick={[Function]}
-                        onMouseDown={[Function]}
-                        style={
-                          Object {
-                            "WebkitUserSelect": "none",
-                            "display": "block",
-                            "userSelect": "none",
-                          }
-                        }
-                        unselectable="on"
-                      >
-                        Class and Section code
-                      </div>
-                    </div>
-                    <span
-                      className="ant-select-arrow"
-                      onClick={[Function]}
-                      style={
-                        Object {
-                          "WebkitUserSelect": "none",
-                          "userSelect": "none",
-                        }
-                      }
-                      unselectable="on"
-                    >
-                      <i
-                        className="anticon anticon-down ant-select-arrow-icon"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className=""
-                          data-icon="down"
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="64 64 896 896"
-                          width="1em"
-                        >
-                          <path
-                            d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                          />
-                        </svg>
-                      </i>
-                    </span>
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className="registerButton"
-        >
-          <button
-            className="ant-btn ant-btn-primary"
-            disabled={false}
-            margin="auto"
-            onClick={[Function]}
-            type="button"
-          >
-            <span>
-              Join Class
-            </span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <br />
       <div
         className="ant-select-lg ant-select ant-select-enabled"
         onBlur={[Function]}
@@ -335,7 +105,7 @@ exports[`JoinClass Render JoinClass without any eror 1`] = `
                 <span
                   className="ant-select-search__field__mirror"
                 >
-
+                  
                    
                 </span>
               </div>
