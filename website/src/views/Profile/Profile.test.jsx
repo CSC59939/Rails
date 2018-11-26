@@ -24,6 +24,6 @@ describe('Profile View', () => {
       <Profile />,
     );
     const tree = component.toJSON();
-    expect(tree).toMatchSnapshot(); // eslint-disable-line no-undef
+    expect(tree).toMatchSnapshot();
   });
 });
