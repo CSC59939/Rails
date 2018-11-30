@@ -15,7 +15,7 @@ describe('ProfileInfo', () => {
   });
 
   /* enzyme testing */
-  const wrapper = shallow(<ProfileInfo />);
+  const wrapper = shallow(<ProfileInfo name="test full name" email="test@gmail.com" />);
 
   it('should display name', () => {
     expect(wrapper.exists('.name')).toBe(true);
