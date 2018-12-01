@@ -65,7 +65,27 @@ export function getprofile (req, res) {
                     universities[uni].forEach((cuid) => {
                         if (eventsData[cuid]) {
                             userData.universities[uni][cuid].events = {}
-                            userData.universities[uni][cuid].events = eventsData[cuid];
+                            const {
+                                allowDiscussion,
+                                allowSubmission,
+                                description,
+                                dueDate,
+                                postedDate,
+                                priority,
+                                title,
+                                instructorName
+                            } = eventsData[cuid];
+                            const ed = { 
+                                allowDiscussion,
+                                allowSubmission,
+                                description,
+                                dueDate,
+                                postedDate,
+                                priority,
+                                title,
+                                instructorName
+                            };
+                            userData.universities[uni][cuid].events = ed;
                         }
                         else userData.universities[uni][cuid].events = {};
                     });

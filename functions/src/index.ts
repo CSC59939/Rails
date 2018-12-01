@@ -4,9 +4,9 @@ import * as functions from 'firebase-functions';
 import * as serviceAccount from '../rails-private-key.json';
 
 admin.initializeApp({
-    credential: admin.credential.cert(<any>serviceAccount),
-    databaseURL: "https://rails-students.firebaseio.com"
-  });
+  credential: admin.credential.cert(<any>serviceAccount),
+  databaseURL: "https://rails-students.firebaseio.com"
+});
 
   export const signup = functions.https.onRequest((req, res) => {
     handlers.signup(req, res);
@@ -34,5 +34,17 @@ admin.initializeApp({
   
   export const getprofile = functions.https.onRequest((req, res) => {
     handlers.getprofile(req, res);
+  });
+
+  export const createevent = functions.https.onRequest((req, res) => {
+    handlers.createevent(req, res);
+  });
+
+  export const editevent = functions.https.onRequest((req, res) => {
+    handlers.editevent(req, res);
+  });
+
+  export const geteventdetails = functions.https.onRequest((req, res) => {
+    handlers.geteventdetails(req, res);
   });
   
