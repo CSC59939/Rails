@@ -53,7 +53,7 @@ export function editclass(req, res) {
           const classSnapData = classSnap.val();
           if (classSnapData) {
             if (classSnapData.instructorUid === uid) {
-              delete classSnapData.instructorUid;
+              delete classSnapData.instructorUid; //delete instrutorUid, and instrutorname data because it's not used to compare.
               delete classSnapData.instructorName;
               if (classSnapData === classData)
                 return res.status(202).send({ message: "No changed data" });

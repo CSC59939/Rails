@@ -30,7 +30,7 @@ export function getclassdetails(req, res) {
             if (
               userData.universities &&
               userData.universities[university] &&
-              userData.universities[university].indexOf(classUid) !== -1
+              userData.universities[university].indexOf(classUid) !== -1 //-1 meaning not in array
             ) {
               return res
                 .status(200)
