@@ -1,14 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import firebase from 'firebase';
 import {
   shallow,
   configure,
 } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {
-  Button,
-} from 'antd';
 import { Profile } from './Profile';
 import '../../utils/tests/test.css';
 
@@ -28,11 +24,8 @@ describe('Profile View when userData is defined as student. Empty university wit
   it('Expect the Profile page to match snap shot', () => {
     const wrapper = shallow(<Profile />);
     const userData = {
-      requested: {
-
-      },
-      universities: {
-      },
+      requested: {},
+      universities: {},
       type: 'student',
     };
     wrapper.setState({ userData });
@@ -44,9 +37,7 @@ describe('Profile View when userData is defined as student. a university with em
   it('Expect the Profile page to match snap shot', () => {
     const wrapper = shallow(<Profile />);
     const userData = {
-      requested: {
-
-      },
+      requested: {},
       universities: {
         universityName: 'CUNY City College',
       },
@@ -64,9 +55,7 @@ describe('Profile View when userData is defined as student. empty university wit
       requested: {
         universityName: 'CUNY City College',
       },
-      universities: {
-
-      },
+      universities: {},
       type: 'student',
     };
     wrapper.setState({ userData });
@@ -95,12 +84,8 @@ describe('Profile View when userData is defined as teacher. empty university wit
   it('Expect the Profile page to match snap shot', () => {
     const wrapper = shallow(<Profile />);
     const userData = {
-      requested: {
-
-      },
-      universities: {
-
-      },
+      requested: {},
+      universities: {},
       type: 'teacher',
     };
     wrapper.setState({ userData });
@@ -112,9 +97,7 @@ describe('Profile View when userData is defined as teacher. a university with em
   it('Expect the Profile page to match snap shot', () => {
     const wrapper = shallow(<Profile />);
     const userData = {
-      requested: {
-
-      },
+      requested: {},
       universities: {
         universityName: 'CUNY City College',
       },
@@ -132,9 +115,7 @@ describe('Profile View when userData is defined as teacher. empty university wit
       requested: {
         universityName: 'CUNY City College',
       },
-      universities: {
-
-      },
+      universities: {},
       type: 'teacher',
     };
     wrapper.setState({ userData });
@@ -172,9 +153,7 @@ describe('When userData is null', () => {
 describe('when userData is defined, but empty key for universities and requested and type is student ', () => {
   const wrapper = shallow(<Profile />);
   const userData = {
-    requested: {
-
-    },
+    requested: {},
     universities: {
     },
     type: 'student',
