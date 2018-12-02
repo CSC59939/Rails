@@ -28,7 +28,7 @@ export default class App extends Component {
   }
 
   switchTab(tab) {
-    fetch(`http://35.196.200.81:5000/${tab.key}`, {
+    fetch(`http://35.211.175.158:5000/${tab.key}`, {
       method: "POST"
     })
       .then(res => res.json())
@@ -54,9 +54,12 @@ export default class App extends Component {
             .auth()
             .currentUser.getIdToken(true)
             .then(idToken => {
-              fetch(`http://35.196.200.81:5000/verifyuser?idToken=${idToken}`, {
-                method: "POST"
-              })
+              fetch(
+                `http://35.211.175.158:5000/verifyuser?idToken=${idToken}`,
+                {
+                  method: "POST"
+                }
+              )
                 .then(res => res.json())
                 .then(result => {
                   if (result.auth === true) this.setState({ auth: true });
