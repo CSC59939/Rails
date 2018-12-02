@@ -125,6 +125,7 @@ export default class App extends Component {
             ) : null}
             {tab === "logs" ? (
               <List
+                style={{ marginBottom: 50 }}
                 bordered
                 dataSource={sourceData}
                 renderItem={item => <List.Item>{item}</List.Item>}
