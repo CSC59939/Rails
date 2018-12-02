@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Layout, List, Menu } from 'antd';
+import { Layout, List, Menu, Input, Button, message } from 'antd';
+import ReactJson from 'react-json-view'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import Logo from './logo.svg';
 import './App.css';
 
@@ -9,33 +12,72 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      auth: false,
       tab: '',
+      email: '',
+      password: '',
       sourceData: null
     };
     this.switchTab = this.switchTab.bind(this);
+    this.signin = this.signin.bind(this);
   }
 
   switchTab(tab) {
-    fetch('http://35.196.200.81:5000/'+tab.key,{
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
+    fetch(`https://cors-anywhere.herokuapp.com/http://35.196.200.81:5000/${tab.key}`,{
+      method: 'GET'
     })
     .then(res => res.json())
     .then((sourceData) => {
-      this.setState ({ sourceData });
+      message.info(sourceData.message);
+      if (sourceData.logs) this.setState ({ sourceData: sourceData.logs, tab: tab.key });
     }).catch((err) => {
-
+      message.error(err.message);
+      console.log(err);
     });
   }
 
+  signin() {
+    const { email, password } = this.state;
+    if (email !== '' & password !== '') {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        firebase.auth().currentUser
+          .getIdToken(true)
+          .then((idToken) => {
+            fetch(`https://cors-anywhere.herokuapp.com/http://35.196.200.81:5000/verifyuser?idToken=${idToken}`,{
+              method: 'GET',
+            })
+            .then(res => res.json())
+            .then((result) => {
+              if (result.auth === true) this.setState({ auth: true });
+              else {
+                message.error(result.message);
+                firebase.auth().signOut();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              message.error(err.message);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        message.error(err.message);
+      })
+    } else {
+      message.info('Missing fields');
+    }
+  }
+
   render() {
-    const { tab, sourceData } = this.state;
-    return (
-      <Layout className="layout">
+    const { auth, tab, sourceData } = this.state;
+    return auth ? (
+      <Layout>
       <Header>
         <div className="logo"> <img src={Logo} alt="Rails Backup Server"/> </div>
         <Menu
@@ -60,7 +102,7 @@ export default class App extends Component {
           }
           {
             tab === 'backup' ?
-            <p>backup</p> : null
+            <ReactJson src={sourceData} /> : null
           }
         </div>
       </Content>
@@ -68,6 +110,15 @@ export default class App extends Component {
         Rails Backup Server - for use by Rails Development Team only
       </Footer>
     </Layout>
+    ) : (
+    <div className="signin">
+      <h1>Rails Backup Server</h1>
+      <div className="container">
+        <Input onChange={e => this.setState({ email: e.target.value })} placeholder="E-Mail" type="email"/>
+        <Input onChange={e => this.setState({ password: e.target.value })} placeholder="Password" type="password"/>
+        <Button onClick={this.signin} type="primary" block>Sign In</Button>
+      </div>
+    </div>
     );
   }
 }

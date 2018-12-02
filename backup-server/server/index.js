@@ -85,5 +85,24 @@ app.get('/backup',(req, res) => {
         });
     });
 });
+
+app.post('/verifyuser', (req, res) => {
+    return cors(req, res, ()=>{
+        const { idToken } = req.query;
+        if (idToken) {
+            firebase.auth().verifyIdToken(idToken)
+            .then((uid) => {
+                if (uid === 'OGocIfNVpdS51HzB56aYh29dyU23') {
+                    res.status(200).send({message: 'Logging in...', auth: true});
+                } else {
+                    res.status(403).send({message: 'Not authorized...', auth: false});
+                }
+            }).catch((err) => {
+                res.status(406).send({message: 'Unable to verify user', auth: false});
+            });
+        }
+        else res.status(400).send({message: 'Missing data.'});
+    });
+})
  
 app.listen(5000);
