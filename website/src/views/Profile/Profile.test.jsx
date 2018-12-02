@@ -8,7 +8,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Profile } from './Profile';
 import '../../utils/tests/test.css';
 
-configure({ adapter: new Adapter() }); // configure
+configure({ adapter: new Adapter() });
 
 describe('Profile View when userData is undefined', () => {
   it('Expect the Profile page to match snap shot', () => {
@@ -150,7 +150,7 @@ describe('When userData is null', () => {
   });
 });
 
-describe('when userData is defined, but empty key for universities and requested and type is student ', () => {
+describe('when userData is defined, but empty element for universities and requested and type is student ', () => {
   const wrapper = shallow(<Profile />);
   const userData = {
     requested: {},
@@ -165,13 +165,13 @@ describe('when userData is defined, but empty key for universities and requested
   it('it should not find the center-loading-icon', () => {
     expect(wrapper.exists('.center-loading-icon')).toBe(false);
   });
-  it('it should contains the p tag witch shows empty university', () => {
+  it('it should contains the p tag which shows empty university', () => {
     expect(wrapper.contains(<p>{'You haven\'t joined any universities/classes yet.'}</p>)).toBe(true);
   });
-  it('it should not contains the p tag witch shows joined class', () => {
+  it('it should not contains the p tag which shows joined class', () => {
     expect(wrapper.contains(<p className="academics-subtitle">Joined classes</p>)).toBe(false);
   });
-  it('it should contains the p tag witch shows empty requested classes message', () => {
+  it('it should contains the p tag which shows empty requested classes message', () => {
     expect(wrapper.contains(<p>No other requested classes.</p>)).toBe(true);
   });
   it('it should not contains the p tag with shows requested classes message', () => {
@@ -180,12 +180,12 @@ describe('when userData is defined, but empty key for universities and requested
   it('it should has the button for join class', () => {
     expect(wrapper.find({ href: '/join/class' }).length).toBe(1);
   });
-  it('it should not has the button for create class', () => {
+  it('it have not has the button for create class', () => {
     expect(wrapper.find({ href: '/create/class' }).length).toBe(0);
   });
 });
 
-describe('when userData is defined, but a key for universities and requested and type is teacher', () => {
+describe('when userData is defined, but one element for universities and requested and the type is teacher', () => {
   const wrapper = shallow(<Profile />);
   const userData = {
     requested: {
@@ -197,19 +197,19 @@ describe('when userData is defined, but a key for universities and requested and
     type: 'teacher',
   };
   wrapper.setState({ userData });
-  it('it should not contains the p tag witch shows empty university', () => {
+  it('it should not contains the p tag which shows empty university', () => {
     expect(wrapper.contains(<p>{'You haven\'t joined any universities/classes yet.'}</p>)).toBe(false);
   });
-  it('it should contains the p tag witch shows joined class', () => {
+  it('it should contains the p tag which shows joined class', () => {
     expect(wrapper.contains(<p className="academics-subtitle">Joined classes</p>)).toBe(true);
   });
-  it('it should not contains the p tag witch shows empty requested classes message', () => {
+  it('it should not contains the p tag which shows empty requested classes message', () => {
     expect(wrapper.contains(<p>No other requested classes.</p>)).toBe(false);
   });
   it('it should contains the p tag with shows requested classes message', () => {
     expect(wrapper.contains(<p className="academics-subtitle">Requested classes</p>)).toBe(true);
   });
-  it('it should not has the button for join class', () => {
+  it('it have not has the button for join class', () => {
     expect(wrapper.find({ href: '/join/class' }).length).toBe(0);
   });
   it('it should has the button for create class', () => {
