@@ -20,6 +20,7 @@ export default class App extends Component {
     };
     this.switchTab = this.switchTab.bind(this);
     this.signin = this.signin.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   componentWillUnmount() {
@@ -42,7 +43,6 @@ export default class App extends Component {
 
   signin() {
     const { email, password } = this.state;
-    console.log(email, password);
     if (email !== '' & password !== '') {
       firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
@@ -79,6 +79,11 @@ export default class App extends Component {
     }
   }
 
+  refresh() {
+    const { tab }  = this.state;
+    this.switchTab({key: tab});
+  }
+
   render() {
     const { auth, tab, sourceData } = this.state;
     return auth ? (
@@ -95,8 +100,13 @@ export default class App extends Component {
           <Menu.Item key="backup">Backup</Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: '0 50px' }}>
+      <Content style={{ padding: '0 50px', height: '100%' }}>
         <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          {
+            tab !== '' ?
+            <Button type="primary" style={{marginBottom: 40}} block onClick={this.refresh}>Refresh</Button>
+            : null
+          }
           {
             tab === 'logs' ?
             <List 
@@ -120,7 +130,7 @@ export default class App extends Component {
           }
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer style={{ textAlign: 'center', position: 'fixed', bottom: 0, width: '100%' }}>
         Rails Backup Server - for use by Rails Development Team only
       </Footer>
     </Layout>
