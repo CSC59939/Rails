@@ -34,3 +34,4 @@ backup-server/rails-private-key.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+backup-server/server/rails-private-key.json

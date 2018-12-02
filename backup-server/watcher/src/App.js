@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   switchTab(tab) {
-    fetch('http://192.168.86.35:5000/'+tab.key,{
+    fetch('http://35.196.200.81:5000/'+tab.key,{
       method: 'GET',
       headers: {
         Accept: 'application/json',
