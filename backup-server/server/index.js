@@ -51,36 +51,45 @@ cron.schedule('0 0-23 * * *', () => {
 });
 
 
-app.get('/', function (req, res) {
+app.post('/', function (req, res) {
     return cors(req, res, ()=>{
+        log.info("POST REQUEST at: '/'");
         res.send('Server is up and running. Go here <a href="localhost:3000">to check server</a>');
     });
 });
 
-app.get('/logs',(req, res) => {
+app.post('/logs',(req, res) => {
     return cors(req, res, ()=>{
         fs.readFile('backup-logger.log', (err, data) => {
-            if (err) res.status(400).send({message: 'Failed to read', err});
+            if (err) {
+                log.warn("POST REQUEST at: '/logs' - Failed to read");
+                res.status(400).send({message: 'Failed to read', err});
+            }
             else {
                 var arr = data.toString('utf8').split('\n');
                 arr.forEach((item, index) => {
                     arr[index] = item.replace("\r","");
                     arr[index] = item.trim();
                 })
+                log.info("POST REQUEST at: '/logs' - Got logs");
                 res.status(200).send({message: 'Got logs.', logs: arr});
             }
         });
     });
 });
 
-app.get('/backup',(req, res) => {
+app.post('/backup',(req, res) => {
     return cors(req, res, ()=>{
         fs.readFile('database.json', (err, data) => {
-            if (err) res.status(400).send({message: 'Failed to read', err});
+            if (err) {
+                log.warn("POST REQUEST at: '/backup' - Failed to read");
+                res.status(400).send({message: 'Failed to read', err});
+            }
             else {
                 var arr = data.toString('utf8');
                 arr = JSON.parse(arr);
-                res.status(200).send({message: 'Got logs.', logs: arr});
+                log.info("POST REQUEST at: '/backup' - Got backup data");
+                res.status(200).send({message: 'Got backup data.', logs: arr});
             }
         });
     });
@@ -92,16 +101,21 @@ app.post('/verifyuser', (req, res) => {
         if (idToken) {
             firebase.auth().verifyIdToken(idToken)
             .then((uid) => {
-                if (uid === 'OGocIfNVpdS51HzB56aYh29dyU23') {
+                if (uid.uid === 'OGocIfNVpdS51HzB56aYh29dyU23') {
+                    log.info("POST REQUEST at: '/verifyuser' - Logging in...");
                     res.status(200).send({message: 'Logging in...', auth: true});
                 } else {
+                    log.warn("POST REQUEST at: '/verifyuser' - Not authorized");
                     res.status(403).send({message: 'Not authorized...', auth: false});
                 }
             }).catch((err) => {
                 res.status(406).send({message: 'Unable to verify user', auth: false});
             });
         }
-        else res.status(400).send({message: 'Missing data.'});
+        else {
+            log.warn("POST REQUEST at: '/verifyuser' - Missing data");
+            res.status(400).send({message: 'Missing data.'});
+        }
     });
 })
  

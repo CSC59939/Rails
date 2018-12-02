@@ -22,9 +22,13 @@ export default class App extends Component {
     this.signin = this.signin.bind(this);
   }
 
+  componentWillUnmount() {
+    firebase.auth().signOut();
+  }
+
   switchTab(tab) {
-    fetch(`https://cors-anywhere.herokuapp.com/http://35.196.200.81:5000/${tab.key}`,{
-      method: 'GET'
+    fetch(`http://35.196.200.81:5000/${tab.key}`,{
+      method: 'POST'
     })
     .then(res => res.json())
     .then((sourceData) => {
@@ -38,14 +42,15 @@ export default class App extends Component {
 
   signin() {
     const { email, password } = this.state;
+    console.log(email, password);
     if (email !== '' & password !== '') {
       firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         firebase.auth().currentUser
           .getIdToken(true)
           .then((idToken) => {
-            fetch(`https://cors-anywhere.herokuapp.com/http://35.196.200.81:5000/verifyuser?idToken=${idToken}`,{
-              method: 'GET',
+            fetch(`http://35.196.200.81:5000/verifyuser?idToken=${idToken}`,{
+              method: 'POST',
             })
             .then(res => res.json())
             .then((result) => {
@@ -102,7 +107,16 @@ export default class App extends Component {
           }
           {
             tab === 'backup' ?
-            <ReactJson src={sourceData} /> : null
+            <div>
+              <ReactJson collapsed enableClipboard={false} src={sourceData} /> 
+            </div>: null
+          }
+          {
+            tab === '' ?
+            <div>
+              Choose a tab from above to view data.
+            </div>
+            : null
           }
         </div>
       </Content>
