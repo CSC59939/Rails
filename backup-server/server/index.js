@@ -2,13 +2,17 @@ const cron = require('node-cron');
 const firebase = require('firebase-admin');
 const fs = require('fs');
 const log = require('simple-node-logger').createSimpleFileLogger('backup-logger.log');
-
+const express = require('express')
+const app = express()
+const _cors = require('cors');
+const cors = _cors({origin: true});
 const serviceAccount = require('./rails-private-key.json');
 
 firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
     databaseURL: "https://rails-students.firebaseio.com"
 });
+
 
 cron.schedule('0 0-23 * * *', () => {
     const start = Date.now();
@@ -45,3 +49,41 @@ cron.schedule('0 0-23 * * *', () => {
     scheduled: true,
     timezone: "America/New_York"
 });
+
+
+app.get('/', function (req, res) {
+    return cors(req, res, ()=>{
+        res.send('Server is up and running. Go here <a href="localhost:3000">to check server</a>');
+    });
+});
+
+app.get('/logs',(req, res) => {
+    return cors(req, res, ()=>{
+        fs.readFile('backup-logger.log', (err, data) => {
+            if (err) res.status(400).send({message: 'Failed to read', err});
+            else {
+                var arr = data.toString('utf8').split('\n');
+                arr.forEach((item, index) => {
+                    arr[index] = item.replace("\r","");
+                    arr[index] = item.trim();
+                })
+                res.status(200).send({message: 'Got logs.', logs: arr});
+            }
+        });
+    });
+});
+
+app.get('/backup',(req, res) => {
+    return cors(req, res, ()=>{
+        fs.readFile('database.json', (err, data) => {
+            if (err) res.status(400).send({message: 'Failed to read', err});
+            else {
+                var arr = data.toString('utf8');
+                arr = JSON.parse(arr);
+                res.status(200).send({message: 'Got logs.', logs: arr});
+            }
+        });
+    });
+});
+ 
+app.listen(5000);

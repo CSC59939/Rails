@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "rails-students",
+  "private_key_id": "c836ded7df02f6c59f627808ecceb38204425c14",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDQJV59dlZZCgeG\n+oYL1m4FQoKFP3S3WQWkDBR3UMOzt2E04s0gXbfWy7u7upSpP5K8CgzCE+zMzHXK\nefiAUJTCJuJvRqpDikKXPrg2Lpg3aVn44RLYsLBukNEKVS2eTahOZuZ8r0OxEl1S\nDoaS3/wlW/fIyAR2Nthhvaih81P6sVpOH05viw+ciwSN99I6I/419OmywLYYARpe\n+9ylyxEbPMEHQAdUONeg7rOy8uCzmzfRDE7at4gaEEZx9kt/27j2Sg0vDwTjA8zJ\nvguzcgIygxKU/K0igMaxMC/WuOGH5z+c32MmCdfm1C/oHOtNfmrs56Nth/HkOqGQ\nKtFSq2ETAgMBAAECggEABKihdhe6gLmuDK5cK7UKt1x/p4U5EtpoYpsLiK80eEuq\nXngfOdc6OofUrj2sTayLSMOKW96awnV6m+i1RlMux1ZNKIYhiBLZStyNXAh7GgHI\npJdTNG6OIK8XZ0wvr26GnLFj1eK+qfc9zIzChsqV/1SuerSCcfqZWp/rP6GhJQWi\n2iOsvS4RnIspoyznWAulXyGd94SgSPowEdc0rypKrTnlh+Qp41H9FmRjcHcGfuVs\nOrwuABoQzcyxgCdrw61Fh7wWfgJn14KAazCssiHGT6fIF2ULCII+ESIpKPz5rCBJ\nqQbdGheZqmInQe74Ih5rFlF1FnCuxA/LkishZ1muSQKBgQDo7tIEgXqVE2IddsNC\n1LRY1bN3PeMPHDTNZnjd5l60xJGFrIKtcXSXETePU4Hpj1ac6HHegrxThlo3c3uW\nQeMviZFvq82WgcrAdqEZ7zxsLNKE5yghZU/+DGW17lhuK9BH1YdzZ/PeV8VcNLnz\nDOl3Y3C6kZYmBe9HhzfCaxwLTwKBgQDkwipFXS0AtH6du0VbqlkZkT7FlkHuO1YW\nAQ46OPoPxC7yLAHRBzXBhZ4KPyPtNR35HFNECFVDSZKNCl/D1NINOsQ6gBQKZGln\nX2TeRFXV/10fFJ1qYDAvwxrd/c5hJrgatYtpfMx2QJ7s+me5U+J1L+68oONXjx+j\nGYqDLKuM/QKBgQCXyyoprYcIpv0FXmOYpaxxR7IQPtA9BJCUWfbiBEIrYv3CMs1l\n4c2stJeUW0MJxVMYJZIvAttfQup/wE4FeSJn1Cpmr3rmXeaWzbfmgrTJedwmp8zL\nFo6ua73MdWpDQWIVrdz7I/8UIfaHRAT5kqyCFNddfYpvdOadokx/8fTwmQKBgQCx\nZh2v0vUeUdrK6Tp9PpqAKFH8mmygmeVFhSYKYrsRVPtvFE+IUUYPwFXx7ksnHgUT\ndTLhVHECkGCU/dGMJVOLrOIV19Myx/Gxl5m6gFXscW8+thbpMpTLxUrlknjkgElP\ndTAa6wwIPE7CyeF8KCA67qP+JeqHsVdAfYMb/J1A5QKBgAnQs1Q+D69O5rsIHmQC\nYESoeEObns0WW2Dqe7vJzWQIIJrkfsKbe4YBKv/VU0CzKJl0bqd9lRTb0PB0+i5b\nJk02Wb10pnyARbLm7d2PaBIbl0D7kgZxI+RojnyiPH8saKGVXMWAGo0hIqU4z7nl\nOKWfaCweLxwUOccjdaVU2NKD\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-k1ubz@rails-students.iam.gserviceaccount.com",
+  "client_id": "104828134966518103657",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-k1ubz%40rails-students.iam.gserviceaccount.com"
+}

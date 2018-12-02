@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
     "firebase-admin": "^6.3.0",
     "node-cron": "^2.0.3",
     "simple-node-logger": "^0.93.40"
