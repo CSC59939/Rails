@@ -23,7 +23,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 functions/rails-private-key.json
-*/rails-private-key.*
+backup-server/server/rails-private-key.json
 
 # macOS
 # general
