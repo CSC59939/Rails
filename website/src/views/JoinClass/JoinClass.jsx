@@ -81,7 +81,7 @@ class JoinClass extends Component {
       });
   }
 
-  openClassModal(r) {
+  openClassModal(rec) {
     this.setState({
       selectedClass: rec,
       showModal: true,

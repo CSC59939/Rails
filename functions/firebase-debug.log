@@ -1,0 +1,40 @@
+[debug] [2018-12-02T07:11:06.391Z] ----------------------------------------------------------------------
+[debug] [2018-12-02T07:11:06.392Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Tobias\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js functions:shell
+[debug] [2018-12-02T07:11:06.392Z] CLI Version:   6.1.1
+[debug] [2018-12-02T07:11:06.392Z] Platform:      win32
+[debug] [2018-12-02T07:11:06.392Z] Node Version:  v8.11.1
+[debug] [2018-12-02T07:11:06.393Z] Time:          Sun Dec 02 2018 02:11:06 GMT-0500 (Eastern Standard Time)
+[debug] [2018-12-02T07:11:06.393Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-02T07:11:06.399Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-02T07:11:06.399Z] > authorizing via signed-in user
+[debug] [2018-12-02T07:11:06.399Z] [iam] checking project rails-students for permissions ["firebase.projects.get"]
+[debug] [2018-12-02T07:11:06.400Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-02T07:11:06.400Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2018-12-02T07:11:06.555Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-02T07:11:06.559Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/rails-students:testIamPermissions  
+
+[debug] [2018-12-02T07:11:06.861Z] <<< HTTP RESPONSE 200
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-12-02T07:11:07.289Z] Fetching environment
+[debug] [2018-12-02T07:11:07.290Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/rails-students  
+ 
+[debug] [2018-12-02T07:11:07.534Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-02T07:11:07.534Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/927373339672:getServerAppConfig  
+ 
+[debug] [2018-12-02T07:11:07.773Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-02T07:11:07.774Z] Starting @google-cloud/functions-emulator
+[debug] [2018-12-02T07:11:08.788Z] Parsing function triggers
+[info] +  functions: signup
+[info] +  functions: createclass
+[info] +  functions: joinclass
+[info] +  functions: getclasses
+[info] +  functions: requestclass
+[info] +  functions: approveclass
+[info] +  functions: getprofile
+[info] +  functions: createevent
+[info] +  functions: editevent
+[info] +  functions: getclassdetails
+[info] +  functions: geteventdetails
+[info] +  functions: editclass
