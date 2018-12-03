@@ -55,3 +55,11 @@ export const geteventdetails = functions.https.onRequest((req, res) => {
 export const editclass = functions.https.onRequest((req, res) => {
   handlers.editclass(req, res);
 });
+
+export const dropclass = functions.https.onRequest((req, res) => {
+  handlers.dropclass(req, res);
+});
+
+export const addmessage = functions.https.onRequest((req, res) => {
+  handlers.addmessage(req, res);
+});

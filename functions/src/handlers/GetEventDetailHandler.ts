@@ -23,11 +23,13 @@ export function geteventdetails(req, res) {
         admin.database().ref(`discussions/${classUid}/${eventUid}`)
         .once('value')
         .then((discussionSnap) => {
-            const discussions = discussionSnap.val();
-            console.log(eventUid, classUid, uid, discussions);
+            const d = discussionSnap.val();
             eventData.discussions = [];
-            if (discussions) {
-                eventData.discussions = discussions;
+            if (d) {
+                d.forEach((msg) => {
+                    const { fromName, message } = msg;
+                    eventData.discussions.push({fromName, message});
+                });
             }
             if (userType === 'teacher' && (eventData.instructorUid === uid) ) {
                 res.status(200).send({message: 'Found event', eventData});
@@ -52,7 +54,11 @@ export function geteventdetails(req, res) {
         .then((eventSnap) => {
             const eventData = eventSnap.val();
             if (eventData) {
-                getEventDiscussion(query, userType, eventData);
+                if (eventData.allowDiscussion) getEventDiscussion(query, userType, eventData);
+                else {
+                    eventData.discussions = [];
+                    res.status(200).send({message: 'Found event', eventData});
+                }
             } else return res.status(404).send({message: 'Event not found.'});
         })
         .catch((err) => {
