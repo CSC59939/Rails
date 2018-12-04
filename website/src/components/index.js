@@ -5,8 +5,8 @@ import HeaderIcons from './HeaderIcons/HeaderIcons';
 import IconButton from './IconButton/IconButton';
 import SampleComponent from './SampleComponent/SampleComponent';
 import EventSummary from './EventSummary/EventSummary';
-import EventSummaryCollection from './EventSummaryCollection/EventSummaryCollection';
 import Notification from './Notification/Notification';
+import EventCalendar from './EventCalendar/EventCalendar';
 
 export {
   ProfileInfo,
@@ -17,5 +17,5 @@ export {
   SampleComponent,
   Notification,
   EventSummary,
-  EventSummaryCollection,
+  EventCalendar,
 };

@@ -44,6 +44,7 @@ class App extends PureComponent {
             <Route path="/join/class" component={ProtectedJoinClass} />
             <Route path="/dashboard/:optional?" component={ProtectedDashboardRouter} />
             <Route component={NotFound} />
+
           </Switch>
         </div>
       </Router>
