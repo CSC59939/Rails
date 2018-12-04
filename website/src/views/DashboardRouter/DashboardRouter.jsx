@@ -1,12 +1,10 @@
 import React, { PureComponent } from 'react';
-import {
-  BrowserRouter as Router, Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { DashboardHome, Profile } from '..';
 import { Layout } from 'antd';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { DashboardHeader, Notification } from '../../components';
+import { DashboardHeader, CreateEventDrawer } from '../../components';
 import { WithProtectedView } from '../../hoc';
 import './Dashboard.css';
 
@@ -22,19 +20,22 @@ class DashboardRouter extends PureComponent {
 
   componentDidMount() {
     if (firebase.auth().currentUser !== undefined) {
-      firebase.auth().currentUser
-        .getIdToken(true)
+      firebase.auth().currentUser.getIdToken(true)
         .then((idToken) => {
           const { uid } = firebase.auth().currentUser;
           const reqData = { uid, idToken };
-          fetch('https://us-central1-rails-students.cloudfunctions.net/getprofile', {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
+          fetch(
+            'https://us-central1-rails-students.cloudfunctions.net/getprofile',
+            {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(reqData),
             },
-            body: JSON.stringify(reqData),
-          }).then(res => res.json())
+          )
+            .then(res => res.json())
             .then((data) => {
               this.setState({
                 teacher: data.userData.type === 'teacher',
@@ -60,7 +61,6 @@ class DashboardRouter extends PureComponent {
     });
   };
 
-
   render() {
     const { visible, teacher, userData } = this.state;
     return (
@@ -74,7 +74,11 @@ class DashboardRouter extends PureComponent {
             </div>
           </Router>
         </Layout>
-        <Notification notificationVisible={visible} onClose={this.onClose} />
+        <CreateEventDrawer
+          userData={userData}
+          visible={visible}
+          onClose={this.onClose}
+        />
       </Layout>
     );
   }
