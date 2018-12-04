@@ -44,7 +44,7 @@ export function editevent (req, res) {
 
     function updateEvent(classUid, eventUid, eventData) {
         admin.database().ref(`events/${classUid}/${eventUid}`)
-        .set(eventData)
+        .update(eventData)
         .then(() => {
             return res.status(200).send({message: 'Updated event.'});
         })
