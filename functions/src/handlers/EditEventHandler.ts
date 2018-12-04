@@ -21,7 +21,7 @@ export function editevent (req, res) {
         }
     */
     
-    function validateData(eventData) {
+   function validateData(eventData) {
         const { 
             allowDiscussion,
             allowSubmission,
@@ -29,20 +29,22 @@ export function editevent (req, res) {
             dueDate,
             postedDate,
             priority,
-            title 
+            title, 
+            hasFile
         } = eventData;
-        return allowDiscussion &&
-            allowSubmission &&
+        return (allowDiscussion !== null) &&
+            (allowSubmission !== null) &&
             description &&
             dueDate &&
             postedDate &&
-            priority &&
+            (priority !== null) &&
+            (hasFile !== null) &&
             title;
     }
 
     function updateEvent(classUid, eventUid, eventData) {
         admin.database().ref(`events/${classUid}/${eventUid}`)
-        .update(eventData)
+        .set(eventData)
         .then(() => {
             return res.status(200).send({message: 'Updated event.'});
         })
