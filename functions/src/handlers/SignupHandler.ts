@@ -40,8 +40,7 @@ export function signup (req, res) {
     .then(()=> {
       if (test || test === 'true' || test === true) {
         removeUser(uid);
-      }
-      else return res.status(200).send({message: 'Signed up successfully'});
+      } else return res.status(200).send({message: 'Signed up successfully'});
     }).catch((err) => {
       err.whereInApi = 'SingupHandler/addToDatabase';
       res.status(406).send({message: 'Something went wrong.', error: err});
