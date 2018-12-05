@@ -28,3 +28,13 @@
   flex: 1;
   max-height: 80%;
 }
+
+.drawer-custom .ant-drawer-content-wrapper {
+  width: 500px !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .drawer-custom .ant-drawer-content-wrapper {
+    width: 100% !important;
+  }
+}

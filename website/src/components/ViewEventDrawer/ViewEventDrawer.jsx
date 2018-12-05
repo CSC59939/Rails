@@ -199,9 +199,9 @@ class ViewEventDrawer extends Component {
     } = this.state;
     return (
       <Drawer
+        className="drawer-custom"
         title={eventData ? eventData.title : 'Loading event...'}
         placement="right"
-        width="500"
         closable
         onClose={onClose}
         visible={visible}
