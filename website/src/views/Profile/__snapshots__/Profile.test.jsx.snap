@@ -788,338 +788,32 @@ ShallowWrapper {
               <p>
                 No other requested classes.
               </p>
-            </Card>
-          </div>,
-        ],
-        "className": "profile-page",
-      },
-      "ref": null,
-      "rendered": Array [
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "class",
-          "props": Object {
-            "cancelButtonDisabled": false,
-            "centered": true,
-            "children": Array [
-              <Alert
-                message="Awaiting approval for this class"
-                showIcon={true}
-                type="info"
-              />,
-              <Breadcrumb
-                prefixCls="ant-breadcrumb"
-                separator="/"
-                style={
-                  Object {
-                    "margin": "10px auto",
-                  }
-                }
-              >
-                <BreadcrumbItem
-                  prefixCls="ant-breadcrumb"
-                  separator="/"
-                />
-                <BreadcrumbItem
-                  prefixCls="ant-breadcrumb"
-                  separator="/"
-                />
-              </Breadcrumb>,
-              <p
-                className="join-class-label"
-              >
-                <span>
-                  Section Code: 
-                </span>
-              </p>,
-              <p
-                className="join-class-label"
-              >
-                <span>
-                  Instructor: 
-                </span>
-              </p>,
-              <p
-                className="join-class-label"
-              >
-                <span>
-                  Time: 
-                </span>
-              </p>,
-              <p
-                className="join-class-label"
-              >
-                <span>
-                  Day(s): 
-                </span>
-              </p>,
-              <List
-                bordered={false}
-                dataSource={Array []}
-                header="Class Events"
-                loading={false}
-                pagination={false}
-                prefixCls="ant-list"
-                renderItem={[Function]}
-                split={true}
-              />,
-            ],
-            "className": "class-modal",
-            "confirmLoading": false,
-            "footer": Array [
-              <Button
-                block={false}
-                ghost={false}
-                loading={false}
-                onClick={[Function]}
-                prefixCls="ant-btn"
-                type="primary"
-              >
-                OK
-              </Button>,
-            ],
-            "maskTransitionName": "fade",
-            "okButtonDisabled": false,
-            "okType": "primary",
-            "prefixCls": "ant-modal",
-            "title": undefined,
-            "transitionName": "zoom",
-            "visible": false,
-            "width": 520,
-          },
-          "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "message": "Awaiting approval for this class",
-                "showIcon": true,
-                "type": "info",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "children": Array [
-                  <BreadcrumbItem
-                    prefixCls="ant-breadcrumb"
-                    separator="/"
-                  />,
-                  <BreadcrumbItem
-                    prefixCls="ant-breadcrumb"
-                    separator="/"
-                  />,
-                ],
-                "prefixCls": "ant-breadcrumb",
-                "separator": "/",
-                "style": Object {
-                  "margin": "10px auto",
-                },
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "children": undefined,
-                    "prefixCls": "ant-breadcrumb",
-                    "separator": "/",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "children": undefined,
-                    "prefixCls": "ant-breadcrumb",
-                    "separator": "/",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Section Code: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Section Code: ",
-                  },
-                  "ref": null,
-                  "rendered": "Section Code: ",
-                  "type": "span",
-                },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Instructor: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Instructor: ",
-                  },
-                  "ref": null,
-                  "rendered": "Instructor: ",
-                  "type": "span",
-                },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Time: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Time: ",
-                  },
-                  "ref": null,
-                  "rendered": "Time: ",
-                  "type": "span",
-                },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Day(s): 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Day(s): ",
-                  },
-                  "ref": null,
-                  "rendered": "Day(s): ",
-                  "type": "span",
-                },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "bordered": false,
-                "dataSource": Array [],
-                "header": "Class Events",
-                "loading": false,
-                "pagination": false,
-                "prefixCls": "ant-list",
-                "renderItem": [Function],
-                "split": true,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
+            </Card>,
           ],
-          "type": [Function],
+          "className": "profile-page",
         },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": Array [
-              <Card
-                className="profile-card"
-                title="About You"
-              >
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
                 <Input
                   className="cust-input"
                   disabled={true}
                   placeholder="Full Name"
                   prefixCls="ant-input"
                   type="text"
-                />
+                />,
                 <Input
                   className="cust-input"
                   disabled={true}
                   placeholder="E-Mail"
                   prefixCls="ant-input"
                   type="text"
-                />
+                />,
                 <Input
                   className="cust-input"
                   disabled={false}
@@ -1128,7 +822,7 @@ ShallowWrapper {
                   prefixCls="ant-input"
                   type="text"
                   value=""
-                />
+                />,
                 <Input
                   className="cust-input"
                   disabled={false}
@@ -1137,7 +831,7 @@ ShallowWrapper {
                   prefixCls="ant-input"
                   type="text"
                   value=""
-                />
+                />,
                 <Progress
                   format={[Function]}
                   percent={0}
@@ -1147,7 +841,8 @@ ShallowWrapper {
                   strokeColor="red"
                   trailColor="#f3f3f3"
                   type="line"
-                />
+                />,
+                null,
                 <Button
                   block={true}
                   className="cust-button"
@@ -1158,12 +853,125 @@ ShallowWrapper {
                   type="primary"
                 >
                   Change Password
-                </Button>
-              </Card>,
-              <Card
-                className="profile-card"
-                title="Your Academics"
-              >
+                </Button>,
+              ],
+              "className": "profile-card",
+              "title": "About You",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": true,
+                  "placeholder": "Full Name",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": undefined,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": true,
+                  "placeholder": "E-Mail",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": undefined,
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": false,
+                  "onChange": [Function],
+                  "placeholder": "Old Password",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": "",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": false,
+                  "onChange": [Function],
+                  "placeholder": "New Password",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": "",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "format": [Function],
+                  "percent": 0,
+                  "prefixCls": "ant-progress",
+                  "showInfo": true,
+                  "size": "default",
+                  "strokeColor": "red",
+                  "trailColor": "#f3f3f3",
+                  "type": "line",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
+              },
+              null,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "block": true,
+                  "children": "Change Password",
+                  "className": "cust-button",
+                  "ghost": false,
+                  "loading": false,
+                  "onClick": [Function],
+                  "prefixCls": "ant-btn",
+                  "type": "primary",
+                },
+                "ref": null,
+                "rendered": "Change Password",
+                "type": [Function],
+              },
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
                 <Button
                   block={true}
                   ghost={false}
@@ -1178,190 +986,16 @@ ShallowWrapper {
                   type="primary"
                 >
                   Join Class
-                </Button>
+                </Button>,
                 <p>
                   You haven't joined any universities/classes yet.
-                </p>
+                </p>,
                 <p>
                   No other requested classes.
-                </p>
-              </Card>,
-            ],
-            "className": "profile-page",
-          },
-          "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "children": Array [
-                  <Input
-                    className="cust-input"
-                    disabled={true}
-                    placeholder="Full Name"
-                    prefixCls="ant-input"
-                    type="text"
-                  />,
-                  <Input
-                    className="cust-input"
-                    disabled={true}
-                    placeholder="E-Mail"
-                    prefixCls="ant-input"
-                    type="text"
-                  />,
-                  <Input
-                    className="cust-input"
-                    disabled={false}
-                    onChange={[Function]}
-                    placeholder="Old Password"
-                    prefixCls="ant-input"
-                    type="text"
-                    value=""
-                  />,
-                  <Input
-                    className="cust-input"
-                    disabled={false}
-                    onChange={[Function]}
-                    placeholder="New Password"
-                    prefixCls="ant-input"
-                    type="text"
-                    value=""
-                  />,
-                  <Progress
-                    format={[Function]}
-                    percent={0}
-                    prefixCls="ant-progress"
-                    showInfo={true}
-                    size="default"
-                    strokeColor="red"
-                    trailColor="#f3f3f3"
-                    type="line"
-                  />,
-                  null,
-                  <Button
-                    block={true}
-                    className="cust-button"
-                    ghost={false}
-                    loading={false}
-                    onClick={[Function]}
-                    prefixCls="ant-btn"
-                    type="primary"
-                  >
-                    Change Password
-                  </Button>,
-                ],
-                "className": "profile-card",
-                "title": "About You",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "className": "cust-input",
-                    "disabled": true,
-                    "placeholder": "Full Name",
-                    "prefixCls": "ant-input",
-                    "type": "text",
-                    "value": undefined,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "className": "cust-input",
-                    "disabled": true,
-                    "placeholder": "E-Mail",
-                    "prefixCls": "ant-input",
-                    "type": "text",
-                    "value": undefined,
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "className": "cust-input",
-                    "disabled": false,
-                    "onChange": [Function],
-                    "placeholder": "Old Password",
-                    "prefixCls": "ant-input",
-                    "type": "text",
-                    "value": "",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "className": "cust-input",
-                    "disabled": false,
-                    "onChange": [Function],
-                    "placeholder": "New Password",
-                    "prefixCls": "ant-input",
-                    "type": "text",
-                    "value": "",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "format": [Function],
-                    "percent": 0,
-                    "prefixCls": "ant-progress",
-                    "showInfo": true,
-                    "size": "default",
-                    "strokeColor": "red",
-                    "trailColor": "#f3f3f3",
-                    "type": "line",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-                null,
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "block": true,
-                    "children": "Change Password",
-                    "className": "cust-button",
-                    "ghost": false,
-                    "loading": false,
-                    "onClick": [Function],
-                    "prefixCls": "ant-btn",
-                    "type": "primary",
-                  },
-                  "ref": null,
-                  "rendered": "Change Password",
-                  "type": [Function],
-                },
+                </p>,
               ],
-              "type": [Function],
+              "className": "profile-card",
+              "title": "Your Academics",
             },
             "ref": null,
             "rendered": Array [
@@ -1379,31 +1013,29 @@ ShallowWrapper {
                   "style": Object {
                     "marginBottom": 10,
                   },
-                  "ref": null,
-                  "rendered": "Join Class",
-                  "type": [Function],
+                  "type": "primary",
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "You haven't joined any universities/classes yet.",
-                  },
-                  "ref": null,
-                  "rendered": "You haven't joined any universities/classes yet.",
-                  "type": "p",
+                "ref": null,
+                "rendered": "Join Class",
+                "type": [Function],
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "You haven't joined any universities/classes yet.",
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "No other requested classes.",
-                  },
-                  "ref": null,
-                  "rendered": "No other requested classes.",
-                  "type": "p",
+                "ref": null,
+                "rendered": "You haven't joined any universities/classes yet.",
+                "type": "p",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "No other requested classes.",
                 },
                 "ref": null,
                 "rendered": "No other requested classes.",
@@ -1748,22 +1380,9 @@ ShallowWrapper {
                 "type": "text",
                 "value": undefined,
               },
-              undefined,
-            ],
-            "type": "p",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": Array [
-                <span>
-                  Instructor: 
-                </span>,
-                undefined,
-              ],
-              "className": "join-class-label",
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
@@ -1777,22 +1396,9 @@ ShallowWrapper {
                 "type": "text",
                 "value": undefined,
               },
-              undefined,
-            ],
-            "type": "p",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": Array [
-                <span>
-                  Time: 
-                </span>,
-                undefined,
-              ],
-              "className": "join-class-label",
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
@@ -3466,7 +3072,7 @@ ShallowWrapper {
               >
                 Change Password
               </Button>
-            </Card>
+            </Card>,
             <Card
               className="profile-card"
               title="Your Academics"
@@ -3762,267 +3368,120 @@ ShallowWrapper {
               "className": "profile-card",
               "title": "About You",
             },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "children": Array [
-                  <BreadcrumbItem
-                    prefixCls="ant-breadcrumb"
-                    separator="/"
-                  />,
-                  <BreadcrumbItem
-                    prefixCls="ant-breadcrumb"
-                    separator="/"
-                  />,
-                ],
-                "prefixCls": "ant-breadcrumb",
-                "separator": "/",
-                "style": Object {
-                  "margin": "10px auto",
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": true,
+                  "placeholder": "Full Name",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": undefined,
                 },
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "children": undefined,
-                    "prefixCls": "ant-breadcrumb",
-                    "separator": "/",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": true,
+                  "placeholder": "E-Mail",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": undefined,
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "children": undefined,
-                    "prefixCls": "ant-breadcrumb",
-                    "separator": "/",
-                  },
-                  "ref": null,
-                  "rendered": null,
-                  "type": [Function],
-                },
-              ],
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Section Code: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Section Code: ",
-                  },
-                  "ref": null,
-                  "rendered": "Section Code: ",
-                  "type": "span",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": false,
+                  "onChange": [Function],
+                  "placeholder": "Old Password",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": "",
                 },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Instructor: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Instructor: ",
-                  },
-                  "ref": null,
-                  "rendered": "Instructor: ",
-                  "type": "span",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "className": "cust-input",
+                  "disabled": false,
+                  "onChange": [Function],
+                  "placeholder": "New Password",
+                  "prefixCls": "ant-input",
+                  "type": "text",
+                  "value": "",
                 },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Time: 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Time: ",
-                  },
-                  "ref": null,
-                  "rendered": "Time: ",
-                  "type": "span",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "format": [Function],
+                  "percent": 0,
+                  "prefixCls": "ant-progress",
+                  "showInfo": true,
+                  "size": "default",
+                  "strokeColor": "red",
+                  "trailColor": "#f3f3f3",
+                  "type": "line",
                 },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  <span>
-                    Day(s): 
-                  </span>,
-                  undefined,
-                ],
-                "className": "join-class-label",
+                "ref": null,
+                "rendered": null,
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Day(s): ",
-                  },
-                  "ref": null,
-                  "rendered": "Day(s): ",
-                  "type": "span",
+              null,
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "class",
+                "props": Object {
+                  "block": true,
+                  "children": "Change Password",
+                  "className": "cust-button",
+                  "ghost": false,
+                  "loading": false,
+                  "onClick": [Function],
+                  "prefixCls": "ant-btn",
+                  "type": "primary",
                 },
-                undefined,
-              ],
-              "type": "p",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "bordered": false,
-                "dataSource": Array [],
-                "header": "Class Events",
-                "loading": false,
-                "pagination": false,
-                "prefixCls": "ant-list",
-                "renderItem": [Function],
-                "split": true,
+                "ref": null,
+                "rendered": "Change Password",
+                "type": [Function],
               },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-          ],
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": Array [
-              <Card
-                className="profile-card"
-                title="About You"
-              >
-                <Input
-                  className="cust-input"
-                  disabled={true}
-                  placeholder="Full Name"
-                  prefixCls="ant-input"
-                  type="text"
-                />
-                <Input
-                  className="cust-input"
-                  disabled={true}
-                  placeholder="E-Mail"
-                  prefixCls="ant-input"
-                  type="text"
-                />
-                <Input
-                  className="cust-input"
-                  disabled={false}
-                  onChange={[Function]}
-                  placeholder="Old Password"
-                  prefixCls="ant-input"
-                  type="text"
-                  value=""
-                />
-                <Input
-                  className="cust-input"
-                  disabled={false}
-                  onChange={[Function]}
-                  placeholder="New Password"
-                  prefixCls="ant-input"
-                  type="text"
-                  value=""
-                />
-                <Progress
-                  format={[Function]}
-                  percent={0}
-                  prefixCls="ant-progress"
-                  showInfo={true}
-                  size="default"
-                  strokeColor="red"
-                  trailColor="#f3f3f3"
-                  type="line"
-                />
-                <Button
-                  block={true}
-                  className="cust-button"
-                  ghost={false}
-                  loading={false}
-                  onClick={[Function]}
-                  prefixCls="ant-btn"
-                  type="primary"
-                >
-                  Change Password
-                </Button>
-              </Card>,
-              <Card
-                className="profile-card"
-                title="Your Academics"
-              >
+            ],
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": Array [
                 <Button
                   block={true}
                   ghost={false}
@@ -4037,7 +3496,7 @@ ShallowWrapper {
                   type="primary"
                 >
                   Join Class
-                </Button>
+                </Button>,
                 <div>
                   <p
                     className="academics-subtitle"
@@ -4280,7 +3739,7 @@ ShallowWrapper {
                       className="academics-subtitle"
                     >
                       Joined classes
-                    </p>
+                    </p>,
                     <Collapse
                       bordered={true}
                       openAnimation={
@@ -4376,59 +3835,30 @@ ShallowWrapper {
                           split={true}
                         />
                       </CollapsePanel>
-                    </Collapse>
-                  </div>,
-                  <p>
-                    No other requested classes.
-                  </p>,
-                ],
-                "className": "profile-card",
-                "title": "Your Academics",
-              },
-              "ref": null,
-              "rendered": Array [
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "class",
-                  "props": Object {
-                    "block": true,
-                    "children": "Join Class",
-                    "ghost": false,
-                    "href": "/join/class",
-                    "loading": false,
-                    "prefixCls": "ant-btn",
-                    "style": Object {
-                      "marginBottom": 10,
-                    },
-                    "type": "primary",
-                  },
-                  "ref": null,
-                  "rendered": "Join Class",
-                  "type": [Function],
+                    </Collapse>,
+                  ],
                 },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": Array [
-                      <p
-                        className="academics-subtitle"
-                      >
-                        Joined classes
-                      </p>,
-                      <Collapse
-                        bordered={true}
-                        openAnimation={
-                          Object {
-                            "appear": [Function],
-                            "enter": [Function],
-                            "leave": [Function],
-                          }
-                        }
-                        prefixCls="ant-collapse"
-                      >
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Joined classes",
+                      "className": "academics-subtitle",
+                    },
+                    "ref": null,
+                    "rendered": "Joined classes",
+                    "type": "p",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "bordered": true,
+                      "children": Array [
                         <CollapsePanel
                           header="universityName"
                         >
@@ -4512,23 +3942,14 @@ ShallowWrapper {
                             renderItem={[Function]}
                             split={true}
                           />
-                        </CollapsePanel>
-                      </Collapse>,
-                    ],
-                  },
-                  "ref": null,
-                  "rendered": Array [
-                    Object {
-                      "instance": null,
-                      "key": undefined,
-                      "nodeType": "host",
-                      "props": Object {
-                        "children": "Joined classes",
-                        "className": "academics-subtitle",
+                        </CollapsePanel>,
+                      ],
+                      "openAnimation": Object {
+                        "appear": [Function],
+                        "enter": [Function],
+                        "leave": [Function],
                       },
-                      "ref": null,
-                      "rendered": "Joined classes",
-                      "type": "p",
+                      "prefixCls": "ant-collapse",
                     },
                     "ref": null,
                     "rendered": Array [
@@ -4619,13 +4040,10 @@ ShallowWrapper {
                           />,
                           "header": "universityName",
                         },
-                        "prefixCls": "ant-collapse",
-                      },
-                      "ref": null,
-                      "rendered": Array [
-                        Object {
+                        "ref": null,
+                        "rendered": Object {
                           "instance": null,
-                          "key": "universityName",
+                          "key": undefined,
                           "nodeType": "class",
                           "props": Object {
                             "bordered": false,
@@ -4706,106 +4124,13 @@ ShallowWrapper {
                             "split": true,
                           },
                           "ref": null,
-                          "rendered": Object {
-                            "instance": null,
-                            "key": undefined,
-                            "nodeType": "class",
-                            "props": Object {
-                              "bordered": false,
-                              "dataSource": Array [
-                                Object {
-                                  "0": "C",
-                                  "classUid": "0",
-                                },
-                                Object {
-                                  "0": "U",
-                                  "classUid": "1",
-                                },
-                                Object {
-                                  "0": "N",
-                                  "classUid": "2",
-                                },
-                                Object {
-                                  "0": "Y",
-                                  "classUid": "3",
-                                },
-                                Object {
-                                  "0": " ",
-                                  "classUid": "4",
-                                },
-                                Object {
-                                  "0": "C",
-                                  "classUid": "5",
-                                },
-                                Object {
-                                  "0": "i",
-                                  "classUid": "6",
-                                },
-                                Object {
-                                  "0": "t",
-                                  "classUid": "7",
-                                },
-                                Object {
-                                  "0": "y",
-                                  "classUid": "8",
-                                },
-                                Object {
-                                  "0": " ",
-                                  "classUid": "9",
-                                },
-                                Object {
-                                  "0": "C",
-                                  "classUid": "10",
-                                },
-                                Object {
-                                  "0": "o",
-                                  "classUid": "11",
-                                },
-                                Object {
-                                  "0": "l",
-                                  "classUid": "12",
-                                },
-                                Object {
-                                  "0": "l",
-                                  "classUid": "13",
-                                },
-                                Object {
-                                  "0": "e",
-                                  "classUid": "14",
-                                },
-                                Object {
-                                  "0": "g",
-                                  "classUid": "15",
-                                },
-                                Object {
-                                  "0": "e",
-                                  "classUid": "16",
-                                },
-                              ],
-                              "loading": false,
-                              "pagination": false,
-                              "prefixCls": "ant-list",
-                              "renderItem": [Function],
-                              "split": true,
-                            },
-                            "ref": null,
-                            "rendered": null,
-                            "type": [Function],
-                          },
+                          "rendered": null,
                           "type": [Function],
                         },
-                      ],
-                      "type": [Function],
-                    },
-                  ],
-                  "type": "div",
-                },
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "No other requested classes.",
+                        "type": [Function],
+                      },
+                    ],
+                    "type": [Function],
                   },
                 ],
                 "type": "div",
@@ -5582,289 +4907,6 @@ ShallowWrapper {
                     }
                   }
                   prefixCls="ant-collapse"
-                >
-                  <CollapsePanel
-                    header="universityName"
-                  >
-                    <List
-                      bordered={false}
-                      dataSource={
-                        Array [
-                          Object {
-                            "0": "C",
-                            "classUid": "0",
-                          },
-                          Object {
-                            "0": "U",
-                            "classUid": "1",
-                          },
-                          Object {
-                            "0": "N",
-                            "classUid": "2",
-                          },
-                          Object {
-                            "0": "Y",
-                            "classUid": "3",
-                          },
-                          Object {
-                            "0": " ",
-                            "classUid": "4",
-                          },
-                          Object {
-                            "0": "C",
-                            "classUid": "5",
-                          },
-                          Object {
-                            "0": "i",
-                            "classUid": "6",
-                          },
-                          Object {
-                            "0": "t",
-                            "classUid": "7",
-                          },
-                          Object {
-                            "0": "y",
-                            "classUid": "8",
-                          },
-                          Object {
-                            "0": " ",
-                            "classUid": "9",
-                          },
-                          Object {
-                            "0": "C",
-                            "classUid": "10",
-                          },
-                          Object {
-                            "0": "o",
-                            "classUid": "11",
-                          },
-                          Object {
-                            "0": "l",
-                            "classUid": "12",
-                          },
-                          Object {
-                            "0": "l",
-                            "classUid": "13",
-                          },
-                          Object {
-                            "0": "e",
-                            "classUid": "14",
-                          },
-                          Object {
-                            "0": "g",
-                            "classUid": "15",
-                          },
-                          Object {
-                            "0": "e",
-                            "classUid": "16",
-                          },
-                        ]
-                      }
-                      loading={false}
-                      pagination={false}
-                      prefixCls="ant-list"
-                      renderItem={[Function]}
-                      split={true}
-                    />
-                  </CollapsePanel>
-                </Collapse>
-              </div>
-            </Card>,
-          ],
-          "className": "profile-page",
-        },
-        "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "class",
-            "props": Object {
-              "children": Array [
-                <Input
-                  className="cust-input"
-                  disabled={true}
-                  placeholder="Full Name"
-                  prefixCls="ant-input"
-                  type="text"
-                />,
-                <Input
-                  className="cust-input"
-                  disabled={true}
-                  placeholder="E-Mail"
-                  prefixCls="ant-input"
-                  type="text"
-                />,
-                <Input
-                  className="cust-input"
-                  disabled={false}
-                  onChange={[Function]}
-                  placeholder="Old Password"
-                  prefixCls="ant-input"
-                  type="text"
-                  value=""
-                />,
-                <Input
-                  className="cust-input"
-                  disabled={false}
-                  onChange={[Function]}
-                  placeholder="New Password"
-                  prefixCls="ant-input"
-                  type="text"
-                  value=""
-                />,
-                <Progress
-                  format={[Function]}
-                  percent={0}
-                  prefixCls="ant-progress"
-                  showInfo={true}
-                  size="default"
-                  strokeColor="red"
-                  trailColor="#f3f3f3"
-                  type="line"
-                />,
-                null,
-                <Button
-                  block={true}
-                  className="cust-button"
-                  ghost={false}
-                  loading={false}
-                  onClick={[Function]}
-                  prefixCls="ant-btn"
-                  type="primary"
-                >
-                  Change Password
-                </Button>,
-              ],
-              "className": "profile-card",
-              "title": "About You",
-            },
-            "ref": null,
-            "rendered": Array [
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "className": "cust-input",
-                  "disabled": true,
-                  "placeholder": "Full Name",
-                  "prefixCls": "ant-input",
-                  "type": "text",
-                  "value": undefined,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "className": "cust-input",
-                  "disabled": true,
-                  "placeholder": "E-Mail",
-                  "prefixCls": "ant-input",
-                  "type": "text",
-                  "value": undefined,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "className": "cust-input",
-                  "disabled": false,
-                  "onChange": [Function],
-                  "placeholder": "Old Password",
-                  "prefixCls": "ant-input",
-                  "type": "text",
-                  "value": "",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "className": "cust-input",
-                  "disabled": false,
-                  "onChange": [Function],
-                  "placeholder": "New Password",
-                  "prefixCls": "ant-input",
-                  "type": "text",
-                  "value": "",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "format": [Function],
-                  "percent": 0,
-                  "prefixCls": "ant-progress",
-                  "showInfo": true,
-                  "size": "default",
-                  "strokeColor": "red",
-                  "trailColor": "#f3f3f3",
-                  "type": "line",
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              null,
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "block": true,
-                  "children": "Change Password",
-                  "className": "cust-button",
-                  "ghost": false,
-                  "loading": false,
-                  "onClick": [Function],
-                  "prefixCls": "ant-btn",
-                  "type": "primary",
-                },
-                "ref": null,
-                "rendered": "Change Password",
-                "type": [Function],
-              },
-            ],
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "class",
-            "props": Object {
-              "children": Array [
-                <Button
-                  block={true}
-                  ghost={false}
-                  href="/join/class"
-                  loading={false}
-                  prefixCls="ant-btn"
-                  style={
-                    Object {
-                      "marginBottom": 10,
-                    }
-                  }
-                  type="primary"
                 >
                   <CollapsePanel
                     header="universityName"
@@ -20740,10 +19782,12 @@ ShallowWrapper {
                   bordered={true}
                   openAnimation={
                     Object {
-                      "marginBottom": 10,
+                      "appear": [Function],
+                      "enter": [Function],
+                      "leave": [Function],
                     }
                   }
-                  type="primary"
+                  prefixCls="ant-collapse"
                 >
                   <CollapsePanel
                     header="universityName"
