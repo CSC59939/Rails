@@ -31,7 +31,7 @@ const myEventsList = [
 
 describe('EventSummaryCollection', () => {
   it('Snapshot test of EventCalendar in the default agenda view', () => {
-    MockDate.set(1543801827000);
+    MockDate.set(1543820242000);
     expect(renderer.create(<EventCalendar events={myEventsList} />)
       .toJSON()).toMatchSnapshot();
     MockDate.reset();
