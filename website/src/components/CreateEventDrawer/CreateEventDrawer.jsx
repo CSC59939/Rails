@@ -180,7 +180,7 @@ class CreateEventDrawer extends PureComponent {
       <Drawer
         title={mode === 'edit' ? `Edit ${title}` : 'Create New Event'}
         placement="right"
-        width="500"
+        className="drawer-custom"
         closable
         onClose={onClose}
         visible={visible}
