@@ -4,12 +4,25 @@
   padding: 20px;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
+}
+
+@media only screen and (max-width: 768px) {
+  .profile-page {
+    flex-direction: column;
+  }
+
+  .profile-card {
+    margin-top: 40px !important;
+    width: 100% !important;
+  }
 }
 
 .profile-card {
   flex: 1;
   height: fit-content !important;
-  margin: 0 10px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
   border-radius: 15px !important;
   filter: drop-shadow(0 1px 2px rgba(190, 190, 190, 0.5));
 }
@@ -41,4 +54,9 @@
   margin-top: 20px;
   font-weight: 500;
   margin-bottom: 7.5px;
+}
+
+.ant-modal-body {
+  max-height: 50vh !important;
+  overflow-y: auto !important;
 }

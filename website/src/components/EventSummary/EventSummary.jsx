@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import './EventSummary.css';
 
 class EventSummary extends PureComponent {
@@ -19,16 +20,14 @@ class EventSummary extends PureComponent {
 
   render() {
     const {
-      course,
-      eventName,
-      dueDate,
-      color,
+      event,
     } = this.props;
+    const time = moment(event.dueDate).format('hh:mm A');
     return (
-      <div style={{ borderColor: color, color }} className="EventSummary">
-        <span className="course">{course}</span>
-        <span className="eventName">{eventName}</span>
-        <span className="dueDate">{dueDate}</span>
+      <div style={{ backgroundColor: this.priorityColor() }} onClick={() => { event.viewEvent(event); }} className="EventSummary">
+        <span className="course">{event.course}</span>
+        <span className="eventName">{event.title}</span>
+        <span className="dueDate">{time}</span>
       </div>
     );
   }
