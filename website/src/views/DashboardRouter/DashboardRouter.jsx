@@ -74,10 +74,10 @@ class DashboardRouter extends PureComponent {
   };
 
   viewEvent = (eventData) => {
+    const { eventUid, classUid, university } = eventData;
     if (navigator.onLine) {
       message.info('Getting event...');
       const { userData } = this.state;
-      const { eventUid, classUid, university } = eventData;
       const { uid } = firebase.auth().currentUser;
       const reqData = { eventUid, classUid, uid };
       fetch(
@@ -108,15 +108,21 @@ class DashboardRouter extends PureComponent {
                 eventVisible: true,
                 eventData: result.eventData,
               });
+              localStorage.setItem(eventUid, JSON.stringify(result.eventData));
             }
           }
         })
         .catch((err) => {
-          console.log(err);
           message.error(err.message);
         });
+    } else if (localStorage.getItem(eventUid) !== null) {
+      message.error('Your offline showing saved data if it exists');
+      this.setState({
+        eventData: JSON.parse(localStorage.getItem(eventUid)),
+        eventVisible: true,
+      });
     } else {
-      message.error('Can\'t get event when offline');
+      message.error('Sorry can\'t get any data nothing saved');
     }
   }
 
