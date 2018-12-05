@@ -145,26 +145,32 @@ class JoinClass extends Component {
         title: 'Class Code',
         dataIndex: 'name',
         key: 'name',
+        width: '15%',
       },
       {
         title: 'Class Name',
         dataIndex: 'description',
         key: 'description',
+        width: '25%',
+
       },
       {
         title: 'Instructor',
         dataIndex: 'instructorName',
         key: 'instructorName',
+        width: '15%',
       },
       {
         title: 'Time',
         dataIndex: 'time',
         key: 'time',
+        width: '15%',
       },
       {
         title: 'Days',
         dataIndex: 'days',
         key: 'days',
+        width: '15%',
       },
     ];
     return (
