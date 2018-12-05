@@ -1,25 +1,39 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
+import moment, { now } from "moment";
 import "./EventSummary.css";
 
 class EventSummary extends PureComponent {
   static propTypes = {
-    event: PropTypes.object.shape({
-      color: PropTypes.string,
+    event: PropTypes.shape({
       course: PropTypes.string,
+      title: PropTypes.string,
       eventName: PropTypes.string,
-      dueDate: PropTypes.string
+      dueDate: PropTypes.instanceOf(Date),
+      description: PropTypes.string,
+      priority: PropTypes.number,
+      viewEvent: PropTypes.func
     })
   };
 
   static defaultProps = {
     event: {
-      color: "red",
       course: "",
+      title: "",
       eventName: "",
-      dueDate: ""
+      dueDate: new Date(),
+      description: "",
+      priority: 0,
+      viewEvent: () => {}
     }
+  };
+
+  priorityColor = () => {
+    const { event } = this.props;
+    const { priority } = event;
+    const colors = ["#9E9E9E", "#03A9F4", "#F44336"];
+    const color = colors[priority];
+    return color;
   };
 
   render() {
