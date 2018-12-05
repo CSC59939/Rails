@@ -3,27 +3,27 @@
 exports[`EventSummary Render EventSummary without any eror 1`] = `
 <div
   className="EventSummary"
+  onClick={[Function]}
   style={
     Object {
-      "borderColor": "red",
-      "color": "red",
+      "backgroundColor": "#F44336",
     }
   }
 >
   <span
     className="course"
   >
-    CS103
+    CSC 59929
   </span>
   <span
     className="eventName"
   >
-    Final exam
+    Project Presentation
   </span>
   <span
     className="dueDate"
   >
-    Friday
+    11:41 PM
   </span>
 </div>
 `;
